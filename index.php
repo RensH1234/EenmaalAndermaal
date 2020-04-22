@@ -2,6 +2,7 @@
     $title = 'Eenmaal Andermaal!';
     $siteNaam = 'Welkom!';
     $huidigeJaar = 2019;
+    include 'php/veilingArtikel.php';
 ?>
 <!doctype html>
 <html lang="nl">
@@ -16,6 +17,10 @@
         <?php include 'includes/header.php'; ?>
         <main>
             <h1>Welkom!</h1>
+            <?php
+            $artikel = new VeilingArtikel();
+            $artikel->_construct();
+            echo $artikel->printArtikel();?>
         </main>
         <footer>&copy; <?= $huidigeJaar ?></footer>
     </body>
