@@ -20,3 +20,9 @@
 .VeilingArtikel_eindtijd{
     float: right;
 }
+
+.scrolllist{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}

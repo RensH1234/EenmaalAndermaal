@@ -1,8 +1,8 @@
 <?php
     $title = 'Eenmaal Andermaal!';
     $siteNaam = 'Welkom!';
-    $huidigeJaar = date("Y");
-    include 'php classes/veilingArtikel.php';
+    $huidigeJaar = 2019;
+    include 'php classes/Veilinglijst.php';
 ?>
 <!doctype html>
 <html lang="nl">
@@ -20,12 +20,13 @@
         <main>
             <h1>Welkom!</h1>
             <?php
-            $artikel = new VeilingArtikel();
-            $artikel->_construct();
-            echo $artikel->printArtikel();
-            $artikel2 = new VeilingArtikel();
-            $artikel2->_construct();
-            echo $artikel2->printArtikel();?>
+            $artikelLijst = new Veilinglijst();
+            $artikelLijst->_construct(10,""," Aanbevolen");
+            $artikelLijst->printVeilinglijst();
+            $artikelLijst2 = new Veilinglijst();
+            $artikelLijst2->_construct(6,""," Geschiedenis");
+            $artikelLijst2->printVeilinglijst();
+            ?>
         </main>
         <footer>&copy; <?= $huidigeJaar ?></footer>
     </body>
