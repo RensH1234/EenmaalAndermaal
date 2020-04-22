@@ -1,7 +1,7 @@
 <?php
     $title = 'Eenmaal Andermaal!';
     $siteNaam = 'Welkom!';
-    $huidigeJaar = 2019;
+    $huidigeJaar = date("Y");
     include 'php classes/veilingArtikel.php';
 ?>
 <!doctype html>
