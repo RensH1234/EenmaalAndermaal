@@ -1,7 +1,7 @@
 <?php
     $title = 'Eenmaal Andermaal!';
     $siteNaam = 'Welkom!';
-    $huidigeJaar = 2019;
+    $huidigeJaar = 2020;
     include 'php classes/Veilinglijst.php';
 ?>
 <!doctype html>
