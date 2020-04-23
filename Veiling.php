@@ -18,6 +18,8 @@ $huidigeJaar = 2020;
 <main>
 <h1>Sample Text</h1>
     <p>Semper Fidelis</p>
+    <p>Semper Fidelis</p>
+    <p>Semper Fidelis</p>
 </main>
 <footer>&copy; <?= $huidigeJaar ?></footer>
 </body>
