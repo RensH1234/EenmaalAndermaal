@@ -1,4 +1,5 @@
 <?php
+include '../includes/Databases.php';
 
 class VeilingArtikel
 {
@@ -8,10 +9,21 @@ class VeilingArtikel
     private $prijs;
     private $eindtijd;
 
-    //constructor query
-//   function _construct(private $subQuery){
-//    //database moet nog worden geregeld
-//}
+   // constructor query
+   function _constructDB($voorwerpnummer){
+        $queryTitel = 'SELECT Titel FROM Voorwerp WHERE Voorwerpnummer = :p1';
+        $queryAfbeelding = 'SELECT afbeeldingURL FROM Bestand WHERE Voorwerpnummer = :p1';
+        $queryLocatie = 'SELECT Plaatsnaam FROM Voorwerp WHERE Voorwerpnummer = :p1';
+        $queryPrijs = 'SELECT Verkoopprijs FROM Voorwerp WHERE Voorwerpnummer = :p1';
+        $queryTotaleDuur = 'SELECT MaximaleLooptijd FROM Voorwerp WHERE Voorwerpnummer = :p1';
+        $queryStartDatum = "SELECT DATEADD(days,:p2,)LooptijdBegin FROM Voorwerp WHERE Voorwerpnummer = :p1";
+        $this->titel = getArraySelection1Par($queryTitel, $voorwerpnummer)[0];
+        $this->afbeeldingURL = getArraySelection1Par($queryAfbeelding, $voorwerpnummer)[0];
+        $this->afstand = getArraySelection1Par($queryLocatie, $voorwerpnummer)[0];
+        $this->prijs = getArraySelection1Par($queryPrijs, $voorwerpnummer)[0];
+        $this->eindtijd = getArraySelection2Par($queryStartDatum,$voorwerpnummer,getArraySelection1Par($queryTotaleDuur, $voorwerpnummer)[0])[0];
+    //database moet nog worden geregeld
+}
 
     //constructor default
     function _construct(){
