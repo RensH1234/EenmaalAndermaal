@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
 $user = 'root';
-$dbname = 'portofolio';
+$dbname = 'iproject12';
 $dsn = 'mysql:host=' . $host . ';dbname=' . $dbname;
 $pdo = new PDO($dsn, $user);
 
