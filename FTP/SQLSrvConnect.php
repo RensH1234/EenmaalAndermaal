@@ -1,5 +1,5 @@
 <?php
-$dsn = "sqlsrv:Server=mssql.iproject.icasites.nl,1433;Database=iproject12";
+$dsn = "sqlsrv:Server=mssql2.iproject.icasites.nl,1433;Database=iproject12";
 try
 {
     $conn = new PDO($dsn, "iproject12", "NSgGF59F");
