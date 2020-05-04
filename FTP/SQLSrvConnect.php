@@ -1,13 +1,13 @@
 <?php
-$serverName = "mssql.iproject.icasites.nl";
-$connectionInfo = array( "Database"=>"iproject",  "UID"=>"iproject", "PWD"=>"SecurePass");
+$serverName = "mssql2.iproject.icasites.nl";
+$connectionInfo = array( "Database"=>"iproject12",  "UID"=>"iproject12", "PWD"=>"NSgGF59F");
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
 
 if($conn)
 {
     echo "Connection established.<br />";
 
-    $tsql = "SELECT tst_Column1, tst_Column2, tst_Column3 FROM test";
+    $tsql = "SELECT kolom1 FROM test1";
     $result = sqlsrv_query( $conn, $tsql, null);
 
     if ( $result === false)
