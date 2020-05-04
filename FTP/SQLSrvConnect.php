@@ -1,30 +1,20 @@
 <?php
-$serverName = "mssql2.iproject.icasites.nl";
-$connectionInfo = array( "Database"=>"iproject12",  "UID"=>"iproject12", "PWD"=>"NSgGF59F");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
-
-if($conn)
+$dsn = "sqlsrv:Server=mssql.iproject.icasites.nl,1433;Database=iproject12";
+try
 {
-    echo "Connection established.<br />";
+    $conn = new PDO($dsn, "iproject12", "NSgGF59F");
+    $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-    $tsql = "SELECT kolom1 FROM test1";
-    $result = sqlsrv_query( $conn, $tsql, null);
+    $sql = "SELECT kolom1 FROM test1";
 
-    if ( $result === false)
+    foreach ($conn->query($sql) as $row)
     {
-        die( FormatErrors( sqlsrv_errors() ) );
+        print_r($row);
     }
-
-    while( $row = sqlsrv_fetch_array( $result, SQLSRV_FETCH_ASSOC))
-    {
-        echo $row['tst_Column1'].", ".$row['tst_Column2']."<br />";
-    }
-    sqlsrv_free_stmt($result);
-    sqlsrv_close($conn);
-} else
+    echo ('Done');
+}
+catch(PDOException $e)
 {
-    echo "Connection could not be established.<br />";
-    die( print_r( sqlsrv_errors(), true));
+    echo $e->getMessage();
 }
 ?>
-
