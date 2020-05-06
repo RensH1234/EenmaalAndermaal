@@ -43,10 +43,10 @@ include 'php classes/VeilingArtikel.php';
     </div>
     <?php
     $artikel = new Artikel();
-    $artikel->_construct("Nintendo Entertainment System", "Zo goed als nieuw",
-        "item-pics/nes.jpeg", 20.00, "IDEAL", "Doe het goed",
+    $artikel->_construct(1,"Nintendo Entertainment System", "Zo goed als nieuw",
+        "item-pics/nes.jpeg", 20.10, "IDEAL", "Doe het goed",
         "Arnhem", "Nederland", "30", "2020-05-04 00:00:00", 12.67,
-    "In Doos", "PietHeijn", "", "", true, 20.00,
+    "In Doos", "PietHeijn", "", "", true, 20.20,
         1, 21.00);
     $artikel->_printArtikel();
     ?>
