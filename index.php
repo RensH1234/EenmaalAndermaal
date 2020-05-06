@@ -13,7 +13,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?= $title ?> | <?= $siteNaam ?></title>
         <link rel="stylesheet" href="custom%20stylesheet.css">
-        <?php include 'includes/framework includes.php'?>
+        <?php include 'includes/framework.php' ?>
     </head>
     <body>
         <?php include 'includes/header.php'; ?>
