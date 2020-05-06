@@ -2,9 +2,10 @@
     $title = 'Eenmaal Andermaal!';
     $siteNaam = 'Welkom!';
     $huidigeJaar = 2020;
-    include 'php classes/Veilinglijst.php';
     include 'includes/sqlsrvConnectieGegevens.php';
     include 'includes/sqlsrvPHPFuncties.php';
+    include 'php classes/VeilingArtikel.php';
+
 ?>
 <!doctype html>
 <html lang="nl">
@@ -60,15 +61,21 @@
         <main>
             <h1>Welkom!</h1>
             <?php
-            $artikelLijst = new Veilinglijst();
-            $artikelLijst->_construct(10,""," Aanbevolen");
-            $artikelLijst->printVeilinglijst();
-            $artikelLijst2 = new Veilinglijst();
-            $artikelLijst2->_construct(6,""," Geschiedenis");
-            $artikelLijst2->printVeilinglijst();
-            echo getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp","Plaatsnaam");
-            echo "<br>";
-            echo getGegevenRij1GbOpIndex(getConn(),"SELECT * FROM Voorwerp",5);
+//            $artikelLijst = new Veilinglijst();
+//            $artikelLijst->_construct(10,""," Aanbevolen");
+//            $artikelLijst->printVeilinglijst();
+//            $artikelLijst2 = new Veilinglijst();
+//            $artikelLijst2->_construct(6,""," Geschiedenis");
+//            $artikelLijst2->printVeilinglijst();
+            $art1 = new VeilingArtikel();
+            $art1->_construct(1);
+            echo $art1->printArtikel();
+            $art2 = new VeilingArtikel();
+            $art2->_construct(2);
+            echo $art2->printArtikel();
+            $art3 = new VeilingArtikel();
+            $art3->_construct(3);
+            echo $art3->printArtikel();
             ?>
         </main>
         <footer>&copy; <?= $huidigeJaar ?></footer>
