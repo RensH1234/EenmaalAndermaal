@@ -5,7 +5,8 @@ $password = "NSgGF59F";
 $connectionInfo = array("Database" => "iproject12", "UID" => $login, "PWD" => $password);
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-function getConn(){
+function getConn()
+{
     global $conn;
     return $conn;
 }

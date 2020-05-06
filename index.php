@@ -28,6 +28,9 @@
             $artikelLijst2 = new Veilinglijst();
             $artikelLijst2->_construct(6,""," Geschiedenis");
             $artikelLijst2->printVeilinglijst();
+            echo getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp","Plaatsnaam");
+            echo "<br>";
+            echo getGegevenRij1GbOpIndex(getConn(),"SELECT * FROM Voorwerp",5);
             ?>
         </main>
         <footer>&copy; <?= $huidigeJaar ?></footer>
