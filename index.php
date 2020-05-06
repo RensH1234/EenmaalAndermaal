@@ -3,6 +3,8 @@
     $siteNaam = 'Welkom!';
     $huidigeJaar = 2020;
     include 'php classes/Veilinglijst.php';
+    include 'includes/sqlsrvConnectieGegevens.php';
+    include 'includes/sqlsrvPHPFuncties.php';
 ?>
 <!doctype html>
 <html lang="nl">
@@ -26,30 +28,6 @@
             $artikelLijst2 = new Veilinglijst();
             $artikelLijst2->_construct(6,""," Geschiedenis");
             $artikelLijst2->printVeilinglijst();
-
-            $serverName = "mssql2.iproject.icasites.nl";
-            $login = "iproject12";
-            $password = "NSgGF59F";
-            $connectionInfo = array("Database"=>"iproject12","UID"=>$login,"PWD"=>$password);
-            $conn = sqlsrv_connect($serverName,$connectionInfo);
-            if( $conn ) {
-                echo "Connection established.<br />";
-            }else{
-                echo "Connection could not be established.<br />";
-                die( print_r( sqlsrv_errors(), true));
-            }
-            if( $conn === false ) {
-                die( print_r( sqlsrv_errors(), true));
-            }
-            $sql = "select Rol from Rollen where Rol = ('Verkoper')";
-            $stmt = sqlsrv_query( $conn, $sql );
-            if( $stmt === false) {
-                die( print_r( sqlsrv_errors(), true) );
-            }
-
-            while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-                echo $row['Rol'];
-            }
             ?>
         </main>
         <footer>&copy; <?= $huidigeJaar ?></footer>
