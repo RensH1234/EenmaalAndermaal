@@ -3,6 +3,8 @@
     $siteNaam = 'Welkom!';
     $huidigeJaar = 2020;
     include 'php classes/Veilinglijst.php';
+    include 'includes/sqlsrvConnectieGegevens.php';
+    include 'includes/sqlsrvPHPFuncties.php';
 ?>
 <!doctype html>
 <html lang="nl">
@@ -12,8 +14,13 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?= $title ?> | <?= $siteNaam ?></title>
+
 <!--        <link rel="stylesheet" href="customStylesheet.css">-->
         <?php include 'includes/frameworkIncludes.php'?>
+
+        <link rel="stylesheet" href="custom%20stylesheet.css">
+        <?php include 'includes/framework.php' ?>
+
     </head>
     <body>
         <nav>
@@ -59,6 +66,9 @@
             $artikelLijst2 = new Veilinglijst();
             $artikelLijst2->_construct(6,""," Geschiedenis");
             $artikelLijst2->printVeilinglijst();
+            echo getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp","Plaatsnaam");
+            echo "<br>";
+            echo getGegevenRij1GbOpIndex(getConn(),"SELECT * FROM Voorwerp",5);
             ?>
         </main>
         <footer>&copy; <?= $huidigeJaar ?></footer>
