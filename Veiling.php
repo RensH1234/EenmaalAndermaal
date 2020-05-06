@@ -1,26 +1,58 @@
 <?php
 $title = 'Veiling';
 $siteNaam = 'Veiling!';
-$huidigeJaar = 2020;
+include 'php classes/VeilingArtikel.php';
 ?>
 <!doctype html>
 <html lang="nl">
 <head>
+    <title><?= $title ?> | <?= $siteNaam ?></title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?> | <?= $siteNaam ?></title>
-    <link rel="stylesheet" href="custom%20stylesheet.css">
-    <?php include 'includes/framework includes.php' ?>
+    <?php include 'includes/framework.php'; ?>
 </head>
 <body>
 <main>
-<h1>Sample Text</h1>
-    <p>Semper Fidelis</p>
-    <p>Semper Fidelis</p>
-    <p>Semper Fidelis</p>
+    <div class="container-fluid bg-light p-5 border">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">&ltHeader&gt</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-n2  bg-light p-2 border">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center">&ltNavBar&gt</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-2">
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <a href="#" class="btn btn-light border" role="button">&ltKavelLijst&gt</a>
+            </div>
+            <div class="col-4">
+                <a href="#" class="btn btn-light border" role="button">&ltKavelLijst&gt</a>
+                <a href="#" class="btn btn-light border" role="button">&ltKavelLijst&gt</a>
+            </div>
+        </div>
+    </div>
+    <?php
+    $artikel = new Artikel();
+    $artikel->_construct("Nintendo Entertainment System", "Zo goed als nieuw",
+        "item-pics/nes.jpeg", 20.00, "IDEAL", "Doe het goed",
+        "Arnhem", "Nederland", "30", "2020-05-04 00:00:00", 12.67,
+    "In Doos", "PietHeijn", "", "", true, 20.00,
+        1, 21.00);
+    $artikel->_printArtikel();
+    ?>
 </main>
-<footer>&copy; <?= $huidigeJaar ?></footer>
+<?php
+include_once 'includes/footer.php';
+?>
 </body>
 </html>
