@@ -1,7 +1,7 @@
 <?php
 $title = 'Veiling';
 $siteNaam = 'Veiling!';
-$huidigeJaar = 2020;
+include 'php classes/VeilingArtikel.php';
 ?>
 <!doctype html>
 <html lang="nl">
@@ -41,65 +41,18 @@ $huidigeJaar = 2020;
             </div>
         </div>
     </div>
-    <div class="container mt-2">
-        <div class="container">
-            <div class="row">
-                <div class="col border">
-                    <img src="item-pics/nes.jpeg" class="rounded" alt="nes" width="265" height="190">
-                </div>
-                <div class="col border">
-                    <h1 class="text-center">&ltItemNaam&gt</h1>
-                    <div class="row">
-                        <div class="col border">
-                            <h2 class="text-center">&ltBodTimer&gt</h2>
-                        </div>
-                    </div>
-                    <div class="row ">
-                        <div class="col border">
-                            <p class="text-center">&ltHuidigeBod&gt</p>
-                        </div>
-                        <div class="col border">
-                            <p class="text-center">&ltBodAantal&gt</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col border">
-                            <p class="text-center">&ltMinBodHuidig&lt></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col border">
-                            <h3 class="text-center">&ltPlaatsBod&gt</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mt-2">
-                            <p>Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text
-                                Sample Text Sample TextSample Text Sample Text Sample Text Sample Text Sample Text
-                                Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text
-                                Sample Text</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col border">
-                    <p>Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text
-                        Sample Text Sample Text Sample Text Sample Text Sample Text Sample Text</p>
-                </div>
-                <div class="col border"></div>
-            </div>
-        </div>
-    </div>
+    <?php
+    $artikel = new Artikel();
+    $artikel->_construct("Nintendo Entertainment System", "Zo goed als nieuw",
+        "item-pics/nes.jpeg", 20.00, "IDEAL", "Doe het goed",
+        "Arnhem", "Nederland", "30", "2020-05-04 00:00:00", 12.67,
+    "In Doos", "PietHeijn", "", "", true, 20.00,
+        1, 21.00);
+    $artikel->_printArtikel();
+    ?>
 </main>
-<footer>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col border">
-                <h4 class="text-center">&ltFooter&gt</h4>
-            </div>
-        </div>
-    </div>
-</footer>
+<?php
+include_once 'includes/footer.php';
+?>
 </body>
 </html>
