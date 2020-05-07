@@ -3,9 +3,6 @@
     $siteNaam = 'Welkom!';
     $huidigeJaar = date('Y');
     include 'php classes/Veilinglijst.php';
-    include 'includes/DatabaseConn.php';
-    include 'includes/sqlsrvPHPFuncties.php';
-    include 'php classes/VeilingArtikel.php';
 
 ?>
 <!doctype html>
