@@ -2,6 +2,7 @@
 $title = 'Veiling';
 $siteNaam = 'Veiling!';
 include 'php classes/VeilingArtikel.php';
+include_once 'includes/Functions.php';
 ?>
 <!doctype html>
 <html lang="nl">
@@ -45,8 +46,6 @@ include 'php classes/VeilingArtikel.php';
     $artikel->_printArtikel();
     ?>
 </main>
-<?php
-include_once 'includes/footer.php';
-?>
+<?= _generateFooter(date('Y'))?>
 </body>
 </html>

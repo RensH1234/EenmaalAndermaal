@@ -3,7 +3,7 @@
     $siteNaam = 'Welkom!';
     $huidigeJaar = date('Y');
     include 'php classes/Veilinglijst.php';
-
+    include_once 'includes/Functions.php';
 ?>
 <!doctype html>
 <html lang="nl">
@@ -19,12 +19,11 @@
 
         <link rel="stylesheet" href="custom%20stylesheet.css">
         <?php include 'includes/framework.php' ?>
-
     </head>
     <body>
         <nav>
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <a class="navbar-brand" href="#"><img src="images/png/logov1.png"> Eenmaal Andermaal</a>
+                <a class="navbar-brand" href="#"><img src="images/png/logov1.png" alt="Logo"> Eenmaal Andermaal</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -59,12 +58,6 @@
         <main>
             <h1>Welkom!</h1>
             <?php
-//            $artikelLijst = new Veilinglijst();
-//            $artikelLijst->_construct(10,""," Aanbevolen");
-//            $artikelLijst->printVeilinglijst();
-//            $artikelLijst2 = new Veilinglijst();
-//            $artikelLijst2->_construct(6,""," Geschiedenis");
-//            $artikelLijst2->printVeilinglijst();
             $art1 = new VeilingArtikel();
             $art1->_construct(1);
             echo $art1->printArtikel();
@@ -76,6 +69,6 @@
             echo $art3->printArtikel();
             ?>
         </main>
-        <footer>&copy; <?= $huidigeJaar ?></footer>
+<?=_generateFooter(date('Y')) ?>
     </body>
 </html>
