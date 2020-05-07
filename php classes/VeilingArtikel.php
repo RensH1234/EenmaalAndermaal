@@ -10,34 +10,54 @@ class VeilingArtikel
     private $prijs;
     private $eindtijd;
 
-    //constructor default
-    function _construct($voorwerpnummer)
+    public function _getFromVoorwerp($id)
     {
-        $this->titel = getGegevenRij1GbOpKolomnaam(getConn(), "SELECT * FROM Voorwerp WHERE Voorwerpnummer = {$voorwerpnummer}", "Titel");
-        $this->afbeeldingURL = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Bestand WHERE Voorwerpnummer = {$voorwerpnummer}","AfbeeldingURL");
-        $this->afstand = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp WHERE Voorwerpnummer = {$voorwerpnummer}","Plaatsnaam");
-        $this->prijs = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp WHERE Voorwerpnummer = {$voorwerpnummer}","Verkoopprijs");
-        $this->eindtijd = getGegevenRij1GbOpKolomnaam(getConn(), "SELECT * FROM Voorwerp WHERE Voorwerpnummer = {$voorwerpnummer}", "MaximaleLooptijd");
+        $conn = getConn();
+        $sql = "SELECT * FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE 
+v.Voorwerpnummer = ?;";
+        $stmt = sqlsrv_prepare($conn, $sql, array($id));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $this->Id = $row['Voorwerpnummer'];
+
+            }
+        } else {
+            die(print_r(sqlsrv_errors(), true));
+        }
     }
 
-
-    function getEindDateTime($voorwerpnummer)
+    //constructor default
+    function _construct($id)
     {
-        $startdatum = getGegevenRij1GbOpKolomnaam(getConn(), "SELECT * FROM Voorwerp WHERE Voorwerpnummer = {$voorwerpnummer}", "Looptijdbegin");
-        $maximaleLooptijd = getGegevenRij1GbOpKolomnaam(getConn(), "SELECT * FROM Voorwerp WHERE Voorwerpnummer = {$voorwerpnummer}", "MaximaleLooptijd");
-        try {
-            $startdatum = new DateTime($startdatum);
-        } catch (Exception $e) {
+        $conn = getConn();
+        $sql = "SELECT * FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE 
+v.Voorwerpnummer = ?;";
+        $stmt = sqlsrv_prepare($conn, $sql, array($id));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
         }
-        $i = DateInterval::createFromDateString("{$maximaleLooptijd} days");
-        date_add($startdatum, $i);
-        return $startdatum->format('Y-m-d H:i:s');
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $this->titel = $row['Titel'];
+                $this->afbeeldingURL = $row['AfbeeldingURL'];
+                $this->afstand = $row['Plaatsnaam'];
+                $this->prijs = $row['Verkoopprijs'];
+                $this->eindtijd = $row['MaximaleLooptijd'];
+            }
+        } else {
+            die(print_r(sqlsrv_errors(), true));
+        }
     }
 
     function printArtikel()
     {
         return <<<HTML
-<article class="VeilingArtikel_article">
+    <article class="VeilingArtikel_article">
     <h2 class="VeilingArtikel_titel">$this->titel</h2>
     <img class="VeilingArtikel_img img-fluid" src=$this->afbeeldingURL alt="">
     <p class="VeilingArtikel_afstand">Op  $this->afstand afstand</p>
@@ -53,7 +73,7 @@ class Artikel
 {
     //Lokale variabelen
     //Database variabelen worden hierin verwerkt
-    private $Voorwerpnummer;
+    private $Id;
     private $Titel;
     private $Beschrijving;
     private $startprijs;
@@ -77,33 +97,43 @@ class Artikel
     private $AfbeeldingURL;
 
     //Constructor
-    public function _construct($Voorwerpnummer)
+    public function _getFromVoorwerp($id)
     {
-        $this->Voorwerpnummer = $Voorwerpnummer;
-        $this->Titel = getGegevenRij1GbOpKolomnaam(getConn(), "SELECT * FROM Voorwerp WHERE Voorwerpnummer = 
-{$Voorwerpnummer}", "Titel");
-        $this->Beschrijving = "Sample Text";
-        $this->AfbeeldingURL = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Bestand WHERE Voorwerpnummer = 
-{$Voorwerpnummer}","AfbeeldingURL");
-        $this->startprijs = "Sample Text";
-        $this->Betalingswijze = "Sample Text";
-        $this->Betalingsinstructie = "Sample Text";
-        $this->Plaatsnaam = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp WHERE Voorwerpnummer = 
-{$Voorwerpnummer}","Plaatsnaam");
-        $this->Land = "Sample Text";
-        $this->MaximaleLooptijd = getGegevenRij1GbOpKolomnaam(getConn(), "SELECT * FROM Voorwerp WHERE Voorwerpnummer = 
-{$Voorwerpnummer}", "MaximaleLooptijd");
-        $this->Looptijdbegin = "Sample Text";
-        $this->Verzendkosten = "Sample Text";
-        $this->Verzendinstructies = "Sample Text";
-        $this->Verkoper = "Sample Text";
-        $this->Koper = "Sample Text";
-        $this->LooptijdEinde = "Sample Text";
-        $this->VeilingGesloten = $this->_isGesloten("Sample Text");
-        $this->Verkoopprijs = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp WHERE Voorwerpnummer = 
-{$Voorwerpnummer}","Verkoopprijs");
-        $this->Aantalbiedingen = "Sample Text";
-        $this->Minimumprijs = "Sample Text";
+        $conn = getConn();
+        $sql = "SELECT * FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE 
+v.Voorwerpnummer = ?;";
+        $stmt = sqlsrv_prepare($conn, $sql, array($id));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $this->Id = $row['Voorwerpnummer'];
+                $this->Titel = $row['Titel'];
+                $this->Beschrijving = $row['Beschrijving'];
+                $this->startprijs = $row['Startprijs'];
+                $this->Betalingswijze = $row['Betalingswijze'];
+                $this->Betalingsinstructie = $row['Betalingsinstructie'];
+                $this->Plaatsnaam = $row['Plaatsnaam'];
+                $this->Land = $row['Land'];
+                $this->Looptijdbegin= $row['Looptijdbegin'];
+                $this->Verzendkosten = $row['Verzendkosten'];
+                $this->Verzendinstructies = $row['Verzendinstructies'];
+                $this->Verkoper = $row['Verkoper'];
+                $this->Koper = $row['Koper'];
+                $this->LooptijdEinde = $row['LooptijdEinde'];
+                $this->VeilingGesloten = $row['VeilingGesloten'];
+                $this->MaximaleLooptijd =$row['MaximaleLooptijd'];
+                $this->Verkoopprijs=$row['Verkoopprijs'];
+                $this->AfbeeldingURL = $row['AfbeeldingURL'];
+                $this->VeilingGesloten = $this->_isGesloten("Sample Text");
+                $this->Aantalbiedingen = "Sample Text";
+                $this->Minimumprijs = "Sample Text";
+            }
+        } else {
+            die(print_r(sqlsrv_errors(), true));
+        }
     }
 
     //Functie die op basis van geldigheid van veiling een andere string returnt
@@ -143,7 +173,7 @@ class Artikel
         $artikel .= "<div class='row'><div class='col-1 border'><h5 class='text-muted'>✄</h5></div>";
         $artikel .= "<div class='col border'><h5 class='text-muted'>Verzendwijze: $this->Verzendinstructies</h5></div></div>";
         $artikel .= "<div class='row'><div class='col-1 border'><h5 class='text-muted'>▪</h5></div>";
-        $artikel .= "<div class='col border'><h5 class='text-muted'>Kavelnummer: $this->Voorwerpnummer</h5></div></div>";
+        $artikel .= "<div class='col border'><h5 class='text-muted'>Kavelnummer: $this->Id</h5></div></div>";
         $artikel .= "</div ></div>";
         $artikel .= "<div class='row'><div class='col border'>";
         $artikel .= "<h5 class='font-weight-bold'>Beschrijving:</h5></div><div class='col'></div></div>";

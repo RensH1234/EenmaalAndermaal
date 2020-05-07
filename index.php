@@ -14,6 +14,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?= $title ?> | <?= $siteNaam ?></title>
 
+<!--        <link rel="stylesheet" href="customStylesheet.css">-->
         <?php include 'includes/frameworkIncludes.php'?>
 
         <link rel="stylesheet" href="custom%20stylesheet.css">
