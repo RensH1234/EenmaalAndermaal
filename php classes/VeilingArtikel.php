@@ -10,25 +10,7 @@ class VeilingArtikel
     private $prijs;
     private $eindtijd;
 
-    public function _getFromVoorwerp($id)
-    {
-        $conn = getConn();
-        $sql = "SELECT * FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE 
-v.Voorwerpnummer = ?;";
-        $stmt = sqlsrv_prepare($conn, $sql, array($id));
-        if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
-        }
-        sqlsrv_execute($stmt);
-        if (sqlsrv_execute($stmt)) {
-            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                $this->Id = $row['Voorwerpnummer'];
 
-            }
-        } else {
-            die(print_r(sqlsrv_errors(), true));
-        }
-    }
 
     //constructor default
     function _construct($id)
