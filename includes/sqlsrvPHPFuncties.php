@@ -18,8 +18,8 @@ function getGegevenRij1GbOpKolomnaam($conn, string $sql, string $kolomnaam)
     return -1;
 }
 
-function test($conn, string $sql, string $kolomnaam){
-
+function test($conn, string $sql, string $kolomnaam)
+{
     $stmt = sqlsrv_prepare($conn, $sql, array($kolomnaam));
     if (!$stmt){
         die(print_r( sqlsrv_errors(), true));
@@ -27,14 +27,14 @@ function test($conn, string $sql, string $kolomnaam){
     sqlsrv_execute($stmt);
     if(sqlsrv_execute($stmt)){
         while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
-            return $row[$kolomnaam];
+            $titel = $row['Titel'];
+            echo $titel;
         }
-    }
-    else {
-        die (print_r( sqlsrv_errors(), true));
     }
     return -1;
 }
+
+
 
 //retourneerd een gegeven uit de eerste rij van de $sql (selectie querie) gespecifeerd met kolomindex
 function getGegevenRij1GbOpIndex($conn, string $sql, int $kolomindex)
