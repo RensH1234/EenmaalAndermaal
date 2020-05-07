@@ -1,11 +1,11 @@
 <?php
     $title = 'Eenmaal Andermaal!';
     $siteNaam = 'Welkom!';
-    $huidigeJaar = 2020;
-    require_once 'php classes/Veilinglijst.php';
-    require_once 'includes/DatabaseConn.php';
-    require_once 'includes/sqlsrvPHPFuncties.php';
-    require_once 'php classes/VeilingArtikel.php';
+    $huidigeJaar = date('Y');
+    include 'php classes/Veilinglijst.php';
+    include 'includes/DatabaseConn.php';
+    include 'includes/sqlsrvPHPFuncties.php';
+    include 'php classes/VeilingArtikel.php';
 
 ?>
 <!doctype html>
