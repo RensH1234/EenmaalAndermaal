@@ -5,13 +5,35 @@
 //retourneerd een gegeven uit de eerste rij van de $sql (selectie querie) gespecifeerd met kolomnaam
 function getGegevenRij1GbOpKolomnaam($conn, string $sql, string $kolomnaam)
 {
-    $stmt = sqlsrv_query($conn, $sql);
-    if ($stmt === false) {
-        die(print_r(sqlsrv_errors(), true));
+    $stmt = sqlsrv_prepare($conn, $sql, array($kolomnaam));
+    if (!$stmt){
+        die(print_r( sqlsrv_errors(), true));
     }
-    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-        return $row[$kolomnaam];
+    sqlsrv_execute($stmt);
+    if(sqlsrv_execute($stmt)){
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
+            return $row[$kolomnaam];
+        }
     }
+    return -1;
+}
+
+function test($conn, string $sql, string $kolomnaam){
+
+    $stmt = sqlsrv_prepare($conn, $sql, array($kolomnaam));
+    if (!$stmt){
+        die(print_r( sqlsrv_errors(), true));
+    }
+    sqlsrv_execute($stmt);
+    if(sqlsrv_execute($stmt)){
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
+            return $row[$kolomnaam];
+        }
+    }
+    else {
+        die (print_r( sqlsrv_errors(), true));
+    }
+    return -1;
 }
 
 //retourneerd een gegeven uit de eerste rij van de $sql (selectie querie) gespecifeerd met kolomindex

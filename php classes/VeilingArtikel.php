@@ -94,30 +94,33 @@ class Artikel
     private $AfbeeldingURL;
 
     //Constructor
-    public function _construct($Voorwerpnummer, $Titel, $Beschrijving, $AfbeeldingURL, $startprijs, $Betalingswijze, $Betalingsinstructie, $Plaatsnaam,
-                               $Land, $MaximaleLooptijd, $Looptijdbegin, $Verzendkosten, $Verzendinstructies, $Verkoper,
-                               $Koper, $LooptijdEinde, $VeilingGesloten, $Verkoopprijs, $Aantalbiedingen, $Minimumprijs)
+    public function _construct($Voorwerpnummer)
     {
         $this->Voorwerpnummer = $Voorwerpnummer;
-        $this->Titel = $Titel;
-        $this->Beschrijving = $Beschrijving;
-        $this->AfbeeldingURL = $AfbeeldingURL;
-        $this->startprijs = $startprijs;
-        $this->Betalingswijze = $Betalingswijze;
-        $this->Betalingsinstructie = $Betalingsinstructie;
-        $this->Plaatsnaam = $Plaatsnaam;
-        $this->Land = $Land;
-        $this->MaximaleLooptijd = $MaximaleLooptijd;
-        $this->Looptijdbegin = $Looptijdbegin;
-        $this->Verzendkosten = $Verzendkosten;
-        $this->Verzendinstructies = $Verzendinstructies;
-        $this->Verkoper = $Verkoper;
-        $this->Koper = $Koper;
-        $this->LooptijdEinde = $LooptijdEinde;
-        $this->VeilingGesloten = $this->_isGesloten($VeilingGesloten);
-        $this->Verkoopprijs = number_format($Verkoopprijs, 2);
-        $this->Aantalbiedingen = $Aantalbiedingen;
-        $this->Minimumprijs = number_format($Minimumprijs, 2);
+        $this->Titel = getGegevenRij1GbOpKolomnaam(getConn(), "SELECT * FROM Voorwerp WHERE Voorwerpnummer = 
+{$Voorwerpnummer}", "Titel");
+        $this->Beschrijving = "Sample Text";
+        $this->AfbeeldingURL = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Bestand WHERE Voorwerpnummer = 
+{$Voorwerpnummer}","AfbeeldingURL");
+        $this->startprijs = "Sample Text";
+        $this->Betalingswijze = "Sample Text";
+        $this->Betalingsinstructie = "Sample Text";
+        $this->Plaatsnaam = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp WHERE Voorwerpnummer = 
+{$Voorwerpnummer}","Plaatsnaam");
+        $this->Land = "Sample Text";
+        $this->MaximaleLooptijd = getGegevenRij1GbOpKolomnaam(getConn(), "SELECT * FROM Voorwerp WHERE Voorwerpnummer = 
+{$Voorwerpnummer}", "MaximaleLooptijd");
+        $this->Looptijdbegin = "Sample Text";
+        $this->Verzendkosten = "Sample Text";
+        $this->Verzendinstructies = "Sample Text";
+        $this->Verkoper = "Sample Text";
+        $this->Koper = "Sample Text";
+        $this->LooptijdEinde = "Sample Text";
+        $this->VeilingGesloten = $this->_isGesloten("Sample Text");
+        $this->Verkoopprijs = getGegevenRij1GbOpKolomnaam(getConn(),"SELECT * FROM Voorwerp WHERE Voorwerpnummer = 
+{$Voorwerpnummer}","Verkoopprijs");
+        $this->Aantalbiedingen = "Sample Text";
+        $this->Minimumprijs = "Sample Text";
     }
 
     //Functie die op basis van geldigheid van veiling een andere string returnt
