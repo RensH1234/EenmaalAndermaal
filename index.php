@@ -1,7 +1,7 @@
 <?php
     $title = 'Eenmaal Andermaal!';
     $siteNaam = 'Welkom!';
-    $huidigeJaar = 2020;
+    $huidigeJaar = date('Y');
     include 'php classes/Veilinglijst.php';
     include 'includes/DatabaseConn.php';
     include 'includes/sqlsrvPHPFuncties.php';
