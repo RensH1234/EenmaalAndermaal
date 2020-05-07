@@ -133,7 +133,7 @@ class Artikel
     function _printArtikel()
     {
         $artikel = "<div class='container mt-2'><div class='container'><div class='row'>";
-        $artikel .= "<div class='col border'><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel></div>";
+        $artikel .= "<div class='col border'><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel width='480' height='360'></div>";
         $artikel .= "<div class='col border'><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>";
         $artikel .= "<div class='col border text-center alert-danger rounded mt-2'>$this->VeilingGesloten</div></div>";
         $artikel .= "<div class='row'><div class='col border text-muted mt-2'>Huidige Bod</div>";
