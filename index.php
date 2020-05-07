@@ -14,7 +14,6 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?= $title ?> | <?= $siteNaam ?></title>
 
-<!--        <link rel="stylesheet" href="customStylesheet.css">-->
         <?php include 'includes/frameworkIncludes.php'?>
 
         <link rel="stylesheet" href="custom%20stylesheet.css">
@@ -67,6 +66,10 @@
             $art3 = new VeilingArtikel();
             $art3->_construct(3);
             echo $art3->printArtikel();
+            $lijst = new Veilinglijst();
+            $lijst->_constructVeilingLijst([1,2,3,4,5,1,1,1,1],'test');
+            $lijst->printVeilinglijst();
+            $lijst->printVeilingen();
             ?>
         </main>
 <?=_generateFooter(date('Y')) ?>
