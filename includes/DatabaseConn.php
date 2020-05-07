@@ -8,5 +8,6 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 function getConn()
 {
     global $conn;
+    echo "success";
     return $conn;
 }

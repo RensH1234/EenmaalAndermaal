@@ -3,7 +3,7 @@
     $siteNaam = 'Welkom!';
     $huidigeJaar = 2020;
     include 'php classes/Veilinglijst.php';
-    include 'includes/sqlsrvConnectieGegevens.php';
+    include 'includes/DatabaseConn.php';
     include 'includes/sqlsrvPHPFuncties.php';
 ?>
 <!doctype html>

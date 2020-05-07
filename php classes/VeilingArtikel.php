@@ -1,15 +1,6 @@
 <?php
-include '../includes/Databases.php';
+include 'includes/DatabaseConn.php';
 
-class VeilingArtikel
-{
-    private $titel;
-    private $afbeeldingURL;
-    private $afstand;
-    private $prijs;
-    private $eindtijd;
-
-    // constructor query
     function _constructDB($voorwerpnummer)
     {
         $queryTitel = 'SELECT Titel FROM Voorwerp WHERE Voorwerpnummer = :p1';
@@ -57,7 +48,6 @@ class VeilingArtikel
 </article>
 HTML;
     }
-}
 
 //Constructor voor Enkele Artikel in Veilingpagina
 class Artikel
