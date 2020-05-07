@@ -38,7 +38,7 @@ include_once 'includes/Functions.php';
     </div>
     <?php
     $artikel = new Artikel();
-    $artikel->_getFromVoorwerp(1);
+    $artikel->_getFromVoorwerp(2);
     $artikel->_printArtikel();
     ?>
 </main>
