@@ -1,5 +1,5 @@
 <?php
-include "../includes/sqlsrvConnectieGegevens.php";
+include 'includes/DatabaseConn.php';
 include "../includes/sqlsrvPHPFuncties.php";
 
 class VeilingArtikel
@@ -51,48 +51,6 @@ class VeilingArtikel
         return $startdatum->format('Y-m-d H:i:s');
     }
 
-    function _printArtikel($naam, $url, $huidigeBod, $huidigeTijd, $aantalBod, $minBod, $verkoperInfo, $omschrijving)
-    {
-        $artikel = "<div class='container mt-2'><div class='container'><div class='row'><div class='col border'>";
-        $artikel .= "<img src=$url class='rounded' alt=$naam width=>$url->width height=>$url->width></div>";
-        $artikel .= "<div class='col border'><h1 class='text-center'>$naam</h1><div class='row'>";
-        $artikel .= "<div class='col border'><h2 class='text-center'>$huidigeTijd</h2></div></div>";
-        $artikel .= "<div class='row'><div class='col border'><p class='text-center'>$huidigeBod</p></div>";
-        $artikel .= "<div class='col border'><p class='text-center'>$aantalBod</p></div></div>";
-        $artikel .= "<div class='row'><div class='col border'><p class='text-center'>$minBod></p></div></div>";
-        $artikel .= "<div class='row'><div class='col border'><h3 class='text-center'>&ltPlaatsBod&gt</h3></div></div>";
-        $artikel .= "<div class='row'><div class='col mt-2'><p></p><p>$verkoperInfo</p></div></div></div></div>";
-        $artikel .= "<div class='row'><div class='col border'><p>$omschrijving</p></div>";
-        $artikel .= "<div class=\"col border\"></div></div></div></div>";
-        echo $artikel;
-    }
-
-    function getTitel()
-    {
-        return $this->titel;
-    }
-
-    function getURL()
-    {
-        return $this->afbeeldingURL;
-    }
-
-    function getAfstand()
-    {
-        return $this->afstand;
-    }
-
-    function getPrijs()
-    {
-        return $this->prijs;
-    }
-
-    function getEindtijd()
-    {
-        return $this->eindtijd;
-    }
-
-    //functie voor html-code
     function printArtikel()
     {
         return <<<HTML
@@ -112,6 +70,7 @@ class Artikel
 {
     //Lokale variabelen
     //Database variabelen worden hierin verwerkt
+    private $Voorwerpnummer;
     private $Titel;
     private $Beschrijving;
     private $startprijs;
@@ -135,10 +94,11 @@ class Artikel
     private $AfbeeldingURL;
 
     //Constructor
-    public function _construct($Titel, $Beschrijving, $AfbeeldingURL, $startprijs, $Betalingswijze, $Betalingsinstructie, $Plaatsnaam,
+    public function _construct($Voorwerpnummer, $Titel, $Beschrijving, $AfbeeldingURL, $startprijs, $Betalingswijze, $Betalingsinstructie, $Plaatsnaam,
                                $Land, $MaximaleLooptijd, $Looptijdbegin, $Verzendkosten, $Verzendinstructies, $Verkoper,
                                $Koper, $LooptijdEinde, $VeilingGesloten, $Verkoopprijs, $Aantalbiedingen, $Minimumprijs)
     {
+        $this->Voorwerpnummer = $Voorwerpnummer;
         $this->Titel = $Titel;
         $this->Beschrijving = $Beschrijving;
         $this->AfbeeldingURL = $AfbeeldingURL;
@@ -155,9 +115,9 @@ class Artikel
         $this->Koper = $Koper;
         $this->LooptijdEinde = $LooptijdEinde;
         $this->VeilingGesloten = $this->_isGesloten($VeilingGesloten);
-        $this->Verkoopprijs = $Verkoopprijs;
+        $this->Verkoopprijs = number_format($Verkoopprijs, 2);
         $this->Aantalbiedingen = $Aantalbiedingen;
-        $this->Minimumprijs = $Minimumprijs;
+        $this->Minimumprijs = number_format($Minimumprijs, 2);
     }
 
     //Functie die op basis van geldigheid van veiling een andere string returnt
@@ -172,17 +132,37 @@ class Artikel
     //functie die de gehele veilingpagina inhoud genereert
     function _printArtikel()
     {
-        $artikel = "<div class='container mt-2'><div class='container'><div class='row'><div class='col border'>";
-        $artikel .= "<img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel></div>";
-        $artikel .= "<div class='col border'><h1 class='text-center'>$this->Titel</h1><div class='row'>";
-        $artikel .= "<div class='col border '><p class='text-center alert-danger rounded'>$this->VeilingGesloten</p></div></div>";
-        $artikel .= "<div class='row'><div class='col border'><p class='text-center'>Huidige Bod: €$this->Verkoopprijs</p></div>";
-        $artikel .= "<div class='col border'><p class='text-center'>Aantal Biedingen: $this->Aantalbiedingen</p></div></div>";
-        $artikel .= "<div class='row'><div class='col border'><p class='text-center'>Minimum Bod: €$this->Minimumprijs</p></div></div>";
-        $artikel .= "<div class='row justify-content-center'><div class='col-0 mt-2 border'><input type='button' class='btn btn-light btn-lg btn-block' value='Plaats Bod'></div></div>";
-        $artikel .= "<div class='row'><div class='col'><p></p><p>Over de Verkoper: $this->Verkoper</p></div></div></div></div>";
-        $artikel .= "<div class='row'><div class='col border'><p>Omschrijving: $this->Beschrijving</p></div>";
-        $artikel .= "<div class=\"col border\"></div></div></div></div>";
+        $artikel = "<div class='container mt-2'><div class='container'><div class='row'>";
+        $artikel .= "<div class='col border'><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel></div>";
+        $artikel .= "<div class='col border'><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>";
+        $artikel .= "<div class='col border text-center alert-danger rounded mt-2'>$this->VeilingGesloten</div></div>";
+        $artikel .= "<div class='row'><div class='col border text-muted mt-2'>Huidige Bod</div>";
+        $artikel .= "<div class='col border text-muted mt-2'>Aantal Biedingen</div></div>";
+        $artikel .= "<div class='row'><div class='col border font-weight-bold mb-2'>€ $this->Verkoopprijs</div>";
+        $artikel .= "<div class='col border font-weight-bold mb-2'>$this->Aantalbiedingen</div></div>";
+        $artikel .= "<div class='row'><div class='col border mt-2'>";
+        $artikel .= "<h6 class='text-muted'>Minimum volgend bod: € $this->Minimumprijs</h6></div></div>";
+        $artikel .= "<div class='row justify-content-center'><div class='col border'>";
+        $artikel .= "<input type='button' class='btn btn-primary btn-lg btn-block' value='Plaats Bod'></div></div>";
+        $artikel .= "<div class='row mt-2'><div class='col-1 border'><h5 class='text-muted'>✓</h5></div>";
+        $artikel .= "<div class='col border'><h5 class='text-muted'>Georganiseerd door $this->Verkoper</h5></div></div>";
+        $artikel .= "<div class='row'><div class='col-1 border'><h5 class='text-muted'>⮙</h5></div>";
+        $artikel .= "<div class='col border'><h5 class='text-muted'>$this->Plaatsnaam, $this->Land</h5></div></div>";
+        $artikel .= "<div class='row'><div class='col-1 border'><h5 class='text-muted'>€</h5></div>";
+        $artikel .= "<div class='col border'><h5 class='text-muted'>Betalingswijze: $this->Betalingswijze</h5></div></div>";
+        $artikel .= "<div class='row'><div class='col-1 border'><h5 class='text-muted'>🛈</h5></div>";
+        $artikel .= "<div class='col border'><h5 class='text-muted'>BetalingInstructie: $this->Betalingsinstructie</h5></div></div>";
+        $artikel .= "<div class='row'><div class='col-1 border'><h5 class='text-muted'>€</h5></div>";
+        $artikel .= "<div class='col border'><h5 class='text-muted'>Verzendkosten: $this->Verzendkosten</h5></div></div>";
+        $artikel .= "<div class='row'><div class='col-1 border'><h5 class='text-muted'>✄</h5></div>";
+        $artikel .= "<div class='col border'><h5 class='text-muted'>Verzendwijze: $this->Verzendinstructies</h5></div></div>";
+        $artikel .= "<div class='row'><div class='col-1 border'><h5 class='text-muted'>▪</h5></div>";
+        $artikel .= "<div class='col border'><h5 class='text-muted'>Kavelnummer: $this->Voorwerpnummer</h5></div></div>";
+        $artikel .= "</div ></div>";
+        $artikel .= "<div class='row'><div class='col border'>";
+        $artikel .= "<h5 class='font-weight-bold'>Beschrijving:</h5></div><div class='col'></div></div>";
+        $artikel .= "<div class='row'><div class='col border'>$this->Beschrijving</div>";
+        $artikel .= "<div class='col border'></div></div></div></div></div>";
         echo $artikel;
     }
 }
