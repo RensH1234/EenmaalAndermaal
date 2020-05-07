@@ -23,13 +23,7 @@ include 'php classes/VeilingArtikel.php';
             </div>
         </div>
     </div>
-    <div class="container-fluid mt-n2  bg-light p-2 border">
-        <div class="row">
-            <div class="col">
-                <h2 class="text-center">&ltNavBar&gt</h2>
-            </div>
-        </div>
-    </div>
+    <?php include 'includes/navbar.php';?>
     <div class="container mt-2">
         <div class="row justify-content-between">
             <div class="col-4">

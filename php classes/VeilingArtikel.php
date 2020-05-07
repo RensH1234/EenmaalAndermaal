@@ -1,6 +1,6 @@
 <?php
 include 'includes/DatabaseConn.php';
-include "../includes/sqlsrvPHPFuncties.php";
+include 'includes/sqlsrvPHPFuncties.php';
 
 class VeilingArtikel
 {
