@@ -10,22 +10,7 @@ class VeilingArtikel
     private $prijs;
     private $eindtijd;
 
-    // constructor query
-    function _constructDB($voorwerpnummer)
-    {
-        $queryTitel = 'SELECT Titel FROM Voorwerp WHERE Voorwerpnummer = :p1';
-        $queryAfbeelding = 'SELECT afbeeldingURL FROM Bestand WHERE Voorwerpnummer = :p1';
-        $queryLocatie = 'SELECT Plaatsnaam FROM Voorwerp WHERE Voorwerpnummer = :p1';
-        $queryPrijs = 'SELECT Verkoopprijs FROM Voorwerp WHERE Voorwerpnummer = :p1';
-        $queryTotaleDuur = 'SELECT MaximaleLooptijd FROM Voorwerp WHERE Voorwerpnummer = :p1';
-        $queryStartDatum = "SELECT DATEADD(days,:p2,)LooptijdBegin FROM Voorwerp WHERE Voorwerpnummer = :p1";
-        $this->titel = getArraySelection1Par($queryTitel, $voorwerpnummer)[0];
-        $this->afbeeldingURL = getArraySelection1Par($queryAfbeelding, $voorwerpnummer)[0];
-        $this->afstand = getArraySelection1Par($queryLocatie, $voorwerpnummer)[0];
-        $this->prijs = getArraySelection1Par($queryPrijs, $voorwerpnummer)[0];
-        $this->eindtijd = getArraySelection2Par($queryStartDatum, $voorwerpnummer, getArraySelection1Par($queryTotaleDuur, $voorwerpnummer)[0])[0];
-        //database moet nog worden geregeld
-    }
+
 
     //constructor default
     function _construct($id)
@@ -87,7 +72,7 @@ class Artikel
     private $Verzendinstructies;
     private $Verkoper;
     private $Koper;
-    private $LooptijdEinde;
+    private $LoopTijdEinde;
     private $VeilingGesloten;
     private $Verkoopprijs;
 
@@ -122,12 +107,13 @@ v.Voorwerpnummer = ?;";
                 $this->Verzendinstructies = $row['Verzendinstructies'];
                 $this->Verkoper = $row['Verkoper'];
                 $this->Koper = $row['Koper'];
-                $this->LooptijdEinde = $row['LooptijdEinde'];
+                $this->LoopTijdEinde= $row['LoopTijdEinde'];
+                $this->LoopTijdEinde->format('Y-m-d H:i:s');
+                $this->LoopTijdEinde= date_format($this->LoopTijdEinde, "Y/m/d H:i:s");
                 $this->VeilingGesloten = $row['VeilingGesloten'];
                 $this->MaximaleLooptijd =$row['MaximaleLooptijd'];
                 $this->Verkoopprijs=$row['Verkoopprijs'];
                 $this->AfbeeldingURL = $row['AfbeeldingURL'];
-                $this->VeilingGesloten = $this->_isGesloten("Sample Text");
                 $this->Aantalbiedingen = "Sample Text";
                 $this->Minimumprijs = "Sample Text";
             }
@@ -137,21 +123,23 @@ v.Voorwerpnummer = ?;";
     }
 
     //Functie die op basis van geldigheid van veiling een andere string returnt
-    function _isGesloten($bool)
+    function _isGesloten()
     {
-        if ($bool) {
+        if (!$this->VeilingGesloten) {
             return "Deze Veiling is Gesloten!";
-        }
-        return "Sluit in";
-    }
 
+        }
+        return "Deze veiling sluit op $this->LoopTijdEinde";
+    }
     //functie die de gehele veilingpagina inhoud genereert
     function _printArtikel()
     {
         $artikel = "<div class='container mt-2'><div class='container'><div class='row'>";
         $artikel .= "<div class='col border'><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel width='480' height='360'></div>";
         $artikel .= "<div class='col border'><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>";
-        $artikel .= "<div class='col border text-center alert-danger rounded mt-2'>$this->VeilingGesloten</div></div>";
+        $artikel .= "<div class='col border text-center alert-danger rounded mt-2'><h4>";
+        $artikel .= $this->_isGesloten();
+        $artikel .= "</h4></div></div>";
         $artikel .= "<div class='row'><div class='col border text-muted mt-2'>Huidige Bod</div>";
         $artikel .= "<div class='col border text-muted mt-2'>Aantal Biedingen</div></div>";
         $artikel .= "<div class='row'><div class='col border font-weight-bold mb-2'>€ $this->Verkoopprijs</div>";
