@@ -19,11 +19,12 @@
 
         <link rel="stylesheet" href="custom%20stylesheet.css">
         <?php include 'includes/framework.php' ?>
+
     </head>
     <body>
         <nav>
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-                <a class="navbar-brand" href="#"><img src="images/png/logov1.png" alt="Logo"> Eenmaal Andermaal</a>
+                <a class="navbar-brand" href="#"><img src="images/png/logov1.png" alt="logo"> Eenmaal Andermaal</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -56,22 +57,52 @@
                </div>
         </nav>
         <main>
+            <div id="slides" class="carousel slide" data-ride="carousel">
+                <ul class="carousel-indicators">
+                    <li data-target="#slides" data-slide-to="0" class="active"></li>
+                    <li data-target="#slides" data-slide-to="1"></li>
+                    <li data-target="#slides" data-slide-to="2"></li>
+                </ul>
+                <div class="carousel-inner ">
+                    <div class="carousel-item active">
+                        <img src="images/png/slider1.jpg" alt="eerste foto">
+                        <div class="carousel-caption">
+                            <h1 class="display-2">Welkom</h1>
+                            <h3>Dé veilingsite van Nederland!</h3>
+                            <button type="button" class="btn btn-outline-light btn-lg">Bekijk veilingen!</button>
+                            <button type="button" class="btn btn-primary btn-lg test">Registreer nu!</button>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/png/background2.png" alt="twee foto">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/png/background3.png" alt="derde foto" >
+                    </div>
+                </div>
+            </div>
+            <div class="uitgelichteadvertenties col-lg-12">
+
+                <?php
+                //            $artikelLijst = new Veilinglijst();
+                //            $artikelLijst->_construct(10,""," Aanbevolen");
+                //            $artikelLijst->printVeilinglijst();
+                //            $artikelLijst2 = new Veilinglijst();
+                //            $artikelLijst2->_construct(6,""," Geschiedenis");
+                //            $artikelLijst2->printVeilinglijst();
+                $art1 = new VeilingArtikel();
+                $art1->_construct(1);
+                echo $art1->printArtikel();
+                $art2 = new VeilingArtikel();
+                $art2->_construct(2);
+                echo $art2->printArtikel();
+                $art3 = new VeilingArtikel();
+                $art3->_construct(3);
+                echo $art3->printArtikel();
+                ?>
+            </div>
             <h1>Welkom!</h1>
-            <?php
-            $art1 = new VeilingArtikel();
-            $art1->_construct(1);
-            echo $art1->printArtikel();
-            $art2 = new VeilingArtikel();
-            $art2->_construct(2);
-            echo $art2->printArtikel();
-            $art3 = new VeilingArtikel();
-            $art3->_construct(3);
-            echo $art3->printArtikel();
-            $lijst = new Veilinglijst();
-            $lijst->_constructVeilingLijst([1,2,3,4,5,1,1,1,1],'test');
-            $lijst->printVeilinglijst();
-            $lijst->printVeilingen();
-            ?>
+
         </main>
 <?=_generateFooter(date('Y')) ?>
     </body>
