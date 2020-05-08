@@ -6,4 +6,3 @@ function _generateFooter($jaar){
     return $footer;
 }
 
-?>
