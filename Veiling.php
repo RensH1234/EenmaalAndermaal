@@ -2,7 +2,7 @@
 $title = 'Veiling';
 $siteNaam = 'Veiling!';
 include 'php classes/VeilingArtikel.php';
-include_once 'includes/htmlTerugkomendeFuncties/Functions.php';
+include_once 'includes/Functions.php';
 ?>
 <!doctype html>
 <html lang="nl">
@@ -13,7 +13,7 @@ include_once 'includes/htmlTerugkomendeFuncties/Functions.php';
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?> | <?= $siteNaam ?></title>
-    <?php include 'includes/phpIncludes/framework.php'; ?>
+    <?php include 'includes/framework.php'; ?>
 </head>
 <body>
 <main>
@@ -38,7 +38,7 @@ include_once 'includes/htmlTerugkomendeFuncties/Functions.php';
     </div>
     <?php
     $artikel = new Artikel();
-    $artikel->_getFromVoorwerp(1);
+    $artikel->_getFromVoorwerp(2);
     $artikel->_printArtikel();
     ?>
 </main>
