@@ -39,13 +39,16 @@ v.Voorwerpnummer = ?;";
     function printArtikel()
     {
         return <<<HTML
-    <article class="VeilingArtikel_article">
-    <h2 class="VeilingArtikel_titel">$this->titel</h2>
-    <img class="VeilingArtikel_img img-fluid" src=$this->afbeeldingURL alt="">
-    <p class="VeilingArtikel_afstand">Op  $this->afstand afstand</p>
-    <p class="VeilingArtikel_prijs">€ $this->prijs</p>
-    <p class="VeilingArtikel_eindtijd">Eindigt om $this->eindtijd</p>
-</article>
+<div class="card">
+  <img class="card-img-top" src=$this->afbeeldingURL alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">$this->titel</h5>
+    <p class="card-text">Locatie: $this->afstand</p>
+    <p class="card-text">Prijs: $this->prijs</p>
+    <p class="card-text">Eindtijd: $this->eindtijd</p>
+  </div>
+</div>
+
 HTML;
     }
 }
@@ -104,7 +107,7 @@ v.Voorwerpnummer = ?;";
                 $this->Verzendinstructies = $row['Verzendinstructies'];
                 $this->Verkoper = $row['Verkoper'];
                 $this->Koper = $row['Koper'];
-                $this->LooptijdEinde = $row['LooptijdEinde'];
+                $this->LooptijdEinde = $row['LoopTijdEinde'];
                 $this->VeilingGesloten = $row['VeilingGesloten'];
                 $this->MaximaleLooptijd =$row['MaximaleLooptijd'];
                 $this->Verkoopprijs=$row['Verkoopprijs'];

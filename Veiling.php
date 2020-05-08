@@ -24,7 +24,7 @@ include_once 'includes/Functions.php';
             </div>
         </div>
     </div>
-    <?php include 'includes/navbar.php';?>
+    <?php include 'includes/htmlTerugkomendeFuncties/navbar.php';?>
     <div class="container mt-2">
         <div class="row justify-content-between">
             <div class="col-4">
@@ -38,7 +38,7 @@ include_once 'includes/Functions.php';
     </div>
     <?php
     $artikel = new Artikel();
-    $artikel->_construct(1);
+    $artikel->_getFromVoorwerp(1);
     $artikel->_printArtikel();
     ?>
 </main>
