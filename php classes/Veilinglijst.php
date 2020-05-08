@@ -11,7 +11,7 @@ class Veilinglijst
 //    private $huidigeDatum = date("h:i:sa");
 
     //constructor voor veilinglijst
-    public function _constructVeilingLijst($voorwerpnummers,$naam,$cssID){
+    public function _construct($voorwerpnummers,$naam,$cssID){
         $this->maakArtikelen();
         $this->voorwerpnummers=$voorwerpnummers;
         $this->naam=<<<HTML

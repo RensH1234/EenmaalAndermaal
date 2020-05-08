@@ -1,10 +1,14 @@
 <?php
+include 'php classes/Veilinglijst.php';
+include_once 'includes/htmlTerugkomendeFuncties/Functions.php';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
-include 'php classes/Veilinglijst.php';
-include_once 'includes/Functions.php';
+
+
+
 ?>
+
 <!doctype html>
 <html lang="nl">
 <head>
@@ -13,81 +17,27 @@ include_once 'includes/Functions.php';
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?> | <?= $siteNaam ?></title>
-
-    <?php include 'includes/frameworkIncludes.php' ?>
-
-
-    <?php include 'includes/framework.php' ?>
+    <?php include 'includes/phpIncludes/frameworkIncludes.php' ?>
+    <?php include 'includes/phpIncludes/framework.php' ?>
     <link rel="stylesheet" href="custom%20stylesheet.css">
-
 </head>
+
 <body>
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><img src="images/png/logov1.png" alt="logo"> Eenmaal Andermaal</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <form class="form-inline text-center my-2 my-lg-0">
-            <input class="form-control mr-lg-3" type="search" placeholder="Typ hier uw zoekopdracht"
-                   aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Zoeken</button>
-        </form>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Veiling</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown">
-                        Services
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Photography</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">View Our Portfolio</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+<?php include 'includes/htmlTerugkomendeElementen/header.php'?>
 <main>
-    <div id="slides" class="carousel slide" data-ride="carousel">
-        <ul class="carousel-indicators">
-            <li data-target="#slides" data-slide-to="0" class="active"></li>
-            <li data-target="#slides" data-slide-to="1"></li>
-            <li data-target="#slides" data-slide-to="2"></li>
-        </ul>
-        <div class="carousel-inner ">
-            <div class="carousel-item active">
-                <img src="images/png/slider1.jpg" alt="eerste foto">
-                <div class="carousel-caption">
-                    <h1 class="display-2">Welkom</h1>
-                    <h3>Dé veilingsite van Nederland!</h3>
-                    <button type="button" class="btn btn-outline-light btn-lg">Bekijk veilingen!</button>
-                    <button type="button" class="btn btn-primary btn-lg test">Registreer nu!</button>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="images/png/background2.png" alt="twee foto">
-            </div>
-            <div class="carousel-item">
-                <img src="images/png/background3.png" alt="derde foto">
-            </div>
-        </div>
-    </div>
+    <?php include 'includes/htmlTerugkomendeElementen/slides.php'?>
     <div class="uitgelichteadvertenties col-lg-12">
 
         <?php
-
+        $lijstComputers = new Veilinglijst();
+        $lijstComputers->_construct([1,3,1,2],"Computers","lijstComputers");
+        $lijstComputers->printVeilinglijst();
+        $lijstAuto = new Veilinglijst();
+        $lijstAuto->_construct([1,2,2,3],"Auto's","lijstAuto");
+        $lijstAuto->printVeilinglijst();
+        $lijstAanbevolen = new Veilinglijst();
+        $lijstAanbevolen->_construct([4,3,2,1],"Aanbevolen","lijstAanbevolen");
+        $lijstAanbevolen->printVeilinglijst();
         ?>
     </div>
 </main>

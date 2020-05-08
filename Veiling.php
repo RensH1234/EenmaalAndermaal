@@ -24,7 +24,7 @@ include_once 'includes/Functions.php';
             </div>
         </div>
     </div>
-    <?php include 'includes/navbar.php';?>
+    <?php include 'includes/htmlTerugkomendeElementen/navbar.php';?>
     <div class="container mt-2">
         <div class="row justify-content-between">
             <div class="col-4">
