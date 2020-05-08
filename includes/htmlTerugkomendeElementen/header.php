@@ -1,12 +1,12 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><img src="images/png/logov1.png" alt="logo"> Eenmaal Andermaal</a>
+        <a class="navbar-brand" href="index.php"><img src="images/png/logov1.png" alt="logo"> Eenmaal Andermaal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <form class="form-inline text-center my-2 my-lg-0">
+        <form class="form-inline text-center my-2 my-lg-0" method="get" action="VeilingenOverzicht.php">
             <input class="form-control mr-lg-3" type="search" placeholder="Typ hier uw zoekopdracht"
-                   aria-label="Search">
+                   aria-label="Search" name="zoekopdracht">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Zoeken</button>
         </form>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
