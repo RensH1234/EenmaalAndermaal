@@ -4,9 +4,6 @@ include_once 'includes/htmlTerugkomendeFuncties/Functions.php';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
-
-
-
 ?>
 
 <!doctype html>
