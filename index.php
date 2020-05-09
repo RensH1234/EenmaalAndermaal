@@ -19,7 +19,6 @@ $huidigeJaar = date('Y');
 </head>
 
 <body>
-<?php include_once 'h_test.php' ?>
 <main>
     <?php include_once 'slides.php' ?>
     <div class="uitgelichteadvertenties col-lg-12">

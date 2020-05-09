@@ -21,20 +21,43 @@ $huidigeJaar = date('Y');
 </head>
 
 <body>
-<?php include_once 'h_test.php' ?>
 <main>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filter op
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <form action="VeilingenOverzicht.php">
+                <input type="hidden" value="<?php echo $_GET["zoekopdracht"];?>" name="zoekopdracht">
+                <input type="hidden" value="0" name="filter">
+                <button type="submit" class="dropdown-item">Prijs van laag naar hoog</button>
+            </form>
+            <form action="VeilingenOverzicht.php">
+                <input type="hidden" value="<?php echo $_GET["zoekopdracht"];?>" name="zoekopdracht">
+                <input type="hidden" value="1" name="filter">
+                <button type="submit" class="dropdown-item">Prijs van hoog naar laag</button>
+            </form>
+            <form action="VeilingenOverzicht.php">
+                <input type="hidden" value="<?php echo $_GET["zoekopdracht"];?>" name="zoekopdracht">
+                <input type="hidden" value="2" name="filter">
+                <button type="submit" class="dropdown-item">Afstand</button>
+            </form>
+        </div>
+    </div>
     <h2>Resultaten die overeen komen met "<?php echo $_GET["zoekopdracht"];?>"</h2>
-    <div class="uitgelichteadvertenties col-lg-12">
-
         <?php
             $resultaten = new Zoekmachine();
-            $resultaten->_constructNieuw($_GET["zoekopdracht"]);
+            $resultaten->_constructNieuw($_GET["zoekopdracht"],$_GET["filter"]);
             $idArray = explode(".",$resultaten->_getIdArrayRes());
-            $resultaatVeilinglijst = new Veilinglijst();
-            $resultaatVeilinglijst->_construct($idArray,"Resultaten", "ResultatenLijst");
-            $resultaatVeilinglijst->printVeilingen();
+            if($idArray[0]!=null) {
+                $resultaatVeilinglijst = new Veilinglijst();
+                $resultaatVeilinglijst->_construct($idArray, "Resultaten", "ResultatenLijst");
+                $resultaatVeilinglijst->printVeilingen();
+            }
+            else{
+                echo "<p>Er komen geen producten overeen.</p>";
+            }
         ?>
-    </div>
 </main>
 <?= _generateFooter(date('Y')) ?>
 </body>

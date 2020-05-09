@@ -8,6 +8,7 @@ class VeilingArtikel
     private $afstand;
     private $prijs;
     private $eindtijd;
+    private $id;
 
     //constructor default
     function _construct($id)
@@ -27,9 +28,13 @@ v.Voorwerpnummer = ?;";
                 $this->afstand = $row['Plaatsnaam'];
                 $this->prijs = $row['Verkoopprijs'];
                 $this->eindtijd = $row['MaximaleLooptijd'];
+                $this->id = $row['Voorwerpnummer'];
             }
         } else {
             die(print_r(sqlsrv_errors(), true));
+        }
+        if($this->afbeeldingURL==null){
+            $this->afbeeldingURL="https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg";
         }
     }
 
@@ -43,6 +48,10 @@ v.Voorwerpnummer = ?;";
     <p class="card-text">Locatie: $this->afstand</p>
     <p class="card-text">Prijs: $this->prijs</p>
     <p class="card-text">Eindtijd: $this->eindtijd</p>
+    <form action="Veiling.php" method="get">
+    <input name="id" type="hidden" value="$this->id">
+    <button class="btn-dark"  type="submit">info</button>
+</form>
   </div>
 </div>
 
