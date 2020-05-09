@@ -10,8 +10,6 @@ class VeilingArtikel
     private $prijs;
     private $eindtijd;
 
-
-
     //constructor default
     function _construct($id)
     {
@@ -82,12 +80,11 @@ class Artikel
     private $AfbeeldingURL;
 
     //Constructor
-    public function _getFromVoorwerp($id)
+    public function _getVeilingGegevens($id)
     {
         $conn = getConn();
-        $sql = "SELECT * FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE 
-v.Voorwerpnummer = ?;";
-        $stmt = sqlsrv_prepare($conn, $sql, array($id));
+        $sql1 = "SELECT * FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE v.Voorwerpnummer = ?;";
+        $stmt = sqlsrv_prepare($conn, $sql1, array($id));
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
         }
@@ -102,20 +99,18 @@ v.Voorwerpnummer = ?;";
                 $this->Betalingsinstructie = $row['Betalingsinstructie'];
                 $this->Plaatsnaam = $row['Plaatsnaam'];
                 $this->Land = $row['Land'];
-                $this->Looptijdbegin= $row['Looptijdbegin'];
+                $this->Looptijdbegin = $row['Looptijdbegin'];
                 $this->Verzendkosten = $row['Verzendkosten'];
                 $this->Verzendinstructies = $row['Verzendinstructies'];
                 $this->Verkoper = $row['Verkoper'];
                 $this->Koper = $row['Koper'];
-                $this->LoopTijdEinde= $row['LoopTijdEinde'];
-                $this->LoopTijdEinde->format('Y-m-d H:i:s');
-                $this->LoopTijdEinde= date_format($this->LoopTijdEinde, "Y/m/d H:i:s");
+                $this->LoopTijdEinde = $row['LoopTijdEinde'];
                 $this->VeilingGesloten = $row['VeilingGesloten'];
-                $this->MaximaleLooptijd =$row['MaximaleLooptijd'];
-                $this->Verkoopprijs=$row['Verkoopprijs'];
+                $this->MaximaleLooptijd = $row['MaximaleLooptijd'];
+                $this->Verkoopprijs = $row['Verkoopprijs'];
                 $this->AfbeeldingURL = $row['AfbeeldingURL'];
-                $this->Aantalbiedingen = "Sample Text";
                 $this->Minimumprijs = "Sample Text";
+
             }
         } else {
             die(print_r(sqlsrv_errors(), true));
@@ -125,19 +120,44 @@ v.Voorwerpnummer = ?;";
     //Functie die op basis van geldigheid van veiling een andere string returnt
     function _isGesloten()
     {
-        if (!$this->VeilingGesloten) {
-            return "Deze Veiling is Gesloten!";
+        $datum = date_format($this->LoopTijdEinde, "Y/m/d");
+        $tijd = date_format($this->LoopTijdEinde, "H:i:s");
+        if ($this->VeilingGesloten) {
+            $str = "<div class='col border text-center alert-danger rounded mt-2'><h4>";
+            $str .= "Deze Veiling is Gesloten!";
+            return $str;
 
         }
-        return "Deze veiling sluit op $this->LoopTijdEinde";
+        $str = "<div class='col border text-center alert-info rounded mt-2'><h4>";
+        $str .= "Deze veiling sluit op $datum om $tijd";
+        return $str;
     }
+
+    //Functie die alle biedingen op het veilingartikel telt
+    function _telAantalBiedingen()
+    {
+        $conn = getConn();
+        $sql = "SELECT COUNT(Voorwerpnummer) AS AantalBiedingen FROM Bod WHERE Voorwerpnummer = ?;";
+        $stmt = sqlsrv_prepare($conn, $sql, array($this->Id));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $this->Aantalbiedingen = $row['AantalBiedingen'];
+            }
+        } else {
+            die(print_r(sqlsrv_errors(), true));
+        }
+    }
+
     //functie die de gehele veilingpagina inhoud genereert
     function _printArtikel()
     {
         $artikel = "<div class='container mt-2'><div class='container'><div class='row'>";
         $artikel .= "<div class='col border'><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel width='480' height='360'></div>";
         $artikel .= "<div class='col border'><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>";
-        $artikel .= "<div class='col border text-center alert-danger rounded mt-2'><h4>";
         $artikel .= $this->_isGesloten();
         $artikel .= "</h4></div></div>";
         $artikel .= "<div class='row'><div class='col border text-muted mt-2'>Huidige Bod</div>";
