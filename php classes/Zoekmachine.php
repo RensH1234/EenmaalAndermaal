@@ -1,6 +1,5 @@
 <?php
-include_once 'includes/phpIncludes/DatabaseConn.php';
-include_once 'includes/phpIncludes/sqlsrvPHPFuncties.php';
+include_once 'DatabaseConn.php';
 
 class Zoekmachine
 {
@@ -12,7 +11,7 @@ class Zoekmachine
         }
         $this->idArray = array();
         $conn = getConn();
-        $sql = "SELECT Voorwerpnummer FROM Voorwerp  WHERE 
+        $sql = "SELECT Voorwerpnummer FROM Voorwerp WHERE 
 (Titel LIKE '%{$sleutelwoord}%') OR (Beschrijving LIKE '%{$sleutelwoord}%');";
         $stmt = sqlsrv_prepare($conn, $sql);
         if (!$stmt) {

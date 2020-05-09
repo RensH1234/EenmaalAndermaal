@@ -1,6 +1,7 @@
 <?php
-include 'php classes/Veilinglijst.php';
-include_once 'includes/htmlTerugkomendeFuncties/Functions.php';
+include_once 'framework.php';
+include_once 'php classes/Veilinglijst.php';
+include_once 'Functions.php';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
@@ -14,15 +15,13 @@ $huidigeJaar = date('Y');
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?> | <?= $siteNaam ?></title>
-    <?php include 'includes/phpIncludes/frameworkIncludes.php' ?>
-    <?php include 'includes/phpIncludes/framework.php' ?>
-    <link rel="stylesheet" href="custom%20stylesheet.css">
+    <link rel="stylesheet" href="Custom_css/custom%20stylesheet.css">
 </head>
 
 <body>
-<?php include 'includes/htmlTerugkomendeElementen/header.php'?>
+<?php include_once 'h_test.php' ?>
 <main>
-    <?php include 'includes/htmlTerugkomendeElementen/slides.php'?>
+    <?php include_once 'slides.php' ?>
     <div class="uitgelichteadvertenties col-lg-12">
 
         <?php

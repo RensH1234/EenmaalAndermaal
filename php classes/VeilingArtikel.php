@@ -1,6 +1,5 @@
 <?php
-include_once 'includes/phpIncludes/DatabaseConn.php';
-include_once 'includes/phpIncludes/sqlsrvPHPFuncties.php';
+include_once 'DatabaseConn.php';
 
 class VeilingArtikel
 {

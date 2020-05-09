@@ -1,5 +1,5 @@
 <?php
-include 'VeilingArtikel.php';
+require 'VeilingArtikel.php';
 class Veilinglijst
 {
     private $veilingArtikelen = array();

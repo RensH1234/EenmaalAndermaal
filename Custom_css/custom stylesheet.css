@@ -27,7 +27,7 @@
 
 
 body{
-    background: url("images/jpg/backgroundv2.jpg");
+    background: url("../images/jpg/backgroundV2.jpg");
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     /*background-size: auto ; !* Resize the background image to cover the entire container *!*/
@@ -127,24 +127,6 @@ figure img{
         padding: .7rem;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media screen and ( max-width:  768px ){
     input.form-control.mr-lg-3 {

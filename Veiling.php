@@ -1,8 +1,9 @@
 <?php
 $title = 'Veiling';
 $siteNaam = 'Veiling!';
-include 'php classes/VeilingArtikel.php';
-include_once 'includes/htmlTerugkomendeFuncties/Functions.php';
+include_once 'php classes/VeilingArtikel.php';
+include_once 'Functions.php';
+include_once 'framework.php';
 
 $artikel = new Artikel();
 $artikel->_getVeilingGegevens(2);
@@ -24,11 +25,10 @@ if (array_key_exists('VorigeKavel', $_POST)) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?> | <?= $siteNaam ?></title>
-    <?php include 'includes/phpIncludes/frameworkIncludes.php'; ?>
 </head>
 <body>
 <main>
-    <?php include 'includes/htmlTerugkomendeElementen/header.php'; ?>
+    <?php include_once 'h_test.php'; ?>
     <div class="container mt-2">
         <div class="row justify-content-between">
             <div class="col-4">
