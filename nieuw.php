@@ -41,7 +41,7 @@
         return $pictureFolder . $imageName;
     }
 ?>
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/h_test.php'; ?>
 <h1>Nieuwste veiling items</h1>
 <p>Hier zie je de nieuwste veiling items</p>
 <?php foreach ($items as $item) { ?>
