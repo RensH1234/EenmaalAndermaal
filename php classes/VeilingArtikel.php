@@ -34,7 +34,7 @@ v.Voorwerpnummer = ?;";
             die(print_r(sqlsrv_errors(), true));
         }
         if($this->afbeeldingURL==null){
-            $this->afbeeldingURL="https://thaigifts.or.th/wp-content/uploads/2017/03/no-image.jpg";
+            $this->afbeeldingURL="images/png/logov1.png";
         }
     }
 
@@ -158,6 +158,10 @@ class Artikel
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
+    }
+
+    function _volgende(){
+
     }
 
     //functie die de gehele veilingpagina inhoud genereert

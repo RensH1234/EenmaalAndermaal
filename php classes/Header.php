@@ -2,8 +2,6 @@
 include_once 'DatabaseConn.php';
 
 class Header{
-    private $rubriek;
-
 
     function _getFromDb(){
         $conn = getConn();
@@ -16,8 +14,9 @@ INNER JOIN VoorwerpInRubriek vr on vr.RubriekID = r.RubriekID";
         sqlsrv_execute($stmt);
         if (sqlsrv_execute($stmt)) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                $this->rubriek = $row['RubriekID'];
-
+                $rubriek = $row['RubriekID'];
+                $SuperRubriek = $row['SuperRubriekID'];
+                $this->_printCategory($rubriek, $SuperRubriek);
             }
         } else {
             die(print_r(sqlsrv_errors(), true));

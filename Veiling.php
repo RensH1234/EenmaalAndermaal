@@ -3,17 +3,21 @@ $title = 'Veiling';
 $siteNaam = 'Veiling!';
 include_once 'php classes/VeilingArtikel.php';
 include_once 'Functions.php';
-include_once 'framework.php';
-
+include 'framework.php';
 $artikel = new Artikel();
-$artikel->_getVeilingGegevens(2);
+$index = 2;
+$artikel->_getVeilingGegevens($index);
 $artikel->_telAantalBiedingen();
 
 if (array_key_exists('VorigeKavel', $_POST)) {
-    $artikel->_getVeilingGegevens(1);
+    $index--;
+    $artikel->_getVeilingGegevens($index);
+    $artikel->_telAantalBiedingen();
 } else if
-(array_key_exists('VorigeKavel', $_POST)) {
-    $artikel->_getVeilingGegevens(3);
+(array_key_exists('VolgendeKavel', $_POST)) {
+    $index++;
+    $artikel->_getVeilingGegevens($index);
+    $artikel->_telAantalBiedingen();
 }
 ?>
 <!doctype html>
@@ -35,8 +39,12 @@ if (array_key_exists('VorigeKavel', $_POST)) {
                 <a href="#" class="btn btn-light border" role="button">&ltKavelLijst&gt</a>
             </div>
             <div class="col-4">
-                <a href="#" class="btn btn-light border" role="button" id="Vorigekavel">VorigeKavel</a>
-                <a href="#" class="btn btn-light border" role="button" id="VolgendeKavel">VolgendeKavel</a>
+                <form method ='post'>
+                    <input type="submit" name="VorigeKavel" class="btn btn-light border" value="Vorige">
+                    <input type="submit" name="VolgendeKavel" class="btn btn-light border" value="Volgende">
+                </form>
+<!--                <a href="#" class="btn btn-light border" role="button" id="Vorigekavel">VorigeKavel</a>-->
+<!--                <a href="#" class="btn btn-light border" role="button" id="VolgendeKavel">VolgendeKavel</a>-->
             </div>
         </div>
     </div>
