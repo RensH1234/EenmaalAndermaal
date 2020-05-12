@@ -16,12 +16,12 @@
                     <button type="button" class="btn btn-primary btn-lg test">Registreer nu!</button>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="images/png/background2.png" alt="twee foto">
-            </div>
-            <div class="carousel-item">
-                <img src="images/png/background3.png" alt="derde foto">
-            </div>
+<!--            <div class="carousel-item">-->
+<!--                <img src="images/png/background2.png" alt="twee foto">-->
+<!--            </div>-->
+<!--            <div class="carousel-item">-->
+<!--                <img src="images/png/background3.png" alt="derde foto">-->
+<!--            </div>-->
         </div>
     </div>
 </div>

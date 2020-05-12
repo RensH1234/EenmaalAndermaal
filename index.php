@@ -20,8 +20,9 @@ $huidigeJaar = date('Y');
 <body>
 <?php include_once 'h_test.php'; ?>
 <main>
+    <br>
     <?php include_once 'slides.php' ?>
-    <div class="uitgelichteadvertenties col-lg-12">
+    <div class="container rubrieken col-lg-10">
 
         <?php
         $lijstComputers = new Veilinglijst();
