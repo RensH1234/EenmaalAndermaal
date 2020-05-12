@@ -15,7 +15,7 @@ class Veilinglijst
         $this->maakArtikelen();
         $this->voorwerpnummers=$voorwerpnummers;
         $this->naam=<<<HTML
-<div class="veilinglijst" id="$cssID"><h2>$naam</h2>
+<div class="row" id="$cssID"><h2>$naam</h2>
 HTML;
 
     }
@@ -40,7 +40,7 @@ HTML;
     }
     public function printVeilingen(){
         echo $this->naam;
-        echo "<div class='veilingenlijst'>";
+        echo "<div class='col-sm'>";
         for($i = 0; $i < sizeof($this->voorwerpnummers); $i++){
             $a = new VeilingArtikel();
             $a->_construct($this->voorwerpnummers[$i]);

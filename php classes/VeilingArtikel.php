@@ -14,8 +14,8 @@ class VeilingArtikel
     function _construct($id)
     {
         $conn = getConn();
-        $sql = "SELECT * FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE 
-v.Voorwerpnummer = ?;";
+        $sql = "SELECT * FROM Voorwerp  WHERE 
+Voorwerpnummer = ?;";
         $stmt = sqlsrv_prepare($conn, $sql, array($id));
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
@@ -24,15 +24,32 @@ v.Voorwerpnummer = ?;";
         if (sqlsrv_execute($stmt)) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                 $this->titel = $row['Titel'];
-                $this->afbeeldingURL = $row['AfbeeldingURL'];
                 $this->afstand = $row['Plaatsnaam'];
                 $this->prijs = $row['Verkoopprijs'];
-                $this->eindtijd = $row['MaximaleLooptijd'];
+                $this->eindtijd=($row['LoopTijdEinde']->format('Y-m-d H:i:s'));
                 $this->id = $row['Voorwerpnummer'];
             }
-        } else {
+        }
+        else {
             die(print_r(sqlsrv_errors(), true));
         }
+        $sql = "SELECT * FROM Bestand WHERE Voorwerpnummer = ?;";
+        $stmt = sqlsrv_prepare($conn, $sql, array($id));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $this->afbeeldingURL = $row['AfbeeldingURL'];
+            }
+        }
+
+        else {
+            die(print_r(sqlsrv_errors(), true));
+        }
+
         if($this->afbeeldingURL==null){
             $this->afbeeldingURL="images/png/logov1.png";
         }
@@ -47,7 +64,7 @@ v.Voorwerpnummer = ?;";
     <h5 class="card-title">$this->titel</h5>
     <p class="card-text">Locatie: $this->afstand</p>
     <p class="card-text">Prijs: $this->prijs</p>
-    <p class="card-text">Eindtijd: $this->eindtijd</p>
+    <p class="card-text">Eindigt op: $this->eindtijd</p>
     <form action="Veiling.php" method="get">
     <input name="id" type="hidden" value="$this->id">
     <button class="btn-dark"  type="submit">info</button>

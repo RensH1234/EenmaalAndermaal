@@ -7,29 +7,6 @@ body{
 
 }
 
-.VeilingArtikel_article{
-    border: 2pt solid #a8947c;
-    display: inline-block;
-    border-radius: 10pt;
-    font-family: Bahnschrift;
-}
-
-.VeilingArtikel_img{
-    width: 200pt;
-    margin: 2pt;
-}
-
-.VeilingArtikel_afstand{
-
-}
-.VeilingArtikel_prijs{
-    display: inline;
-}
-
-.VeilingArtikel_eindtijd{
-    float: right;
-}
-
 .scrolllist{
     overflow-x: scroll;
     overflow-y: hidden;
