@@ -67,7 +67,7 @@ Voorwerpnummer = ?;";
     <p class="card-text">Eindigt op: $this->eindtijd</p>
     <form action="Veiling.php" method="get">
     <input name="id" type="hidden" value="$this->id">
-    <button class="btn-dark"  type="submit">info</button>
+    <button class="btn-dark"  type="submit"> Informatie Veiling </button>
 </form>
   </div>
 </div>

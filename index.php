@@ -26,17 +26,14 @@ $huidigeJaar = date('Y');
 
         <?php
         $lijstComputers = new Veilinglijst();
-        echo"<br>";
-        $lijstComputers->_construct([1,3,1,2],"Computers","lijstComputers");
-        $lijstComputers->printVeilinglijst();
+        $lijstComputers->_construct([1,3,1,2],"lijstComputers");
+        $lijstComputers->printveilingen();
         $lijstAuto = new Veilinglijst();
-        $lijstAuto->_construct([1,2,2,3],"Auto's","lijstAuto");
-        echo"<br>";
-        $lijstAuto->printVeilinglijst();
+        $lijstAuto->_construct([1,2,2,3],"lijstAuto");
+        $lijstAuto->printveilingen();
         $lijstAanbevolen = new Veilinglijst();
-        $lijstAanbevolen->_construct([4,3,2,1],"Aanbevolen","lijstAanbevolen");
-        echo"<br>";
-        $lijstAanbevolen->printVeilinglijst();
+        $lijstAanbevolen->_construct([4,3,2,1],"lijstAanbevolen");
+        $lijstAanbevolen->printveilingen();
         ?>
     </div>
 </main>

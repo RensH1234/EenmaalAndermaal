@@ -11,11 +11,11 @@ class Veilinglijst
 //    private $huidigeDatum = date("h:i:sa");
 
     //constructor voor veilinglijst
-    public function _construct($voorwerpnummers,$naam,$cssID){
+    public function _construct($voorwerpnummers,$cssID){
         $this->maakArtikelen();
         $this->voorwerpnummers=$voorwerpnummers;
         $this->naam=<<<HTML
-<div class="row" id="$cssID"><h2>$naam</h2>
+<div class="row" id="$cssID">
 HTML;
 
     }
