@@ -1,23 +1,23 @@
 <?php
 
 function _generateFooter($jaar){
-    $footer = "<footer><div class='container-fluid'><div class='row'><div class='col border'>";
-    $footer .= "<h4 class='text-center'>&copy;  $jaar</h4></div></div></div><footer>";
+//    $footer = "<footer><div class='container-fluid'><div class='row'><div class='col border'>";
+//    $footer = "<h4 class='text-center'>&copy;  $jaar</h4></div></div></div><footer>";
 
-    $footer.= "<!-- Footer -->
+    $footer = "<!-- Footer -->
 <footer class=\"page-footer font-small blue pt-4\">
 
   <!-- Footer Links -->
-  <div class=\"container-fluid text-center text-md-left\">
+  <div class=\"container-fluid text-center text-md-center\">
 
     <!-- Grid row -->
-    <div class=\"row\">
+    <div class=\"row bg-transparent\">
 
       <!-- Grid column -->
       <div class=\"col-md-6 mt-md-0 mt-3\">
 
         <!-- Content -->
-        <h5 class=\"text-uppercase\">Footer Content</h5>
+        <h5 class=\"text-uppercase\">Over ons</h5>
         <p>Here you can use rows and columns to organize your footer content.</p>
 
       </div>
@@ -80,8 +80,8 @@ function _generateFooter($jaar){
   <!-- Footer Links -->
 
   <!-- Copyright -->
-  <div class=\"footer-copyright text-center py-3\">© 2020 Copyright:
-    <a href=\"https://mdbootstrap.com/\"> MDBootstrap.com</a>
+  <div class=\"footer-copyright text-center py-3\">©  $jaar Copyright:
+    <a href=\"https://iproject12.icasites.com/\"> Eenmaal Andermaal</a>
   </div>
   <!-- Copyright -->
 
