@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /*voor klasse VeilingArtikel*/
 .card{
     width: 20em;
@@ -26,13 +32,14 @@
 
 
 
-body{
-    background: url("../images/jpg/backgroundV2.jpg");
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    /*background-size: auto ; !* Resize the background image to cover the entire container *!*/
+
+body {
+    background-size: cover;
+    /* Bron: https://pixabay.com/nl/photos/schilderen-aquarel-verf-papier-2407262/. Ik heb de achtergrond met photoshop naar wens aangepast.*/
+    background-image: url("../images/png/mainbackground.jpg");
     background-attachment: fixed;
 }
+
 
 
 input.form-control.mr-lg-3 {
@@ -44,13 +51,14 @@ input.form-control.mr-lg-3 {
 }
 
 
+
 .carousel-inner img {
     width: 100%;
-    height: 30rem;
+    height: 25rem;
 }
 figure img{
     width: 100%;
-    height: 10%;
+    height: 25%;
 }
 .carousel-caption {
     position: absolute;
