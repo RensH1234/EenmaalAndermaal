@@ -90,7 +90,7 @@ $idArray = explode(".", $resultaten->_getIdArrayRes());
     <?php
     if ($idArray[0] != null) {
         $resultaatVeilinglijst = new Veilinglijst();
-        $resultaatVeilinglijst->_construct($idArray, "", "ResultatenLijst");
+        $resultaatVeilinglijst->_construct($idArray, "ResultatenLijst");
         $resultaatVeilinglijst->printVeilingen();
     } else {
                 echo "<p>Er komen geen producten overeen.</p>";
