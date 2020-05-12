@@ -1,5 +1,5 @@
 <?php
-require 'VeilingArtikel.php';
+require_once 'VeilingArtikel.php';
 class Veilinglijst
 {
     private $veilingArtikelen = array();
