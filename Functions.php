@@ -105,3 +105,12 @@ function _generateFooter($jaar){
     return $footer;
 }
 
+function _activeHeader($page_cur)
+{
+    $url_array = explode('/', $_SERVER['REQUEST_URI']);
+    $url = end($url_array);
+    if ($page_cur == $url) {
+        echo 'active';
+    }
+}
+

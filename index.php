@@ -2,6 +2,7 @@
 include_once 'framework.php';
 include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';
+//include 'active.js';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
