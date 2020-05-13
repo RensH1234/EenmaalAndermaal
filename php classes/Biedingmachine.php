@@ -4,10 +4,12 @@ include_once 'DatabaseConn.php';
 class Biedingmachine
 {
     public $voorwerpnummer;
-    private $sessionlogin;
+    private $ingelogd;
     private $stringBiedingenArray = array();
 
-    public function _construct($voorwerpnummer){
+    public function _construct($voorwerpnummer, $ingelogd)
+    {
+        $this->ingelogd = $ingelogd;
         $this->voorwerpnummer = $voorwerpnummer;
         $conn = getConn();
         $sql = "SELECT * FROM Bod  WHERE 
@@ -30,46 +32,98 @@ Voorwerpnummer = ? ORDER BY Boddatum DESC;";
     }
 
     //functie vult de array met de drie data in de vorm van een string die er zo uit ziet: "$bedrag.$datumtijd.$gebruikersnaam"
-    private function createDBString($bedrag, $datumtijd, $gebruikersnaam){
+    private function createDBString($bedrag, $datumtijd, $gebruikersnaam)
+    {
         $explode = array();
-        array_push($explode,$bedrag);
-        array_push($explode,date_format($datumtijd,"Y-m-d h-m-s"));
-        array_push($explode,$gebruikersnaam);
-        $implode = implode("|||||||||",$explode);
+        array_push($explode, $bedrag);
+        array_push($explode, date_format($datumtijd, "Y-m-d h-m-s"));
+        array_push($explode, $gebruikersnaam);
+        $implode = implode("|||||||||", $explode);
         array_push($this->stringBiedingenArray, $implode);
     }
 
-    public function printBod(){
-        $htmla= <<<HTML
+
+    //de functie printBodinfo is een onderdeel van de functie printBiedingsmachine. Het print de tabel met info van biedingen op het product.
+
+
+    private function printBodinfo()
+    {
+        if (sizeof($this->stringBiedingenArray) > 0) {
+
+            $head = <<<HTML
+<div class="col">
+    <table class="table table-sm table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Bodbedrag</th>
+          <th scope="col">Datum bod</th>
+          <th scope="col">Bieder</th>
+        </tr>
+      </thead>
+      <tbody>
+HTML;
+            echo $head;
+            for ($i = 0; $i < sizeof($this->stringBiedingenArray); $i++) {
+                $array = explode("|||||||||", $this->stringBiedingenArray[$i]);
+
+                $row2 = <<<HTML
+        <tr>
+          <td>&euro; $array[0]</td>
+          <td>$array[1]</td>
+          <td>$array[2]</td>
+        </tr>
+HTML;
+                echo $row2;
+            }
+
+            echo '
+            </tbody> 
+        </table> 
+    </div> 
+</div>';
+        } else {
+
+            $html_alt = <<<HTML
 <div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <p>Wees de eerste bieder!</p>
+         </div>
+    </div>
 HTML;
-        echo $htmla;
-        $head = <<<HTML
-<table class="table table-sm table-dark">
-  <thead>
-    <tr>
-      <th scope="col">Bodbedrag</th>
-      <th scope="col">Datum bod</th>
-      <th scope="col">Bieder</th>
-    </tr>
-  </thead>
-  <tbody>
+            echo $html_alt;
+        }
+    }
 
-HTML;
-        echo $head;
-        for($i=0;$i<sizeof($this->stringBiedingenArray);$i++){
-            $array = explode("|||||||||",$this->stringBiedingenArray[$i]);
 
-            $row2 = <<<HTML
-<tr>
-      <td>&euro; $array[0]</td>
-      <td>$array[1]</td>
-      <td>$array[2]</td>
-    </tr>
+
+
+
+    public function printBiedingmachine()
+    {
+        if (!$this->ingelogd) {
+            $html_alt = <<<HTML
+    <div class="container-fluid">    
+        <div class="row">
+            <div class="col">
+            <p>Om te kunnen bieden:</p>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <a class="btn-dark" href="#">Log in</a>
+            </div>
+            <div class="col-2">
+                <a class="btn-primary" href="#">Registreer</a>
+            </div>
+        </div>
 HTML;
-            echo $row2;
         }
 
-        echo '</tbody> </table>';
+        else{
+
+        }
+        echo $html_alt;
+        $this->printBodinfo();
     }
 }

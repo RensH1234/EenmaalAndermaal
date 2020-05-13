@@ -20,14 +20,11 @@ $huidigeJaar = date('Y');
 <body>
 <?php include_once 'h_test.php'; ?>
 <main>
-    <div class="uitgelichteadvertenties col-lg-12">
-
         <?php
         $biedingen = new Biedingmachine();
-        $biedingen->_construct(1);
-        $biedingen->printBod();
+        $biedingen->_construct(1,false);
+        $biedingen->printBiedingmachine();
         ?>
-    </div>
 </main>
 <?= _generateFooter(date('Y')) ?>
 </body>
