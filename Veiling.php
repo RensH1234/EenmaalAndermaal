@@ -5,20 +5,25 @@ include_once 'php classes/VeilingArtikel.php';
 include_once 'Functions.php';
 include 'framework.php';
 $artikel = new Artikel();
-$index = 2;
-$artikel->_getVeilingGegevens($index);
-$artikel->_telAantalBiedingen();
+$artikel->_getVeilingGegevens($_GET['id']);
+$artikel->_getAantalBiedingen();
 
-if (array_key_exists('VorigeKavel', $_POST)) {
-    $index--;
-    $artikel->_getVeilingGegevens($index);
-    $artikel->_telAantalBiedingen();
-} else if
-(array_key_exists('VolgendeKavel', $_POST)) {
-    $index++;
-    $artikel->_getVeilingGegevens($index);
-    $artikel->_telAantalBiedingen();
-}
+//function _gotoVeiling($hdg)
+//{
+//    if($hdg)
+//    if ($_GET['id'] > 1) {
+//        echo $_GET['id'] - 1;
+////        echo $var;
+//    } else {
+//        echo $_GET['id'];
+////        echo $var;
+//    }
+//    else {
+//
+//    }
+//}
+
+
 ?>
 <!doctype html>
 <html lang="nl">
@@ -38,13 +43,19 @@ if (array_key_exists('VorigeKavel', $_POST)) {
             <div class="col-4">
                 <a href="#" class="btn btn-light border" role="button">&ltKavelLijst&gt</a>
             </div>
-            <div class="col-4">
-                <form method ='post'>
-                    <input type="submit" name="VorigeKavel" class="btn btn-light border" value="Vorige">
-                    <input type="submit" name="VolgendeKavel" class="btn btn-light border" value="Volgende">
-                </form>
-<!--                <a href="#" class="btn btn-light border" role="button" id="Vorigekavel">VorigeKavel</a>-->
-<!--                <a href="#" class="btn btn-light border" role="button" id="VolgendeKavel">VolgendeKavel</a>-->
+            <div class="row justify-content-between">
+                <div class="col">
+                    <form action='Veiling.php' method="get">
+                        <input name="id" type="hidden" value=<?php $artikel->_gotoVeiling(false); ?>>
+                        <button class="btn btn-light border" type="submit">Vorige</button>
+                    </form>
+                </div>
+                <div class="col">
+                    <form action='Veiling.php' method="get">
+                        <input name="id" type="hidden" value=<?php $artikel->_gotoVeiling(true); ?>>
+                        <button class="btn btn-light border" type="submit">Volgende</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

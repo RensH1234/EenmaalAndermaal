@@ -2,9 +2,12 @@
 include_once 'framework.php';
 include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';
+//include 'active.js';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
+
+
 ?>
 
 <!doctype html>
@@ -22,7 +25,6 @@ $huidigeJaar = date('Y');
 <main>
     <?php include_once 'slides.php' ?>
     <div class="uitgelichteadvertenties col-lg-12">
-
         <?php
         $lijstComputers = new Veilinglijst();
         $lijstComputers->_construct([1,3,1,2],"lijstComputers");
