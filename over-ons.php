@@ -1,5 +1,5 @@
 <?php
-    // TODO: Wat logica?
+    include 'framework.php';
 ?>
     <?php include 'h_test.php'; ?>
     <h1>Over ons</h1>
