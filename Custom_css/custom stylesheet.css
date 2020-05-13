@@ -36,8 +36,8 @@
 body {
     background-size: cover;
     /* Bron: https://pixabay.com/nl/photos/schilderen-aquarel-verf-papier-2407262/. Ik heb de achtergrond met photoshop naar wens aangepast.*/
-    background-color: #E2C8A7;
-    /*background-image: url("../images/png/mainbackground.jpg");*/
+    /*background-color: #E2C8A7;*/
+    background-image: url("../images/png/mainbackground.jpg");
     background-attachment: fixed;
 }
 
@@ -142,4 +142,5 @@ figure img{
         width: 100px ;
     }
 }
+
 
