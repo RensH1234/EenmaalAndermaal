@@ -8,7 +8,7 @@
     <div class="container col-lg-10">
         <div class="carousel-inner ">
             <div class="carousel-item active">
-                <img src="images/png/headerVeilingsite.png" alt="eerste foto">
+                <img src="images/png/headerVeilingsiteV2.png" alt="eerste foto">
                 <div class="carousel-caption">
                     <h1 class="display-2">Welkom</h1>
                     <h3>Dé veilingsite van Nederland!</h3>

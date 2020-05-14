@@ -10253,9 +10253,19 @@ body {
 
 }
 
+.page-footer a{
+  color: #212529;
+}
+
 .page-footer .text-uppercase h6{
   text-align: left;
 }
 .form-control input {
   text-align: left;
+}
+
+ .login {
+  text-align: left;
+  justify-content: center;
+
 }

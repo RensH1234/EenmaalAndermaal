@@ -25,12 +25,18 @@ $huidigeJaar = date('Y');
 <main>
     <br>
     <?php include_once 'slides.php' ?>
-    <div class="container rubrieken col-lg-10">
+    <div class="container rubrieken col-lg-12 col-md-4">
 
         <?php
+       echo"<div class='container col-lg-7'>
+            <br>
+            <h4>test</h4>
+            </div>";
+       
         $lijstComputers = new Veilinglijst();
         $lijstComputers->_construct([1,3,1,2],"lijstComputers");
         $lijstComputers->printveilingen();
+
         $lijstAuto = new Veilinglijst();
         $lijstAuto->_construct([1,2,2,3],"lijstAuto");
         $lijstAuto->printveilingen();
