@@ -231,7 +231,7 @@ class Artikel
         echo <<< ARTIKEL
 <div class='container mt-2'><div class='container'>
 <div class='row'>
-<div class='col '><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel width='100%' max-height='45%'>
+<div class='col '><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel>
 <div class='row'><div class='col'>
          <h5 class="font-weight-bold">Beschrijving:</h5></div><div class="col"></div></div>
          <div class="row"><div class="col">
