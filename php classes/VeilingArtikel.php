@@ -143,7 +143,7 @@ class Artikel
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
-        $this->setBiedingen();
+        $this->setBiedingen(0,0,0);
     }
 
     //Functie die op basis van geldigheid van veiling een andere string returnt
@@ -218,12 +218,16 @@ class Artikel
     }
 
     //functie die de printBiedingmachine uit Biedingmachine.php uitprint
-    private function setBiedingen(){
+    public function setBiedingen($optie,$bedrag,$gebruiker){
         $biedingen = new Biedingmachine();
         //de boolean waarde moet controleren of er is ingelogd. Met het maken van de inlogfunctie moet dit worden gemaakt.
-        $biedingen->_construct($this->Id,true);
+        $biedingen->_construct($this->Id,true,$gebruiker);
+        if($optie == 1&&$gebruiker !== 0){
+            $biedingen->submitBod($bedrag);
+        }
         $this->biedingenHTML = $biedingen->printBiedingmachine();
     }
+
 
     //functie die de gehele veilingpagina inhoud genereert
     function _printArtikel()
@@ -231,7 +235,7 @@ class Artikel
         echo <<< ARTIKEL
 <div class='container mt-2'><div class='container'>
 <div class='row'>
-<div class='col '><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel>
+<div class='col '><img src=$this->AfbeeldingURL class='img-fluid' alt=$this->Titel>
 <div class='row'><div class='col'>
          <h5 class="font-weight-bold">Beschrijving:</h5></div><div class="col"></div></div>
          <div class="row"><div class="col">
