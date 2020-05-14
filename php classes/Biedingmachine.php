@@ -3,7 +3,7 @@ include_once 'DatabaseConn.php';
 
 class Biedingmachine
 {
-    public $voorwerpnummer;
+    private $voorwerpnummer;
     private $ingelogd;
     private $stringBiedingenArray = array();
 
@@ -50,7 +50,8 @@ Voorwerpnummer = ? ORDER BY Boddatum DESC;";
     {
         if (sizeof($this->stringBiedingenArray) > 0) {
 
-            $head = <<<HTML
+            $html = <<<HTML
+<div class="row">
 <div class="col">
     <table class="table table-sm table-dark">
       <thead>
@@ -61,29 +62,31 @@ Voorwerpnummer = ? ORDER BY Boddatum DESC;";
         </tr>
       </thead>
       <tbody>
+</div>
 HTML;
-            echo $head;
             for ($i = 0; $i < sizeof($this->stringBiedingenArray); $i++) {
                 $array = explode("|||||||||", $this->stringBiedingenArray[$i]);
 
-                $row2 = <<<HTML
+                $html .= <<<HTML
         <tr>
           <td>&euro; $array[0]</td>
           <td>$array[1]</td>
           <td>$array[2]</td>
         </tr>
 HTML;
-                echo $row2;
+
             }
 
-            echo '
+            $html .= <<<HTML
             </tbody> 
         </table> 
     </div> 
-</div>';
+</div>
+</div>
+HTML;
         } else {
 
-            $html_alt = <<<HTML
+            $html = <<<HTML
 <div class="container-fluid">
     <div class="row">
         <div class="col">
@@ -91,8 +94,9 @@ HTML;
          </div>
     </div>
 HTML;
-            echo $html_alt;
+
         }
+        return $html;
     }
 
 
@@ -110,20 +114,48 @@ HTML;
         </div>
         </div>
         <div class="row">
-            <div class="col-2">
-                <a class="btn-dark" href="#">Log in</a>
+            <div class="col text-center">
+                <a class="btn btn-dark" href="#">Log in</a>
             </div>
-            <div class="col-2">
-                <a class="btn-primary" href="#">Registreer</a>
+            <div class="col text-center">
+                <a class="btn btn-primary" href="#">Registreer</a>
             </div>
         </div>
+<br>
 HTML;
+            $html_alt .= $this->printBodinfo();
+            return $html_alt;
+        } else {
+            $html_alt = <<<HTML
+    <div class="container-fluid">    
+        <div class="row">
+            <div class="col">
+            <p>Bieden:</p>
+        </div>
+        </div>
+        <div class="row">
+        <form action="Veiling.php" class="form-inline">
+               <input type="hidden" value="$this->voorwerpnummer" name="id">
+               <div class="input-group mr-sm-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">€</span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Bodbedrag">
+                    <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary mb-2" type="submit">Plaats Bieding</button>
+            
+        </form>
+        </div>
+<br>
+HTML;
+            $html_alt .= $this->printBodinfo();
+            return $html_alt;
         }
 
-        else{
 
-        }
-        echo $html_alt;
-        $this->printBodinfo();
+
     }
 }

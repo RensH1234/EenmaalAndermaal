@@ -22,8 +22,8 @@ $huidigeJaar = date('Y');
 <main>
         <?php
         $biedingen = new Biedingmachine();
-        $biedingen->_construct(1,false);
-        $biedingen->printBiedingmachine();
+        $biedingen->_construct(2,false);
+        echo $biedingen->printBiedingmachine();
         ?>
 </main>
 <?= _generateFooter(date('Y')) ?>
