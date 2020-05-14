@@ -1,5 +1,6 @@
 <?php
 include_once 'DatabaseConn.php';
+include_once 'Biedingmachine.php';
 
 class VeilingArtikel
 {
@@ -103,6 +104,8 @@ class Artikel
     private $AfbeeldingURL;
     private $AantalVoorwerpen;
 
+    private $biedingenHTML;
+
     //Constructor
     public function _getVeilingGegevens($id)
     {
@@ -140,6 +143,7 @@ class Artikel
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
+        $this->setBiedingen();
     }
 
     //Functie die op basis van geldigheid van veiling een andere string returnt
@@ -213,42 +217,60 @@ class Artikel
         }
     }
 
+    //functie die de printBiedingmachine uit Biedingmachine.php uitprint
+    private function setBiedingen(){
+        $biedingen = new Biedingmachine();
+        //de boolean waarde moet controleren of er is ingelogd. Met het maken van de inlogfunctie moet dit worden gemaakt.
+        $biedingen->_construct($this->Id,true);
+        $this->biedingenHTML = $biedingen->printBiedingmachine();
+    }
+
     //functie die de gehele veilingpagina inhoud genereert
     function _printArtikel()
     {
         echo <<< ARTIKEL
-<div class='container mt-2'><div class='container'><div class='row'>
-<div class='col border'><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel width='480' height='360'></div>
-         <div class='col border'><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>
+<div class='container mt-2'><div class='container'>
+<div class='row'>
+<div class='col '><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel width='100%' max-height='45%'>
+<div class='row'><div class='col'>
+         <h5 class="font-weight-bold">Beschrijving:</h5></div><div class="col"></div></div>
+         <div class="row"><div class="col">
+         <h5 class="text-muted">$this->Beschrijving</h5></div><div class="col"></div></div>
+         
+         <div class='row mt-2'><div class='col-1 '><h5 class='text-muted'>✓</h5></div>
+         <div class='col '><h5 class='text-muted'>Georganiseerd door $this->Verkoper</h5></div></div>
+         <div class='row'><div class='col-1 '><h5 class='text-muted'>⮙</h5></div>
+         <div class='col '><h5 class='text-muted'>$this->Plaatsnaam, $this->Land</h5></div></div>
+         <div class='row'><div class='col-1 '><h5 class='text-muted'>€</h5></div>
+         <div class='col '><h5 class='text-muted'>Betalingswijze: $this->Betalingswijze</h5></div></div>
+         <div class='row'><div class='col-1 '><h5 class='text-muted'>🛈</h5></div>
+         <div class='col '><h5 class='text-muted'>BetalingInstructie: $this->Betalingsinstructie</h5></div></div>
+         <div class='row'><div class='col-1 '><h5 class='text-muted'>€</h5></div>
+         <div class='col '><h5 class='text-muted'>Verzendkosten: $this->Verzendkosten</h5></div></div>
+         <div class='row'><div class='col-1 '><h5 class='text-muted'>✄</h5></div>
+         <div class='col '><h5 class='text-muted'>Verzendwijze: $this->Verzendinstructies</h5></div></div>
+         <div class='row'><div class='col-1 '><h5 class='text-muted'>▪</h5></div>
+         <div class='col '><h5 class='text-muted'>Kavelnummer: $this->Id</h5></div></div>
+</div>
+         
+         <div class='col '><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>
          $this->VeilingStatus
          </h4></div></div>
          <div class='row'><div class='col border text-muted mt-2'>Huidige Bod</div>
          <div class='col border text-muted mt-2'>Aantal Biedingen</div></div>
          <div class='row'><div class='col border font-weight-bold mb-2'>€ $this->Verkoopprijs</div>
          <div class='col border font-weight-bold mb-2'>$this->Aantalbiedingen</div></div>
-         <div class='row'><div class='col border mt-2'>
-         <h6 class='text-muted'>Minimum volgend bod: € $this->Minimumprijs</h6></div></div>
-         <div class='row justify-content-center'><div class='col border'>
-         <input type='button' class='btn btn-primary btn-lg btn-block' value='Plaats Bod'></div></div>
-         <div class='row mt-2'><div class='col-1 border'><h5 class='text-muted'>✓</h5></div>
-         <div class='col border'><h5 class='text-muted'>Georganiseerd door $this->Verkoper</h5></div></div>
-         <div class='row'><div class='col-1 border'><h5 class='text-muted'>⮙</h5></div>
-         <div class='col border'><h5 class='text-muted'>$this->Plaatsnaam, $this->Land</h5></div></div>
-         <div class='row'><div class='col-1 border'><h5 class='text-muted'>€</h5></div>
-         <div class='col border'><h5 class='text-muted'>Betalingswijze: $this->Betalingswijze</h5></div></div>
-         <div class='row'><div class='col-1 border'><h5 class='text-muted'>🛈</h5></div>
-         <div class='col border'><h5 class='text-muted'>BetalingInstructie: $this->Betalingsinstructie</h5></div></div>
-         <div class='row'><div class='col-1 border'><h5 class='text-muted'>€</h5></div>
-         <div class='col border'><h5 class='text-muted'>Verzendkosten: $this->Verzendkosten</h5></div></div>
-         <div class='row'><div class='col-1 border'><h5 class='text-muted'>✄</h5></div>
-         <div class='col border'><h5 class='text-muted'>Verzendwijze: $this->Verzendinstructies</h5></div></div>
-         <div class='row'><div class='col-1 border'><h5 class='text-muted'>▪</h5></div>
-         <div class='col border'><h5 class='text-muted'>Kavelnummer: $this->Id</h5></div></div>
-         </div ></div>
-         <div class='row'><div class='col border'>
-         <h5 class='font-weight-bold'>Beschrijving:</h5></div><div class='col'></div></div>
-         <div class='row'><div class='col border'>$this->Beschrijving</div>
-         <div class='col border'></div></div></div></div></div>
+         <div class='row justify-content-center'><div class='col'>
+         $this->biedingenHTML</div></div>
+         
+         </div>
+         </div>
+         
+         
+         </div>
+         
+         
+         </div></div></div>
 ARTIKEL;
 
 //        $artikel = "<div class='container mt-2'><div class='container'><div class='row'>";
