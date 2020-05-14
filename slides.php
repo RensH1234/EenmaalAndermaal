@@ -8,7 +8,7 @@
     <div class="container col-lg-10">
         <div class="carousel-inner ">
             <div class="carousel-item active">
-                <img src="images/png/headerVeilingsite.png" alt="eerste foto">
+                <img src="images/png/headerVeilingsiteV2.png" alt="eerste foto">
                 <div class="carousel-caption">
                     <h1 class="display-2">Welkom</h1>
                     <h3>Dé veilingsite van Nederland!</h3>
@@ -16,12 +16,12 @@
                     <button type="button" class="btn btn-primary btn-lg test">Registreer nu!</button>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="images/png/background2.png" alt="twee foto">
-            </div>
-            <div class="carousel-item">
-                <img src="images/png/background3.png" alt="derde foto">
-            </div>
+<!--            <div class="carousel-item">-->
+<!--                <img src="images/png/background2.png" alt="twee foto">-->
+<!--            </div>-->
+<!--            <div class="carousel-item">-->
+<!--                <img src="images/png/background3.png" alt="derde foto">-->
+<!--            </div>-->
         </div>
     </div>
 </div>

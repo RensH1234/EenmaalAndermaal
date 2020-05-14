@@ -40,7 +40,7 @@ HTML;
     }
     public function printVeilingen(){
         echo $this->naam;
-        echo "<div class='col-sm'>";
+        echo "<div class='col-md'>";
         for($i = 0; $i < sizeof($this->voorwerpnummers); $i++){
             $a = new VeilingArtikel();
             $a->_construct($this->voorwerpnummers[$i]);

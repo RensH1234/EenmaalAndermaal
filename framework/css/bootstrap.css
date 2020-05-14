@@ -10240,3 +10240,32 @@ body {
   text-align: left;
   background-color: #fff;
 }
+
+.page-footer{
+  background-color: transparent;
+  opacity: 75%;
+}
+
+.page-footer .text-uppercase{
+  padding: 2rem;
+  color: whitesmoke;
+  padding-left: 0px;
+
+}
+
+.page-footer a{
+  color: #212529;
+}
+
+.page-footer .text-uppercase h6{
+  text-align: left;
+}
+.form-control input {
+  text-align: left;
+}
+
+ .login {
+  text-align: left;
+  justify-content: center;
+
+}

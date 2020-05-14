@@ -6,14 +6,14 @@
 
 /*voor klasse VeilingArtikel*/
 .card{
-    width: 20em;
+    width: 22em;
     display: inline-block;
     border: 4px solid rgba(168,148,124,255);
     margin: 2pt;
 }
 
 .card-img-top{
-    height: 180px;
+    height: 13em;
     width: 100%;
     display: block;
 }
@@ -56,6 +56,7 @@ input.form-control.mr-lg-3 {
 .carousel-inner img {
     width: 100%;
     height: 25rem;
+    /*opacity: 0%;*/
 }
 figure img{
     width: 100%;
@@ -111,7 +112,7 @@ figure img{
     }
 }
 
-@media (max-width: 576px) {
+@media screen and (max-width: 576px) {
     .carousel-caption {
         top: 40%;
     }
@@ -140,6 +141,13 @@ figure img{
 @media screen and ( max-width:  768px ){
     input.form-control.mr-lg-3 {
         width: 100px ;
+    }
+
+    .card{
+        width: 20em;
+        display: inline-block;
+        border: 4px solid rgba(168,148,124,255);
+        margin: 2pt;
     }
 }
 
