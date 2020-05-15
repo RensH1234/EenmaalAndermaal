@@ -73,4 +73,4 @@ fabric.properties
 # Toevoegingen Bart voor meta bestanden die je OS (macOS, WindOS :P) toch regenereert.
 .DS_Store
 thumbs.db
-/private/
+/private/config.ini
