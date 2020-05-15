@@ -6847,7 +6847,7 @@ button.bg-dark:focus {
 .rounded {
   border-radius: 0.25rem !important;
   width:100%;
-  max-height:360px;
+  max-height:400pt;
 }
 
 .rounded-top {
