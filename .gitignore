@@ -74,3 +74,4 @@ fabric.properties
 .DS_Store
 thumbs.db
 /private/config.ini
+/private
