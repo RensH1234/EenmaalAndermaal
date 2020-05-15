@@ -1,8 +1,7 @@
 <?php
-include_once 'framework.php';
+include_once 'Framework.php';
 include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';
-//include 'active.js';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
@@ -21,7 +20,7 @@ $huidigeJaar = date('Y');
     <link rel="stylesheet" href="Custom_css/custom%20stylesheet.css">
 </head>
 <body>
-<?php include_once 'h_test.php'; ?>
+<?php include_once 'Header.php'; ?>
 <main>
 
 <div class="container">
@@ -49,10 +48,5 @@ $huidigeJaar = date('Y');
     </div>
 
 </div>
-
-
-
-
-
 </main>
-<?= _generateFooter(date('Y')) ?>
+<?php _generateFooter(date('Y')) ?>

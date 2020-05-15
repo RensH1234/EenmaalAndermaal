@@ -1,7 +1,7 @@
 <?php
 include_once 'DatabaseConn.php';
 
-class Header
+class HeaderClass
 {
     function _getRubriekFromDb($SuperRubriek, $RubriekNiveau)
     {
@@ -28,4 +28,14 @@ ON r.RubriekID = Deriv1.SuperRubriekID WHERE r.SuperRubriekID= ?";
             }
         }
     }
+
+    function _activeHeader($page_cur)
+    {
+        $url_array = explode('/', $_SERVER['REQUEST_URI']);
+        $url = end($url_array);
+        if ($page_cur == $url) {
+            echo 'active';
+        }
+    }
+
 }
