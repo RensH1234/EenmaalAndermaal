@@ -1,5 +1,5 @@
 <?php
-include_once 'framework.php';
+include_once 'Framework.php';
 include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';
 include_once 'php classes/Zoekmachine.php';
@@ -74,7 +74,7 @@ $idArray = explode(".", $resultaten->_getIdArrayRes());
 </head>
 
 <body>
-<?php include_once 'h_test.php'; ?>
+<?php include_once 'Header.php'; ?>
 <main>
     <br>
     <div class="container-fluid ">
@@ -158,7 +158,7 @@ $idArray = explode(".", $resultaten->_getIdArrayRes());
 
     </div>
 </main>
-<?= _generateFooter(date('Y')) ?>
+<?php _generateFooter(date('Y')) ?>
 </body>
 </html>
 

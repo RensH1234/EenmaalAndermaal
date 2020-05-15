@@ -3,7 +3,7 @@ $title = 'Veiling';
 $siteNaam = 'Veiling!';
 include_once 'php classes/VeilingArtikel.php';
 include_once 'Functions.php';
-include 'framework.php';
+include 'Framework.php';
 $artikel = new Artikel();
 $artikel->_getVeilingGegevens($_GET['id']);
 $artikel->_getAantalBiedingen();
@@ -12,21 +12,6 @@ if(array_key_exists("bedrag",$_GET)){
     //de gebruiker moet een officiele zijn. Met het maken van het inlogsysteem kan dit worden voltooid.
     $artikel->setBiedingen(1,$_GET["bedrag"],'picklerick');
 }
-//function _gotoVeiling($hdg)
-//{
-//    if($hdg)
-//    if ($_GET['id'] > 1) {
-//        echo $_GET['id'] - 1;
-////        echo $var;
-//    } else {
-//        echo $_GET['id'];
-////        echo $var;
-//    }
-//    else {
-//
-//    }
-//}
-
 ?>
 <!doctype html>
 <html lang="nl">
@@ -40,7 +25,7 @@ if(array_key_exists("bedrag",$_GET)){
 </head>
 <body>
 <main>
-    <?php include_once 'h_test.php'; ?>
+    <?php include_once 'Header.php'; ?>
     <div class="container mt-2">
         <div class="row justify-content-between">
             <div class="col-4">
@@ -66,6 +51,6 @@ if(array_key_exists("bedrag",$_GET)){
     $artikel->_printArtikel();
     ?>
 </main>
-<?= _generateFooter(date('Y')) ?>
+<?php _generateFooter(date('Y')) ?>
 </body>
 </html>
