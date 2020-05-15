@@ -188,7 +188,7 @@ HTML;
         if($this->verkoopprijs > 499.99 && $this->verkoopprijs <= 999.99){
             return ($this->verkoopprijs + 5.00);
         }
-        if($this->verkoopprijs > 4999.99){
+        if($this->verkoopprijs > 999.99){
             return ($this->verkoopprijs + 50.00);
         }
     }

@@ -45,6 +45,14 @@ $idArray = explode(".", $resultaten->_getIdArrayRes());
 <body>
 <?php include_once 'h_test.php';?>
 <main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-5">
+
+            </div>
+        </div>
+
+    </div>
     <div class="dropdown" id="sorteerdropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
