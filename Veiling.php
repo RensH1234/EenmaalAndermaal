@@ -7,6 +7,26 @@ include 'framework.php';
 $artikel = new Artikel();
 $artikel->_getVeilingGegevens($_GET['id']);
 $artikel->_getAantalBiedingen();
+
+if(array_key_exists("bedrag",$_GET)){
+    //de gebruiker moet een officiele zijn. Met het maken van het inlogsysteem kan dit worden voltooid.
+    $artikel->setBiedingen(1,$_GET["bedrag"],'picklerick');
+}
+//function _gotoVeiling($hdg)
+//{
+//    if($hdg)
+//    if ($_GET['id'] > 1) {
+//        echo $_GET['id'] - 1;
+////        echo $var;
+//    } else {
+//        echo $_GET['id'];
+////        echo $var;
+//    }
+//    else {
+//
+//    }
+//}
+
 ?>
 <!doctype html>
 <html lang="nl">

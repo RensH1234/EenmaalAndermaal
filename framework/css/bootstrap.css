@@ -2555,7 +2555,7 @@ fieldset:disabled a.btn {
 .btn-primary:hover {
   color: #fff;
   background-color: #0069d9;
-  border-color: #0062cc;
+  border-color: #000000;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -6846,6 +6846,8 @@ button.bg-dark:focus {
 
 .rounded {
   border-radius: 0.25rem !important;
+  width:100%;
+  max-height:400pt;
 }
 
 .rounded-top {
@@ -10240,3 +10242,37 @@ body {
   text-align: left;
   background-color: #fff;
 }
+
+.page-footer{
+  background-color: transparent;
+  opacity: 75%;
+}
+
+.page-footer .text-uppercase{
+  padding: 2rem;
+  color: whitesmoke;
+  padding-left: 0px;
+
+}
+
+.page-footer a{
+  color: #212529;
+}
+
+.page-footer .text-uppercase h6{
+  text-align: left;
+}
+.form-control input {
+  text-align: left;
+}
+
+ .login {
+  text-align: left;
+  justify-content: center;
+
+}
+ .filtercontainer{
+   background-color: white;
+   border: 4px solid rgba(168,148,124,255);
+   padding: 2px;
+ }

@@ -1,5 +1,5 @@
 <?php
-require 'VeilingArtikel.php';
+require_once 'VeilingArtikel.php';
 class Veilinglijst
 {
     private $veilingArtikelen = array();
@@ -15,7 +15,7 @@ class Veilinglijst
         $this->maakArtikelen();
         $this->voorwerpnummers=$voorwerpnummers;
         $this->naam=<<<HTML
-<div class="row" id="$cssID">
+<div class="row-3" id="$cssID">
 HTML;
 
     }
@@ -40,7 +40,7 @@ HTML;
     }
     public function printVeilingen(){
         echo $this->naam;
-        echo "<div class='col-sm'>";
+        echo "<div class='col-md' >";
         for($i = 0; $i < sizeof($this->voorwerpnummers); $i++){
             $a = new VeilingArtikel();
             $a->_construct($this->voorwerpnummers[$i]);
