@@ -14,11 +14,11 @@ include_once 'Functions.php';
                     <a class="nav-link <?php _activeHeader('index.php');?>" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" href="testpagina.php" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Categoriën</a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         <li class="dropdown-submenu">
-                            <a class="dropdown-item dropdown-toggle" href="#">menu1</a>
+                            <a class="dropdown-item dropdown-toggle" href="testpagina.php">menu1</a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item " href="#">Submenu 1</a>

@@ -7,23 +7,6 @@ include 'framework.php';
 $artikel = new Artikel();
 $artikel->_getVeilingGegevens($_GET['id']);
 $artikel->_getAantalBiedingen();
-
-//function _gotoVeiling($hdg)
-//{
-//    if($hdg)
-//    if ($_GET['id'] > 1) {
-//        echo $_GET['id'] - 1;
-////        echo $var;
-//    } else {
-//        echo $_GET['id'];
-////        echo $var;
-//    }
-//    else {
-//
-//    }
-//}
-
-
 ?>
 <!doctype html>
 <html lang="nl">
