@@ -56,7 +56,7 @@ Voorwerpnummer = ?;";
     function printArtikel()
     {
         return <<<HTML
-<div class="card">
+<div class="card text-center">
   <img class="card-img-top" src=$this->afbeeldingURL alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">$this->titel</h5>
@@ -72,6 +72,7 @@ Voorwerpnummer = ?;";
 
 HTML;
     }
+
 }
 
 //Constructor voor Enkele Artikel in Veilingpagina
