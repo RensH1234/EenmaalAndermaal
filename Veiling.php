@@ -8,9 +8,9 @@ $artikel = new Artikel();
 $artikel->_getVeilingGegevens($_GET['id']);
 $artikel->_getAantalBiedingen();
 
-if(array_key_exists("bedrag",$_GET)){
+if(array_key_exists("bedrag",$_POST)){
     //de gebruiker moet een officiele zijn. Met het maken van het inlogsysteem kan dit worden voltooid.
-    $artikel->setBiedingen(1,$_GET["bedrag"],'picklerick');
+    $artikel->setBiedingen(1,$_POST["bedrag"],'picklerick');
 }
 ?>
 <!doctype html>
