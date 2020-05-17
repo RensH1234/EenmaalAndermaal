@@ -62,13 +62,30 @@ Voorwerpnummer = ?;";
     <h5 class="card-title">$this->titel</h5>
     <p class="card-text">Locatie: $this->afstand</p>
     <p class="card-text">Prijs: $this->prijs</p>
-    <p class="card-text">Eindigt op: $this->eindtijd</p>
+    <p class="card-text">Einde veiling: <span id="$this->id"></span></p>
     <form action="Veiling.php" method="get">
     <input name="id" type="hidden" value="$this->id">
     <button class="btn-dark"  type="submit"> Informatie Veiling </button>
 </form>
   </div>
 </div>
+<script>
+var countDownDate$this->id = new Date("$this->eindtijd").getTime();
+var x$this->id = setInterval(function() {
+  var now$this->id = new Date().getTime();
+  var distance$this->id = countDownDate$this->id - now$this->id;
+  var days$this->id = Math.floor(distance$this->id / (1000 * 60 * 60 * 24));
+  var hours$this->id = Math.floor((distance$this->id % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes$this->id = Math.floor((distance$this->id % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds$this->id = Math.floor((distance$this->id % (1000 * 60)) / 1000);
+  document.getElementById("$this->id").innerHTML = days$this->id + "d " + hours$this->id + "h "
+  + minutes$this->id + "m " + seconds$this->id + "s ";
+  if (distance$this->id < 0) {
+    clearInterval(x$this->id);
+    document.getElementById("$this->id").innerHTML = "Veiling is afgelopen";
+  }
+}, 1000);
+</script>
 
 HTML;
     }
