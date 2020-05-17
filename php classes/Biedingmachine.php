@@ -155,8 +155,7 @@ HTML;
         </div>
         </div>
         <div class="row">
-        <form action="Veiling.php" class="form-inline" method="get">
-               <input type="hidden" value="$this->voorwerpnummer" name="id">
+        <form action="Veiling.php?id=$this->voorwerpnummer" class="form-inline" method="post">
                <div class="input-group mr-sm-2">
                     <div class="input-group-prepend">
                         <span class="input-group-text">€</span>
