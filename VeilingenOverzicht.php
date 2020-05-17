@@ -3,6 +3,7 @@ include_once 'Framework.php';
 include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';
 include_once 'php classes/Zoekmachine.php';
+include_once 'php classes/Rubriekenlijst.php';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
@@ -109,6 +110,10 @@ $idArray = explode(".", $resultaten->_getIdArrayRes());
                         <button class="btn btn-primary" type="submit">Reset filter</button>
                     </form>
                 </div>
+                <?php
+                $rubriekenlijst = new Rubriekenlijst();
+                $rubriekenlijst->_print(0,false);
+                ?>
             </div>
             <div class="col ">
                 <div class="row ">

@@ -1,8 +1,18 @@
 <?php
 include_once 'DatabaseConn.php';
 
-class HeaderClass
+class Rubriekenlijst
 {
+
+    public function _print($openId, $opencheck){
+        if(!$opencheck){
+            $this->_getRubriekFromDb(-1,1);
+        }
+        else{
+            $this->_getRubriekFromDbOpen(-1,1,$openId);
+        }
+    }
+
     function _getRubriekFromDb($SuperRubriek, $RubriekNiveau)
     {
         $conn = getConn();
@@ -29,13 +39,8 @@ ON r.RubriekID = Deriv1.SuperRubriekID WHERE r.SuperRubriekID= ?";
         }
     }
 
-    function _activeHeader($page_cur)
+    private function _getRubriekFromDbOpen($param,$int, $openId)
     {
-        $url_array = explode('/', $_SERVER['REQUEST_URI']);
-        $url = end($url_array);
-        if ($page_cur == $url) {
-            echo 'active';
-        }
-    }
 
+    }
 }
