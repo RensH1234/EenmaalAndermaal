@@ -15,13 +15,13 @@ $menu = new HeaderClass();
                 <li class="nav-item">
                     <a class="nav-link <?php $menu->_activeHeader('Index.php');?>" href="Index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="Index.php" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">Categoriën</a>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <?php $menu->_getRubriekFromDb(-1, 1);?>
-                    </ul>
-                </li>
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="Index.php" id="navbarDropdownMenuLink" data-toggle="dropdown"-->
+<!--                       aria-haspopup="true" aria-expanded="false">Categoriën</a>-->
+<!--                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">-->
+<!--                        --><?php //$menu->_getRubriekFromDb(-1, 1);?>
+<!--                    </ul>-->
+<!--                </li>-->
                 <li class="nav-item">
                     <a class="nav-link <?php $menu->_activeHeader('Inloggen.php');?>" href="Inloggen.php">Login</a>
                 </li>
