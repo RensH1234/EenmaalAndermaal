@@ -27,7 +27,13 @@ Voorwerpnummer = ?;";
                 $this->titel = $row['Titel'];
                 $this->afstand = $row['Plaatsnaam'];
                 $this->prijs = $row['Verkoopprijs'];
-                $this->eindtijd = ($row['LoopTijdEinde']->format('Y-m-d H:i:s'));
+                if($row['LoopTijdEinde']!=null){
+                    $this->eindtijd = ($row['LoopTijdEinde']->format('Y-m-d H:i:s'));
+                }
+                elseif($row["MaximaleLooptijd"]!=null&&$row["Looptijdbegin"]){
+                    $date = $row["Looptijdbegin"]->format('Y-m-d H:i:s');
+                    $this->eindtijd = date('Y-m-d H:i:s', strtotime($date. " + {$row["MaximaleLooptijd"]} days"));
+                }
                 $this->id = $row['Voorwerpnummer'];
             }
         } else {
