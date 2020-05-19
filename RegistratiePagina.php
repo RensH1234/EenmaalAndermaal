@@ -23,12 +23,14 @@ $email = null;
 $telefoonnummer = null;
 $geboortedatum = null;
 $aBeveiligingsvraag = null;
+$beveiligingsvraag = null;
+$rol = null;
 $beveiligingsvragen = _getBeveiligingsvragen();
 
 
 if(array_key_exists("gebruikersnaam",$_POST)){
     $gebruikersnaam=$_POST["gebruikersnaam"];
-    if(strlen($_POST["gebruikersnaam"])>15){
+    if(strlen($_POST["gebruikersnaam"])>30){
         $error .= "<p class='text-white'>Error: gebruikersnaam is te lang</p>";
     }
     if(strlen($_POST["gebruikersnaam"])<5){
@@ -45,9 +47,6 @@ if(array_key_exists("wachtwoord",$_POST)){
     }
     if(strlen($_POST["wachtwoord"])>50){
         $error .= "<p class='text-white'>Error: wachtwoord is te lang</p>";
-    }
-    if(preg_match('/[^A-Za-z0-9]+""/', $wachtoord1)){
-        $error .= "<p class='text-white'>Error: wachtwoord mag geen vreemde tekens bevatten</p>";
     }
 }
 if(array_key_exists("wachtwoord_herhaling",$_POST)){
@@ -183,15 +182,89 @@ if(array_key_exists("antwoord",$_POST)){
         $error .= "<p class='text-white'>Error: antwoord beveiligingsvraag mag geen vreemde tekens bevatten</p>";
     }
 }
+if(array_key_exists("beveiligingsvraag",$_POST)){
+    $beveiligingsvraag=$_POST["beveiligingsvraag"];
+}
+if(array_key_exists("rol",$_POST)){
+    $rol=$_POST["rol"];
+}
 if($error==null&&array_key_exists("gebruikersnaam",$_POST)){
     _registreerGebruiker();
 }
 
 function _getBeveiligingsvragen(){
-    return "";
+    $conn = getConn();
+    $sql = "SELECT COUNT(*) AS AantalVragen FROM Vraag;";
+    $stmt = sqlsrv_prepare($conn, $sql);
+    if (!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    sqlsrv_execute($stmt);
+    if (sqlsrv_execute($stmt)) {
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $aantalvragen = $row["AantalVragen"];
+        }
+    } else {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    $html = "";
+    $sql = "SELECT * FROM Vraag;";
+    $stmt = sqlsrv_prepare($conn, $sql);
+    if (!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    sqlsrv_execute($stmt);
+    if (sqlsrv_execute($stmt)) {
+        for($i = 0; $i < $aantalvragen; $i++) {
+
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC,$i)) {
+                $vraag = $row["Tekstvraag"];
+                $vraagnummer = $row["Beveiligingsvraag"];
+                $html .= <<<HTML
+<option value="$vraagnummer">$vraag</option>
+HTML;
+            }
+        }
+    } else {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    return $html;
 }
 
 function _registreerGebruiker(){
+    global $gebruikersnaam;
+    global $voornaam;
+    global $achternaam;
+    global $straatnaam;
+    global $tussenvoegsel;
+    global $huisnummer;
+    global $postcode;
+    global $plaatsnaam;
+    global $land;
+    global $geboortedatum;
+    global $email;
+    global $wachtoord1;
+    global $beveiligingsvraag;
+    global $aBeveiligingsvraag;
+    global $rol;
+    global $telefoonnummer;
+
+    $beveiligingsvraag = (int) $beveiligingsvraag;
+    $huisnummer = (int) $huisnummer;
+    $bevestigd = 0;
+    $hash = password_hash($wachtoord1,PASSWORD_DEFAULT);
+    $conn = getConn();
+
+
+    $params = array($gebruikersnaam,$voornaam,$achternaam,$straatnaam,$huisnummer,$tussenvoegsel,$postcode,$plaatsnaam,$land,$geboortedatum,$email,$hash,$beveiligingsvraag,$aBeveiligingsvraag,$rol,$bevestigd);
+    $sql = "INSERT INTO 
+Gebruiker(Gebruikersnaam,Voornaam,Achternaam,Straatnaam,Huisnummer,Tussenvoegsel,Postcode,Plaatsnaam,Land,GeboorteDatum,Emailadres,Wachtwoord,Beveiligingsvraag,Antwoordtekst,Rol,Bevestigd) 
+VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $stmt = sqlsrv_prepare($conn, $sql,$params);
+    sqlsrv_execute($stmt);
+    if (!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
 
 }
 ?>
@@ -278,8 +351,7 @@ function _registreerGebruiker(){
                                     <label class="control-label">Koper / Verkoper</label>
                                     <div class="selectContainer">
                                         <div class="input-group">
-                                            <select name="rol" class="form-control selectpicker" >
-                                                <option  value="<?php echo $rol ;?>">Selecteer een rol(Kan worden aangepast)</option>*
+                                            <select name="rol" class="form-control selectpicker" >*
                                                 <option>Koper</option>
                                                 <option>Verkoper</option>
                                             </select>
@@ -314,7 +386,7 @@ function _registreerGebruiker(){
                                 <label class="control-label">Huisnummer</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  nrequired="true" ame="huisnummer" placeholder="Huisnummer" class="form-control"  type="text" value="<?php echo $huisnummer ;?>">*
+                                        <input  nrequired="true" name="huisnummer" placeholder="Huisnummer" class="form-control"  type="text" value="<?php echo $huisnummer ;?>">*
                                     </div>
                                 </div>
                             </div>
@@ -395,9 +467,7 @@ function _registreerGebruiker(){
                                 <div class="selectContainer">
                                     <div class="input-group">
                                         <select required="true" name="beveiligingsvraag" class="form-control selectpicker">   *
-                                            <option>Selecteer een beveiligingsvraag</option>
-                                            <option>Koper</option>
-                                            <option>Verkoper</option>
+                                            <?php echo $beveiligingsvragen; ?>
                                         </select>
                                     </div>
                                 </div>
