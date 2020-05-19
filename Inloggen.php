@@ -32,7 +32,7 @@ $huidigeJaar = date('Y');
 <!--            <img alt="logo" src="./images/png/EenmaalAndermaalLogo200px200px.png">-->
 <!--                <a class="logo" <img alt="logo" src="./images/png/EenmaalAndermaalLogo200px200px.png" href="nu.nl"></a>-->
 
-                <a href="index.php">
+                <a href="./index.php">
                     <img alt="logo" src="./images/png/EenmaalAndermaalLogo200px200px.png"> </a>
             </div>
             <br>
@@ -41,11 +41,11 @@ $huidigeJaar = date('Y');
                 <h2 class="h3 mb-3 font-weight-normal ">Log hier in!</h2>
                 <div class="form-group">
                     <label for="InputGebruiker" <i class="fa fa-user"></i> </i>Gebruikersnaam</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="Gebruiker" placeholder="Gebruikersnaam">
+                    <input type="gebruikersnaam" class="form-control" id="gebruikersnaam" aria-describedby="Gebruiker" placeholder="Gebruikersnaam">
                 </div>
                 <div class="form-group">
                     <label for="InputPassword"<i class="fa fa-key"></i>Wachtwoord</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Wachtwoord">
+                    <input type="password" class="form-control" name="password" id="wachtwoord" placeholder="Wachtwoord">
                 </div>
                 <div class="form-check">
                     <br>
