@@ -1,52 +1,5 @@
 <?php
 
-//Function{
-//$gebruikersnaam = ($_POST ['gebruikersnaam']);
-//$wachtwoord = ($_POST ['wachtwoord']);
-//
-//    session_start();
-//
-//
-//    if (isset($_POST['submitbutton'])) {
-//        $gebruiker = $_POST['gebruikersnaam'];
-//        $db_pw = $_POST['wachtwoord'];
-//
-//        if ($gebruikersnaam == "" && $db_pw == "") {
-//            $_SESSION['ingelogd'] = true;
-//        }
-//    }
-//
-//    if (isset($_SESSION['ingelogd'])) {
-//        $ingelogd = true;
-//    }
-//
-//    if (isset($_POST['logoutbutton'])) {
-//        $ingelogd = false;
-//        session_destroy();
-//    }
-//
-//    $conn = getConn();
-//    $sql = "SELECT Gebruikersnaam,Wachtwoord FROM Gebruiker";
-//
-//
-//
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function _generateFooter($jaar){
     echo <<< FOOTER
 <!-- Footer -->
