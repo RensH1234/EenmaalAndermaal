@@ -78,7 +78,7 @@ $idArray = explode(".", $resultaten->_getIdArrayRes());
 <?php include_once 'Header.php'; ?>
 <main>
     <br>
-    <div class="container-fluid ">
+    <div class="container mt-2">
         <div class="row ">
             <div class="col-cm-auto filtercontainer">
                 <div class="dropdown">
