@@ -107,4 +107,38 @@ function _activeHeader($page_cur)
         echo 'active';
     }
 }
+function stuurRegistratieEmail($email){
+    $to = $email;
+    $subject = "Registratie voltooien";
+
+    $message = "
+<html>
+<head>
+<title>Fakka niffo</title>
+</head>
+<body>
+<p>Paas ff biertje</p>
+<table>
+<tr>
+<th>My</th>
+<th>Balls</th>
+</tr>
+<tr>
+<td>are</td>
+<td>soft</td>
+</tr>
+</table>
+</body>
+</html>
+";
+
+// Always set content-type when sending HTML email
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+// More headers
+    $headers .= 'From: <registratie@eenmaalandermaal.com>' . "\r\n";
+
+    mail($to,$subject,$message,$headers);
+}
 
