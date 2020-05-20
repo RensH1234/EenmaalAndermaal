@@ -1,4 +1,7 @@
 <?php
+//wanneer er op de registratieknop wordt gedrukt, worden deze controles uitgevoert op de gegevens. Dit bestand wordt geincluded op 'RegistratiePagina.php'
+
+
 if(isset($_POST["registreren"])) {
     if (array_key_exists("gebruikersnaam", $_POST)) {
         $gebruikersnaam = $_POST["gebruikersnaam"];
@@ -160,6 +163,8 @@ if(isset($_POST["registreren"])) {
     if (array_key_exists("rol", $_POST)) {
         $rol = $_POST["rol"];
     }
+
+    //aan het eind, als er geen errors zijn gegenereerd wordt de gebruiker geregistreerd.
     if ($error == null && array_key_exists("gebruikersnaam", $_POST)) {
         _registreerGebruiker();
     }

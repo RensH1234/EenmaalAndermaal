@@ -1,12 +1,14 @@
 <?php
 include_once 'DatabaseConn.php';
 include_once 'framework.php';
-include_once 'php classes/Veilinglijst.php';
+
+//deze is voor het versturen van een email
 include_once 'Functions.php';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
 
+//deze lege variabelen worden gedeclareert met waarde null, zodat php een waarde kan printen, ook al is deze leeg.
 $error = null;
 $gebruikersnaam = null;
 $wachtoord1 = null;
@@ -27,8 +29,11 @@ $beveiligingsvraag = null;
 $rol = null;
 $beveiligingsvragen = _getBeveiligingsvragen();
 
+//Wanneer een gebruiker registreert, wordt hierin gecontroleerd of de ingevoerde gegevens correct en veilig zijn. Ook worden de waardes ingevoerd weer op de goede plek gegenereerd.
 include 'RegistratieControles.php';
 
+
+//deze functie haalt alle beveiligingsvragen uit de database, en maakt de html van de form aan. Als er vragen worden toegevoegd, komen deze automatisch op het registratieform.
 function _getBeveiligingsvragen(){
     $conn = getConn();
     $sql = "SELECT COUNT(*) AS AantalVragen FROM Vraag;";
@@ -53,7 +58,6 @@ function _getBeveiligingsvragen(){
     sqlsrv_execute($stmt);
     if (sqlsrv_execute($stmt)) {
         for($i = 0; $i < $aantalvragen; $i++) {
-
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC,$i)) {
                 $vraag = $row["Tekstvraag"];
                 $vraagnummer = $row["Beveiligingsvraag"];
@@ -69,6 +73,9 @@ HTML;
 }
 
 function _registreerGebruiker(){
+
+
+    //het globaal maken van deze variabelen is nodig om ze op te halen in de functie.
     global $gebruikersnaam;
     global $voornaam;
     global $achternaam;
@@ -86,13 +93,18 @@ function _registreerGebruiker(){
     global $rol;
     global $telefoonnummer;
 
+    //De waardes in deze variabelen zijn nodig om de gegevens van php naar de goede in de sql tabel te zetten.
     $beveiligingsvraag = (int) $beveiligingsvraag;
     $huisnummer = (int) $huisnummer;
+
+    //bevestigd wordt nu 0, maar na de bevestiging wordt hij op 1 gezet.
     $bevestigd = 0;
+
     $hash = password_hash($wachtoord1,PASSWORD_DEFAULT);
+
     $conn = getConn();
 
-
+    //De eerste sql query zet de gegevens van de gebruiker in de gebruikerstabel.
     $params = array($gebruikersnaam,$voornaam,$achternaam,$straatnaam,$huisnummer,$tussenvoegsel,$postcode,$plaatsnaam,$land,$geboortedatum,$email,$hash,$beveiligingsvraag,$aBeveiligingsvraag,$rol,$bevestigd);
     $sql = "INSERT INTO 
 Gebruiker(Gebruikersnaam,Voornaam,Achternaam,Straatnaam,Huisnummer,Tussenvoegsel,Postcode,Plaatsnaam,Land,GeboorteDatum,Emailadres,Wachtwoord,Beveiligingsvraag,Antwoordtekst,Rol,Bevestigd) 
@@ -100,13 +112,17 @@ VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     $stmt = sqlsrv_prepare($conn, $sql,$params);
     sqlsrv_execute($stmt);
     if (!$stmt) {
+        //door het globaal maken hiervan kunnen de errorberichten worden aangemaakt.
+        global $error;
+        $error .= "<p>Er ging iets mis.</p>";
         die(print_r(sqlsrv_errors(), true));
     }
+    //wanneer de query succesvol is uitgevoerd, wordt er een mail gestuurt waar de gebruiker de registratie kan voltooien door op een link te drukken.
     elseif($stmt){
-        stuurRegistratieEmail($email);
-        echo $email;
+        stuurRegistratieEmail($email,$gebruikersnaam);
     }
 
+    //de tweede query zet het telefoonnummer in de Gebruikerstelefoon-tabel, als die gegeven is.
     if($telefoonnummer!=null) {
         $params = array($gebruikersnaam, $telefoonnummer);
         $sql = "INSERT INTO 
