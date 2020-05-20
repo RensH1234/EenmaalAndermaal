@@ -1,4 +1,6 @@
 <?php
+require 'SessionHandling/Session.php';
+
 include_once 'Framework.php';
 include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';

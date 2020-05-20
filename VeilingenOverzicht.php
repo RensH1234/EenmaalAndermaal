@@ -5,7 +5,7 @@ include_once 'Functions.php';
 include_once 'php classes/Zoekmachine.php';
 include_once 'php classes/Rubriekenlijst.php';
 $title = 'Eenmaal Andermaal!';
-$siteNaam = 'Welkom!';
+$siteNaam = 'Overzicht';
 $huidigeJaar = date('Y');
 $hiddenDataForms = "";
 if (!array_key_exists("zoekopdracht", $_GET)) {
