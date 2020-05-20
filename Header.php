@@ -27,8 +27,12 @@ $data = $menu->sessionLink();
                     <a class="nav-link <?php $menu->_activeHeader($data['href']);?>" href=<?=$data['href']?>><?=$data['name']?></a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <?php $menu->_activeHeader('RegistratiePagina.php');?>" href=RegistratiePagina.php>Registreren</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?php $menu->_activeHeader('Over-ons.php');?>" href="Over-ons.php">Ons</a>
                 </li>
+
             </ul>
             <form class="form-inline my-2 my-lg-0" method="get" action="VeilingenOverzicht.php">
                 <input class="form-control mr-sm-2" type="search" placeholder="Typ hier uw zoekopdracht"

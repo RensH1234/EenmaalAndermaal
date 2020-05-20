@@ -31,7 +31,7 @@ class HeaderClass
 
         if (isset($menuData['parents'][$SuperID])) {
             foreach ($menuData['parents'][$SuperID] as $itemId) {
-                $html .= "<li class='dropdown-submenu'><a class='dropdown-item' href=''>" . $menuData['items'][$itemId]['Rubrieknaam'] . "</a>";
+                $html .= "<li class='dropdown-submenu'><a class='dropdown-item' href='VeilingenOverzicht.php?rubriekID={$menuData['items'][$itemId]['RubriekID']}'>" . $menuData['items'][$itemId]['Rubrieknaam'] . "</a>";
                 if ($Depth > 1) {
                     $html .= "<ul class='dropdown-menu'>";
                     $html .= $this->_generateRubriekList($itemId, $menuData, $Depth - 1);

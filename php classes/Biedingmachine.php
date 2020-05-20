@@ -12,7 +12,13 @@ class Biedingmachine
 
     public function _construct($voorwerpnummer, $ingelogd, $gebruiker)
     {
-        $this->ingelogd = $ingelogd;
+        if(!$ingelogd||$ingelogd==null){
+            $this->ingelogd = false;
+        }
+        else{
+            $this->ingelogd=true;
+        }
+
         $this->voorwerpnummer = $voorwerpnummer;
         $this->nieuweBieder = $gebruiker;
         $conn = getConn();
@@ -136,10 +142,10 @@ HTML;
         </div>
         <div class="row">
             <div class="col text-center">
-                <a class="btn btn-dark" href="#">Log in</a>
+                <a class="btn btn-dark" href="Inloggen.php">Log in</a>
             </div>
             <div class="col text-center">
-                <a class="btn btn-primary" href="#">Registreer</a>
+                <a class="btn btn-primary" href="RegistratiePagina.php">Registreer</a>
             </div>
         </div>
 <br>

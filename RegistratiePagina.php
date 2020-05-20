@@ -120,6 +120,9 @@ VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     //wanneer de query succesvol is uitgevoerd, wordt er een mail gestuurt waar de gebruiker de registratie kan voltooien door op een link te drukken.
     elseif($stmt){
         stuurRegistratieEmail($email,$gebruikersnaam);
+        echo '<script type="text/javascript">';
+        echo ' alert("Er is een email gestuurt naar het mailadres.")';  //not showing an alert box.
+        echo '</script>';
     }
 
     //de tweede query zet het telefoonnummer in de Gebruikerstelefoon-tabel, als die gegeven is.

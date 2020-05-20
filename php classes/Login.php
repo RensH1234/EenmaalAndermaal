@@ -38,6 +38,9 @@ Gebruikersnaam = ?;";
             $this->_getFromGebruikersDb($this->name_post);
             if ($this->_isMatch()) {
                 $_SESSION['ingelogd'] = true;
+
+                //toegevoegd door rens om een gebruikersnaam bij de biedingen te krijgen
+                $_SESSION['gebruikersnaam'] = $this->name_post;
                 header('location: Login_Redir.php');
             } else {
 

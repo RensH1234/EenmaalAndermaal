@@ -1,5 +1,5 @@
 <?php
-require 'SessionHandling/Session.php';
+require_once 'SessionHandling/Session.php';
 
 include_once 'Framework.php';
 include_once 'php classes/Veilinglijst.php';

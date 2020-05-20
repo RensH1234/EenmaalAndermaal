@@ -1,6 +1,7 @@
 <?php
 $title = 'Veiling';
 $siteNaam = 'Veiling';
+require_once 'SessionHandling/Session.php';
 include_once 'php classes/VeilingArtikel.php';
 include_once 'Functions.php';
 include 'Framework.php';
@@ -9,8 +10,12 @@ $artikel->_getVeilingGegevens($_GET['id']);
 $artikel->_getAantalBiedingen();
 
 if (array_key_exists("bedrag", $_POST)) {
-    //de gebruiker moet een officiele zijn. Met het maken van het inlogsysteem kan dit worden voltooid.
-    $artikel->setBiedingen(1, $_POST["bedrag"], 'picklerick');
+
+    //de gebruiker en of er is ingelogd wordt afgehandeld in 'Artikel->setBiedingen'
+    $artikel->setBiedingen(1, $_POST["bedrag"]);
+
+    //refresh om het bod te laten zien
+    header("Refresh:0");
 }
 ?>
 <!doctype html>

@@ -168,5 +168,6 @@ if(isset($_POST["registreren"])) {
     //aan het eind, als er geen errors zijn gegenereerd wordt de gebruiker geregistreerd.
     if ($error == null && array_key_exists("gebruikersnaam", $_POST)) {
         _registreerGebruiker();
+
     }
 }

@@ -254,11 +254,16 @@ class Artikel
     }
 
     //functie die de printBiedingmachine uit Biedingmachine.php uitprint
-    public function setBiedingen($optie,$bedrag,$gebruiker){
+    public function setBiedingen($optie,$bedrag){
         $biedingen = new Biedingmachine();
         //de boolean waarde moet controleren of er is ingelogd. Met het maken van de inlogfunctie moet dit worden gemaakt.
-        $biedingen->_construct($this->Id,true,$gebruiker);
-        if($optie == 1&&$gebruiker !== 0){
+        if(array_key_exists('ingelogd',$_SESSION)){
+            $biedingen->_construct($this->Id,$_SESSION['ingelogd'],$_SESSION['gebruikersnaam']);
+        }
+        else{
+            $biedingen->_construct($this->Id,false,$_SESSION['gebruikersnaam']);
+        }
+        if($optie == 1){
             $biedingen->submitBod($bedrag);
         }
         $this->biedingenHTML = $biedingen->printBiedingmachine();
