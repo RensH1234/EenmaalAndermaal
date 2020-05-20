@@ -14,15 +14,14 @@ class Zoekmachine
         }
         $this->idArray = array();
         $conn = getConn();
-        $sql = "SELECT Voorwerpnummer FROM Voorwerp WHERE
-(Titel LIKE '%{$sleutelwoord}%' OR Beschrijving LIKE '%{$sleutelwoord}%') {$this->filterprijs} ORDER BY {$filteroptie};";
+        $sql = "SELECT TOP 20 Voorwerpnummer FROM Voorwerp WHERE
+(Titel LIKE '%{$sleutelwoord}%' ) {$this->filterprijs} ORDER BY {$filteroptie};";
         $stmt = sqlsrv_prepare($conn, $sql);
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
         }
         sqlsrv_execute($stmt);
         if (sqlsrv_execute($stmt)) {
-
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                 array_push($this->idArray, $row['Voorwerpnummer']);
 

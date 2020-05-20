@@ -61,9 +61,10 @@ Voorwerpnummer = ?;";
 
     function printArtikel()
     {
+        $url = 'http://iproject12.icasites.nl/pics/';
         return <<<HTML
 <div class="card text-center">
-  <img class="card-img-top" src=$this->afbeeldingURL alt="Card image cap">
+  <img class="card-img-top" src=$url$this->afbeeldingURL alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">$this->titel</h5>
     <p class="card-text">Locatie: $this->afstand</p>
@@ -129,6 +130,7 @@ class Artikel
     private $AantalVoorwerpen;
 
     private $biedingenHTML;
+    private $url = 'http://iproject12.icasites.nl/pics/';
 
     //Constructor
     public function _getVeilingGegevens($id)
@@ -155,7 +157,15 @@ class Artikel
                 $this->Verzendinstructies = $row['Verzendinstructies'];
                 $this->Verkoper = $row['Verkoper'];
                 $this->Koper = $row['Koper'];
-                $this->LoopTijdEinde = $row['LoopTijdEinde'];
+                if($row['LoopTijdEinde']!=null){
+                    $this->eindtijd = ($row['LoopTijdEinde']->format('Y-m-d H:i:s'));
+                }
+                elseif($row["MaximaleLooptijd"]!=null&&$row["Looptijdbegin"]){
+                    $date = $row["Looptijdbegin"]->format('Y-m-d H:i:s');
+                    $this->LoopTijdEinde = date('Y-m-d H:i:s', strtotime($date. " + {$row["MaximaleLooptijd"]} days"));
+                    $this->LoopTijdEinde = date_create($this->LoopTijdEinde);
+
+                }
                 $this->VeilingGesloten = $row['VeilingGesloten'];
                 $this->MaximaleLooptijd = $row['MaximaleLooptijd'];
                 $this->Verkoopprijs = $row['Verkoopprijs'];
@@ -261,7 +271,7 @@ class Artikel
         echo <<< ARTIKEL
 <div class='container mt-2'><div class='container'>
 <div class='row'>
-<div class='col '><img src=$this->AfbeeldingURL class='rounded' alt=$this->Titel>
+<div class='col '><img src=$this->url$this->AfbeeldingURL class='rounded' alt=$this->Titel>
 <div class='row'><div class='col'>
          <h5 class="font-weight-bold">Beschrijving:</h5></div><div class="col"></div></div>
          <div class="row"><div class="col">

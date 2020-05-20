@@ -1,11 +1,12 @@
 <?php
-//wanneer er op de registratieknop wordt gedrukt, worden deze controles uitgevoert op de gegevens. Dit bestand wordt geincluded op 'RegistratiePagina.php'
+//wanneer er op de registratieknop wordt gedrukt, worden deze controles uitgevoert op de gegevens. Dit bestand wordt geincluded op 'RegistratiePagina.php'.
+//de gegevens worden gecontroleerd op vreemde karakters, minimale lengte en maximale lengte.
 
 
 if(isset($_POST["registreren"])) {
     if (array_key_exists("gebruikersnaam", $_POST)) {
         $gebruikersnaam = $_POST["gebruikersnaam"];
-        if (strlen($_POST["gebruikersnaam"]) > 30) {
+        if (strlen($_POST["gebruikersnaam"]) > 50) {
             $error .= "<p class='text-white'>Error: gebruikersnaam is te lang</p>";
         }
         if (strlen($_POST["gebruikersnaam"]) < 5) {

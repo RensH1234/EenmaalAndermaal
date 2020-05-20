@@ -31,20 +31,14 @@ $huidigeJaar = date('Y');
         <?php
        echo"<div class='container col-lg-7'>
             <br>
-            <h4>test</h4>
-            </div>";
+            <h4>test</h4>";
        
         $lijstComputers = new Veilinglijst();
-        $lijstComputers->_construct([1,3,1,2],"lijstComputers");
+        $lijstComputers->_construct([390948843210],"lijst");
         $lijstComputers->printveilingen();
 
-        $lijstAuto = new Veilinglijst();
-        $lijstAuto->_construct([1,2,2,3],"lijstAuto");
-        $lijstAuto->printveilingen();
-        $lijstAanbevolen = new Veilinglijst();
-        $lijstAanbevolen->_construct([4,3,2,1],"lijstAanbevolen");
-        $lijstAanbevolen->printveilingen();
         ?>
+    </div>
     </div>
 </main>
 <?php _generateFooter(date('Y')) ?>
