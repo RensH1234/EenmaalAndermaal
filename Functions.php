@@ -108,3 +108,30 @@ function _activeHeader($page_cur)
     }
 }
 
+//samen met de email en de gebruikersnaam wordt een unieke hash aangemaakt, die uniek is per gebruiker.
+function stuurRegistratieEmail($email,$gebruikersnaam){
+    $vkey = password_hash(($email.$gebruikersnaam),PASSWORD_DEFAULT);
+    $url = "http://iproject12.icasites.nl/RegistratieVerifeer.php?vkey={$vkey}&gebruiker={$gebruikersnaam}";
+    $to = $email;
+    $subject = "Registratie voltooien EenmaalAndermaal";
+
+    $message = "
+<html>
+<head>
+<title>Om te registreren, klik op de link</title>
+</head>
+<body>
+<a href='$url'>Voltooi uw registratie</a>
+</body>
+</html>
+";
+
+// informatie email
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= 'From: <registratie@eenmaalandermaal.com>' . "\r\n";
+
+//deze functionaliteit werkt alleen op de webserver, want daar zit ook een email-server op.
+    mail($to,$subject,$message,$headers);
+}
+
