@@ -1,6 +1,6 @@
 <?php
 $title = 'Veiling';
-$siteNaam = 'Veiling!';
+$siteNaam = 'Veiling';
 include_once 'php classes/VeilingArtikel.php';
 include_once 'Functions.php';
 include 'Framework.php';

@@ -4,7 +4,7 @@ include_once 'framework.php';
 include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';
 $title = 'Eenmaal Andermaal!';
-$siteNaam = 'Welkom!';
+$siteNaam = 'Registreren';
 $huidigeJaar = date('Y');
 
 $error = null;
@@ -26,7 +26,6 @@ $aBeveiligingsvraag = null;
 $beveiligingsvraag = null;
 $rol = null;
 $beveiligingsvragen = _getBeveiligingsvragen();
-
 
 if(array_key_exists("gebruikersnaam",$_POST)){
     $gebruikersnaam=$_POST["gebruikersnaam"];
@@ -487,7 +486,7 @@ VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
                             <div class="form-group">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-4"><br>
-                                    <button type="submit" class="btn btn-dark" >Registreren</button>
+                                    <button type="submit" name="registreer" class="btn btn-dark" >Registreren</button>
                                 </div>
                             </div>
                         </div>

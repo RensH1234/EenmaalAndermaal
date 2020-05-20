@@ -2,6 +2,7 @@
 include_once 'Framework.php';
 include_once 'php classes/Header_Class.php';
 $menu = new HeaderClass();
+$data = $menu->sessionLink();
 ?>
 <header>
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -23,7 +24,7 @@ $menu = new HeaderClass();
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php $menu->_activeHeader('Inloggen.php');?>" href="Inloggen.php">Login</a>
+                    <a class="nav-link <?php $menu->_activeHeader($data['href']);?>" href=<?=$data['href']?>><?=$data['name']?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php $menu->_activeHeader('Over-ons.php');?>" href="Over-ons.php">Ons</a>

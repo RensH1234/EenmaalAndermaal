@@ -1,5 +1,6 @@
 <?php
 include_once 'DatabaseConn.php';
+include_once 'SessionHandling/Session.php';
 
 class HeaderClass
 {
@@ -68,6 +69,7 @@ class HeaderClass
 //            }
 //        }
 //    }
+
     //Functie die controleert of de gebruiker op de huidige pagina zit en op basis daarvan een active echoot
     function _activeHeader($page_cur)
     {
@@ -76,5 +78,19 @@ class HeaderClass
         if ($page_cur == $url) {
             echo 'active';
         }
+    }
+
+    //Functie die of LOGIN of LOGUIT weergeeft in de navigatiebalk afhankelijk van of er is ingelogd of niet
+    function sessionLink(){
+        $session = ["href" => "", "name" => ""];
+        if(is_logged_in()){
+            $session["href"] = "Loguit_Redir.php";
+            $session["name"] = "Loguit";
+        }
+        else {
+            $session["href"] = "Inloggen.php";
+            $session["name"] = "Login";
+        }
+        return $session;
     }
 }
