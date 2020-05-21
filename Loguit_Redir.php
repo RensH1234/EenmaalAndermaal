@@ -9,7 +9,7 @@ $siteNaam = 'U bent Uitgelogd';
 $huidigeJaar = date('Y');
 
 $_SESSION['ingelogd'] = false;
-unset($_SESSION['ingelogd']);
+unset($_SESSION);
 header('refresh: 1 url= Inloggen.php');
 ?>
 <!doctype html>

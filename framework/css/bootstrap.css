@@ -10295,3 +10295,7 @@ body {
    padding: 2px;
  }
 
+ a:empty {
+   display:none;
+ }
+

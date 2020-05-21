@@ -96,14 +96,19 @@ class HeaderClass
 
     //Functie die of LOGIN of LOGUIT weergeeft in de navigatiebalk afhankelijk van of er is ingelogd of niet
     function sessionLink(){
-        $session = ["href" => "", "name" => ""];
         if(is_logged_in()){
-            $session["href"] = "Loguit_Redir.php";
-            $session["name"] = "Loguit";
+            $session["href_log"] = "Loguit_Redir.php";
+            $session["name_log"] = "Loguit";
+            $session["username"] = "Welkom " . $_SESSION['gebruikersnaam'] . "!";
+            $session["href_reg"] = "";
+            $session["name_reg"] = "";
         }
         else {
-            $session["href"] = "Inloggen.php";
-            $session["name"] = "Login";
+            $session["href_log"] = "Inloggen.php";
+            $session["name_log"] = "Login";
+            $session["username"] = "";
+            $session["href_reg"] = "RegistratiePagina.php";
+            $session["name_reg"] = "Registreren";
         }
         return $session;
     }

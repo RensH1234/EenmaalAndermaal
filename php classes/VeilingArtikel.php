@@ -27,12 +27,11 @@ Voorwerpnummer = ?;";
                 $this->titel = $row['Titel'];
                 $this->afstand = $row['Plaatsnaam'];
                 $this->prijs = $row['Verkoopprijs'];
-                if($row['LoopTijdEinde']!=null){
+                if ($row['LoopTijdEinde'] != null) {
                     $this->eindtijd = ($row['LoopTijdEinde']->format('Y-m-d H:i:s'));
-                }
-                elseif($row["MaximaleLooptijd"]!=null&&$row["Looptijdbegin"]){
+                } elseif ($row["MaximaleLooptijd"] != null && $row["Looptijdbegin"]) {
                     $date = $row["Looptijdbegin"]->format('Y-m-d H:i:s');
-                    $this->eindtijd = date('Y-m-d H:i:s', strtotime($date. " + {$row["MaximaleLooptijd"]} days"));
+                    $this->eindtijd = date('Y-m-d H:i:s', strtotime($date . " + {$row["MaximaleLooptijd"]} days"));
                 }
                 $this->id = $row['Voorwerpnummer'];
             }
@@ -175,12 +174,11 @@ class Artikel
                 $this->Verzendinstructies = $row['Verzendinstructies'];
                 $this->Verkoper = $row['Verkoper'];
                 $this->Koper = $row['Koper'];
-                if($row['LoopTijdEinde']!=null){
+                if ($row['LoopTijdEinde'] != null) {
                     $this->eindtijd = ($row['LoopTijdEinde']->format('Y-m-d H:i:s'));
-                }
-                elseif($row["MaximaleLooptijd"]!=null&&$row["Looptijdbegin"]){
+                } elseif ($row["MaximaleLooptijd"] != null && $row["Looptijdbegin"]) {
                     $date = $row["Looptijdbegin"]->format('Y-m-d H:i:s');
-                    $this->LoopTijdEinde = date('Y-m-d H:i:s', strtotime($date. " + {$row["MaximaleLooptijd"]} days"));
+                    $this->LoopTijdEinde = date('Y-m-d H:i:s', strtotime($date . " + {$row["MaximaleLooptijd"]} days"));
                     $this->LoopTijdEinde = date_create($this->LoopTijdEinde);
 
                 }
@@ -195,7 +193,7 @@ class Artikel
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
-        $this->setBiedingen(0,0,0);
+        $this->setBiedingen(0, 0, 0);
     }
 
     //Functie die op basis van geldigheid van de veiling een bericht meegeeft.
@@ -233,55 +231,62 @@ class Artikel
         }
     }
 
+    //DEPRECATED
     //Functie die het aantal veilingvoorwerpen retourneert
-    function _getAantalVoorwerpen()
+//    function _getAantalVoorwerpen()
+//    {
+//        $conn = getConn();
+//        $sql = "SELECT COUNT(Voorwerpnummer) AS AantalVoorwerpen FROM Voorwerp";
+//        $stmt = sqlsrv_prepare($conn, $sql);
+//        if (!$stmt) {
+//            die(print_r(sqlsrv_errors(), true));
+//        }
+//        sqlsrv_execute($stmt);
+//        if (sqlsrv_execute($stmt)) {
+//            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+//                $this->AantalVoorwerpen = $row['AantalVoorwerpen'];
+//            }
+//        } else {
+//            die(print_r(sqlsrv_errors(), true));
+//        }
+//    }
+
+    //Functie die op basis van de vorige en volgende knoppen daar de desbetreffende veiling gaat.
+    function _gotoVeiling($hdg)
     {
         $conn = getConn();
-        $sql = "SELECT COUNT(Voorwerpnummer) AS AantalVoorwerpen FROM Voorwerp";
-        $stmt = sqlsrv_prepare($conn, $sql);
+        if ($hdg) {
+            $sql = "SELECT Voorwerpnummer FROM Voorwerp where Voorwerpnummer = 
+                                          (SELECT min(Voorwerpnummer) from Voorwerp where Voorwerpnummer > ?)";
+        } else {
+            $sql = "SELECT Voorwerpnummer FROM Voorwerp where Voorwerpnummer = 
+                                          (SELECT max(Voorwerpnummer) from Voorwerp where Voorwerpnummer < ?)";
+        }
+        $stmt = sqlsrv_prepare($conn, $sql, array($_GET['id']));
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
         }
         sqlsrv_execute($stmt);
         if (sqlsrv_execute($stmt)) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                $this->AantalVoorwerpen = $row['AantalVoorwerpen'];
+                echo $row['Voorwerpnummer'];
             }
         } else {
-            die(print_r(sqlsrv_errors(), true));
-        }
-    }
-
-    //Functie die op basis van de vorige en volgende artikelknoppen gegevens ervan ophaalt
-    function _gotoVeiling($hdg)
-    {
-        $this->_getAantalVoorwerpen();
-        if ($hdg) {
-            if ($_GET['id'] < $this->AantalVoorwerpen) {
-                echo $_GET['id'] + 1;
-            } else {
-                echo $_GET['id'];
-            }
-        } else {
-            if ($_GET['id'] > 1) {
-                echo $_GET['id'] - 1;
-            } else {
-                echo $_GET['id'];
-            }
+            echo $_GET['id'];
         }
     }
 
     //functie die de printBiedingmachine uit Biedingmachine.php uitprint
-    public function setBiedingen($optie,$bedrag){
+    public function setBiedingen($optie, $bedrag)
+    {
         $biedingen = new Biedingmachine();
         //de boolean waarde moet controleren of er is ingelogd. Met het maken van de inlogfunctie moet dit worden gemaakt.
-        if(array_key_exists('ingelogd',$_SESSION)){
-            $biedingen->_construct($this->Id,$_SESSION['ingelogd'],$_SESSION['gebruikersnaam']);
+        if (array_key_exists('ingelogd', $_SESSION)) {
+            $biedingen->_construct($this->Id, $_SESSION['ingelogd'], $_SESSION['gebruikersnaam']);
+        } else {
+            $biedingen->_construct($this->Id, false, $_SESSION['gebruikersnaam']);
         }
-        else{
-            $biedingen->_construct($this->Id,false,$_SESSION['gebruikersnaam']);
-        }
-        if($optie == 1){
+        if ($optie == 1) {
             $biedingen->submitBod($bedrag);
         }
         $this->biedingenHTML = $biedingen->printBiedingmachine();

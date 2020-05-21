@@ -39,7 +39,6 @@ $huidigeJaar = date('Y');
 
         ?>
     </div>
-    </div>
 </main>
 <?php _generateFooter(date('Y')) ?>
 </body>
