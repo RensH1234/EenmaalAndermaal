@@ -111,8 +111,14 @@ $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"]);
                     </form>
                     <?php
                     $rubrieken = new HeaderClass();
-
-                    echo $rubrieken->_generateRubriekList(-1, $rubrieken->_getRubriekFromDb(), 2)
+                    if(array_key_exists('rubriekID',$_GET)){
+                        $superID = $_GET['rubriekID'];
+                    }
+                    else{
+                        $superID = -1;
+                    }
+                    echo $rubrieken->titleToSuperID($superID);
+                    echo $rubrieken->_generateRubriekListVeilingenOverzicht($superID, $rubrieken->_getRubriekFromDb(), 1)
                     ?>
                 </div>
 

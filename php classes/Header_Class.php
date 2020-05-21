@@ -49,12 +49,9 @@ class HeaderClass
 
         if (isset($menuData['parents'][$SuperID])) {
             foreach ($menuData['parents'][$SuperID] as $itemId) {
-                $html .= "<li class='dropdown-submenu'><a class='dropdown-item' href='VeilingenOverzicht.php?rubriekID={$menuData['items'][$itemId]['RubriekID']}'>" . $menuData['items'][$itemId]['Rubrieknaam'] . "</a>";
+                $html .= "<a class='text-black-50' href='VeilingenOverzicht.php?rubriekID={$menuData['items'][$itemId]['RubriekID']}'>" . $menuData['items'][$itemId]['Rubrieknaam'] . "</a><br>";
                 if ($Depth > 1) {
-                    $html .= "<ul class='dropdown-menu'>";
-                    $html .= $this->_generateRubriekList($itemId, $menuData, $Depth - 1);
-                    $html .= '</li>';
-                    $html .= '</ul>';
+                    $html .= $this->_generateRubriekListVeilingenOverzicht($itemId, $menuData, $Depth - 1);
                 }
             }
         }
@@ -109,5 +106,37 @@ class HeaderClass
             $session["name"] = "Login";
         }
         return $session;
+    }
+
+    function titleToSuperID($rubriekID){
+
+        $conn = getConn();
+        $sql = "SELECT RubriekID as SuperRubriekID , Rubrieknaam as SuperRubrieknaam FROM Rubriek WHERE RubriekID = 
+(SELECT SuperRubriekID FROM Rubriek WHERE RubriekID = ?) ";
+        $stmt = sqlsrv_prepare($conn, $sql, array($rubriekID));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row= sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $superID = $row['SuperRubriekID'];
+                $superNaam = $row['SuperRubrieknaam'];
+            }
+            if(isset($superNaam)) {
+                if ($superNaam == 'Root') {
+                    $superNaam = 'Hoofdrubrieken';
+                }
+            }
+            else{
+                $superID=-1;
+                $superNaam= 'Rubrieken';
+            }
+        }
+        return <<<HTML
+<a class="h2" href="VeilingenOverzicht.php?rubriekID=$superID">
+<h2>$superNaam</h2></a>
+HTML;
+
     }
 }

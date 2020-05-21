@@ -66,12 +66,12 @@ Voorwerpnummer = ?;";
         if($arrayVoorwerp[4]!=null){
             $this->eindtijd = ($arrayVoorwerp[4]->format('Y-m-d H:i:s'));
         }
-        elseif($arrayVoorwerp[4]!=null&&$arrayVoorwerp[5]){
+        elseif($arrayVoorwerp[5]!=null&&$arrayVoorwerp[6]){
             $date = $arrayVoorwerp[6]->format('Y-m-d H:i:s');
             $this->eindtijd = date('Y-m-d H:i:s', strtotime($date. " + {$arrayVoorwerp[5]} days"));
         }
         $this->afbeeldingURL = $arrayVoorwerp[7];
-        $this->id = $arrayVoorwerp[1];
+        $this->id = $arrayVoorwerp[0];
         if ($this->afbeeldingURL == null) {
             $this->afbeeldingURL = "images/png/logov1.png";
         }
