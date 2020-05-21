@@ -13,7 +13,7 @@
                     <h1 class="display-2">Welkom</h1>
                     <h3>Dé veilingsite van Nederland!</h3>
                     <button type="button" class="btn btn-outline-light btn-lg">Bekijk veilingen!</button>
-                    <button type="button" class="btn btn-primary btn-lg test">Registreer nu!</button>
+                    <a type="button" class="btn btn-primary btn-lg test" href="RegistratiePagina.php">Registreer nu!</a>
                 </div>
             </div>
 <!--            <div class="carousel-item">-->

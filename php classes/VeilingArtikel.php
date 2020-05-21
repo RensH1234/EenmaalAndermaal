@@ -59,6 +59,24 @@ Voorwerpnummer = ?;";
         }
     }
 
+    function _constructArray($arrayVoorwerp){
+        $this->titel = $arrayVoorwerp[1];
+        $this->afstand = $arrayVoorwerp[2];
+        $this->prijs = $arrayVoorwerp[3];
+        if($arrayVoorwerp[4]!=null){
+            $this->eindtijd = ($arrayVoorwerp[4]->format('Y-m-d H:i:s'));
+        }
+        elseif($arrayVoorwerp[4]!=null&&$arrayVoorwerp[5]){
+            $date = $arrayVoorwerp[6]->format('Y-m-d H:i:s');
+            $this->eindtijd = date('Y-m-d H:i:s', strtotime($date. " + {$arrayVoorwerp[5]} days"));
+        }
+        $this->afbeeldingURL = $arrayVoorwerp[7];
+        $this->id = $arrayVoorwerp[1];
+        if ($this->afbeeldingURL == null) {
+            $this->afbeeldingURL = "images/png/logov1.png";
+        }
+    }
+
     function printArtikel()
     {
         $url = 'http://iproject12.icasites.nl/pics/';

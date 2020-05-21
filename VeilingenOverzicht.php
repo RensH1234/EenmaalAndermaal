@@ -4,6 +4,7 @@ include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';
 include_once 'php classes/Zoekmachine.php';
 include_once 'php classes/Rubriekenlijst.php';
+include_once 'php classes/Header_Class.php';
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Overzicht';
 $huidigeJaar = date('Y');
@@ -60,7 +61,6 @@ HTML;
 
 $resultaten->prijsfilter(implode(".",$filters));
 $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"]);
-$idArray = explode(".", $resultaten->_getIdArrayRes());
 ?>
 
 <!doctype html>
@@ -109,7 +109,13 @@ $idArray = explode(".", $resultaten->_getIdArrayRes());
                         <br>
                         <button class="btn btn-primary" type="submit">Reset filter</button>
                     </form>
+                    <?php
+                    $rubrieken = new HeaderClass();
+
+                    echo $rubrieken->_generateRubriekList(-1, $rubrieken->_getRubriekFromDb(), 2)
+                    ?>
                 </div>
+
             </div>
             <div class="col ">
                 <div class="row ">
@@ -144,13 +150,9 @@ $idArray = explode(".", $resultaten->_getIdArrayRes());
                 </div>
                 <div class="row  text-center" width="80%">
                     <?php
-                    if ($idArray[0] != null) {
-                        $resultaatVeilinglijst = new Veilinglijst();
-                        $resultaatVeilinglijst->_construct($idArray, "ResultatenLijst");
-                        $resultaatVeilinglijst->printVeilingen();
-                    } else {
-                        echo "<p>Er komen geen producten overeen.</p>";
-                    }
+
+                       $resultaten->genereerVeilingArtikelen();
+
                     ?>
                 </div>
             </div>

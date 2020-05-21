@@ -166,7 +166,7 @@ HTML;
                     <div class="input-group-prepend">
                         <span class="input-group-text">€</span>
                     </div>
-                    <input type="number" name="bedrag" class="form-control" step=".01" aria-label="Bodbedrag" min="$this->minimumVerhoging" max="9999.99">
+                    <input value="$this->minimumVerhoging"  type="number" name="bedrag" class="form-control" step=".01" aria-label="Bodbedrag" min="$this->minimumVerhoging" max="9999.99">
                 </div>
                 <button class="btn btn-primary mb-2" type="submit">Plaats Bieding</button>
             

@@ -4,6 +4,7 @@ class Veilinglijst
 {
     private $veilingArtikelen = array();
     private $voorwerpnummers = array();
+    private $arrayVeilingen;
     private $naam;
 
     // worden bij intregratie database gebruikt
@@ -12,16 +13,24 @@ class Veilinglijst
 
     //constructor voor veilinglijst
     public function _construct($voorwerpnummers,$cssID){
-        $this->maakArtikelen();
         $this->voorwerpnummers=$voorwerpnummers;
         $this->naam=<<<HTML
 <div class="row-3" id="$cssID">
 HTML;
-
     }
 
-    //maak artikelen aan
-    private function maakArtikelen(){
+    public function _constructZoeken($array,$cssID,$voorwerpnummers){
+        $this->voorwerpnummers=$voorwerpnummers;
+        $this->naam=<<<HTML
+<div class="row-3" id="$cssID">
+HTML;
+        $this->arrayVeilingen = $array;
+    }
+
+
+
+    //artikelen voor zoekquery
+    private function maakArtikelenZoekQuery(){
         for($i = 0; $i < sizeof($this->voorwerpnummers); $i++){
             $this->veilingArtikelen= new VeilingArtikel();
             $this->veilingArtikelen[$i]->_construct($this->voorwerpnummers[$i]);
@@ -44,6 +53,17 @@ HTML;
         for($i = 0; $i < sizeof($this->voorwerpnummers); $i++){
             $a = new VeilingArtikel();
             $a->_construct($this->voorwerpnummers[$i]);
+            echo $a->printArtikel();
+        }
+        echo "</div></div>";
+    }
+
+    public function printVeilingenZoeken(){
+        echo $this->naam;
+        echo "<div class='col-md' >";
+        for($i = 0; $i < sizeof($this->arrayVeilingen); $i++){
+            $a = new VeilingArtikel();
+            $a->_constructArray($this->arrayVeilingen[$i]);
             echo $a->printArtikel();
         }
         echo "</div></div>";
