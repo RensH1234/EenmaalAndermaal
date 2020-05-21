@@ -2,6 +2,8 @@
 include_once 'DatabaseConn.php';
 include_once 'framework.php';
 
+require_once 'SessionHandling/Session.php';
+
 //deze is voor het versturen van een email
 include_once 'Functions.php';
 $title = 'Eenmaal Andermaal!';

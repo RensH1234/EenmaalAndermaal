@@ -32,10 +32,7 @@ if (array_key_exists("bedrag", $_POST)) {
 <main>
     <?php include_once 'Header.php'; ?>
     <div class="container mt-2">
-        <div class="row justify-content-between">
-            <div class="col-4">
-                <a href="#" class="btn btn-light border" role="button">&ltKavelLijst&gt</a>
-            </div>
+        <div class="row">
             <div class="row justify-content-between">
                 <div class="col">
                     <form action='Veiling.php' method="get">
