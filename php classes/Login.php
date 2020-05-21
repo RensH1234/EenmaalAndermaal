@@ -8,6 +8,8 @@ class Login
     private $name_post;
     private $pass_post;
 
+    private $mismatch;
+
     //Functie die de gebruikersnaam en wachtwoord ophaalt vanuit de Database
     function _getFromGebruikersDb($user)
     {
@@ -31,19 +33,17 @@ Gebruikersnaam = ?;";
     //vergeleken met het resultaat vanuit de database.
     function _genLogin()
     {
-        if (isset($_POST['login']) && $this->_verify()== "") {
+        $this->mismatch = false;
+        if (isset($_POST['login']) && $this->_verify() == "") {
             $this->name_post = $_POST['gebruikersnaam'];
             $this->pass_post = $_POST['wachtwoord'];
 
             $this->_getFromGebruikersDb($this->name_post);
             if ($this->_isMatch()) {
                 $_SESSION['ingelogd'] = true;
-
                 //toegevoegd door rens om een gebruikersnaam bij de biedingen te krijgen
                 $_SESSION['gebruikersnaam'] = $this->name_post;
                 header('location: Login_Redir.php');
-            } else {
-
             }
         }
     }
@@ -51,10 +51,13 @@ Gebruikersnaam = ?;";
     //Boolean functie die controleert of de invoer en de database gegevens een match zijn
     function _isMatch()
     {
+        if (isset($_POST['login'])) {
             if ($this->name_post == $this->name_db && password_verify($this->pass_post, $this->pass_db)) {
                 return true;
             }
-            return false;
+            $this->mismatch = true;
+        }
+        return false;
     }
 
     //Functie die de invoer van de gebruiker opschoont en bij foutieve invoer een foutmelding weergeeft.
@@ -70,8 +73,12 @@ Gebruikersnaam = ?;";
             }
             if (strlen($pass) < 3 || strlen($pass) > 20) {
                 $e .= '<p class="text-danger mb-n1">Voer een geldige wachtwoord in!</p>';
+            } else if ($this->mismatch) {
+                $e .= '<p class="text-danger mb-n1">Gebruikersnaam en/of wachtwoord komen niet overeen!</p>';
             }
+            return $e;
         }
+        //unset($_POST['login']);
         return $e;
     }
 }

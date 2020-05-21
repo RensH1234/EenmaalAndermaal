@@ -11,6 +11,7 @@ $data = $menu->sessionLink();
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <span class="navbar-text"><?=$data['username']?></span>
         <div id="navbarNavDropdown" class="navbar-collapse collapse justify-content-end">
             <ul class="navbar-nav nav-pills nav-fill">
                 <li class="nav-item">
@@ -20,19 +21,20 @@ $data = $menu->sessionLink();
                     <a class="nav-link dropdown-toggle" href="Index.php" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Categoriën</a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <?php echo $menu->_generateRubriekList(-1, $menu->_getRubriekFromDb(), 1);?>
+                        <?php echo $menu->_generateRubriekList(-1, $menu->_getRubriekFromDb(), 2);?>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php $menu->_activeHeader($data['href']);?>" href=<?=$data['href']?>><?=$data['name']?></a>
+                    <a class="nav-link <?php $menu->_activeHeader($data['href_log']);?>"
+                       href=<?=$data['href_log']?>><?=$data['name_log']?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php $menu->_activeHeader('RegistratiePagina.php');?>" href=RegistratiePagina.php>Registreren</a>
+                    <a class="nav-link <?php $menu->_activeHeader('RegistratiePagina.php');?>"
+                       href=<?=$data['href_reg']?>><?=$data['name_reg']?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php $menu->_activeHeader('Over-ons.php');?>" href="Over-ons.php">Ons</a>
                 </li>
-
             </ul>
             <form class="form-inline my-2 my-lg-0" method="get" action="VeilingenOverzicht.php">
                 <input class="form-control mr-sm-2" type="search" placeholder="Typ hier uw zoekopdracht"
