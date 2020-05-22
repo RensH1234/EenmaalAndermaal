@@ -9,7 +9,7 @@ class Zoekmachine
     private $voorwerpgegevens = array();
     private $nVoorwerpen = 0;
 
-    function _constructNieuw($sleutelwoord, $filterindex)
+    function _constructNieuw($sleutelwoord, $filterindex, $rubriek)
     {
         $nVoorwerpen = 0;
         $filteroptie = $this->setFilter($filterindex);
@@ -21,7 +21,7 @@ class Zoekmachine
         $sql = "SELECT TOP 20 V.Voorwerpnummer, V.Titel, V.Plaatsnaam, 
 V.Verkoopprijs, V.LoopTijdEinde, V.MaximaleLooptijd, V.Looptijdbegin, B.AfbeeldingURL 
 FROM Voorwerp V INNER JOIN Bestand B ON V.Voorwerpnummer = B.Voorwerpnummer WHERE
-(V.Titel LIKE '%{$sleutelwoord}%' ) {$this->filterprijs} ORDER BY {$filteroptie};";
+(V.Titel LIKE '%{$sleutelwoord}%' )  {$rubriek} {$this->filterprijs} ORDER BY {$filteroptie};";
         $stmt = sqlsrv_prepare($conn, $sql);
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));

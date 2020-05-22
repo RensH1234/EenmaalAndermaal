@@ -55,12 +55,24 @@ if (array_key_exists("prijsrange4", $_GET)) {
                             <input type="hidden" value=$value name="prijsrange4">
 HTML;
 }
+if (array_key_exists("rubriekID", $_GET)) {
+    $value = $_GET["rubriekID"];
+    $hiddenDataForms .= <<<HTML
+                            <input type="hidden" value=$value name="rubriekID">
+HTML;
+}
 
 
 
 
 $resultaten->prijsfilter(implode(".",$filters));
-$resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"]);
+if (array_key_exists("rubriekID", $_GET)) {
+    $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"],$_GET['rubriekID']);
+}
+else{
+    $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"],null);
+}
+
 ?>
 
 <!doctype html>
