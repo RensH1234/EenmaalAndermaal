@@ -21,7 +21,7 @@ $data = $menu->sessionLink();
                     <a class="nav-link dropdown-toggle" href="Index.php" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Categoriën</a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <?php echo $menu->_generateRubriekList(-1, $menu->_getRubriekFromDb(), 2);?>
+                        <?php echo $menu->_generateRubriekList(-1, $menu->_getRubriekFromDb(), 1);?>
                     </ul>
                 </li>
                 <li class="nav-item">
