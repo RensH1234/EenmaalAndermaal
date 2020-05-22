@@ -18,7 +18,6 @@ $huidigeJaar = date('Y');
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?> | <?= $siteNaam ?></title>
     <link rel="shortcut icon" type="image/x-icon" href="images/icon/logo.ico" />
-
     <link rel="stylesheet" href="Custom_css/custom%20stylesheet.css">
 </head>
 <body>
@@ -27,16 +26,12 @@ $huidigeJaar = date('Y');
     <br>
     <?php include_once 'Slides.php' ?>
     <div class="container rubrieken col-lg-12 col-md-4">
-
+        <div class='container col-lg-7'>
+            <h4>test</h4>
         <?php
-       echo"<div class='container col-lg-7'>
-            <br>
-            <h4>test</h4>";
-       
         $lijstComputers = new Veilinglijst();
-        $lijstComputers->_construct([390948843210],"lijst");
+        $lijstComputers->_construct($lijstComputers->_fetchHotveilingen(6),"lijst");
         $lijstComputers->printveilingen();
-
         ?>
     </div>
 </main>
