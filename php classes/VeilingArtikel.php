@@ -231,6 +231,12 @@ class Artikel
         }
     }
 
+    function _genereerHotVeilingen(){
+        for($i = 0; $i < 8; $i++){
+
+        }
+    }
+
     //DEPRECATED
     //Functie die het aantal veilingvoorwerpen retourneert
 //    function _getAantalVoorwerpen()

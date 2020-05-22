@@ -68,4 +68,25 @@ HTML;
         }
         echo "</div></div>";
     }
+
+    public function _fetchHotveilingen($amount)
+    {
+        $results = array();
+        $conn = getConn();
+        $sql = "SELECT TOP (?) v.Voorwerpnummer, COUNT(v.Voorwerpnummer) As Aantalbiedingen FROM Voorwerp v
+INNER JOIN Bod b ON v.Voorwerpnummer = b.Voorwerpnummer
+GROUP BY v.Voorwerpnummer
+ORDER BY Aantalbiedingen DESC";
+        $stmt = sqlsrv_prepare($conn, $sql, array($amount));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $results[] = $row['Voorwerpnummer'];
+            }
+        }
+        return $results;
+    }
 }
