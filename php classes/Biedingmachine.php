@@ -214,5 +214,57 @@ HTML;
             die(print_r(sqlsrv_errors(), true));
         }
         sqlsrv_execute($stmt);
+        $this->stuurmailNaarVorigeBieder();
+    }
+
+    private function stuurmailNaarVorigeBieder(){
+        $conn = getConn();
+        $sql = " SELECT G.Emailadres FROM Gebruiker G INNER JOIN Bod B ON G.Gebruikersnaam = B.Gebruikersnaam
+ WHERE B.Bodbedrag = (SELECT MAX(B.Bodbedrag) FROM Bod B 
+ WHERE Bodbedrag < ( SELECT MAX(B.Bodbedrag) FROM Bod b ) AND Voorwerpnummer = ?)";
+        $params=array($this->voorwerpnummer);
+        $stmt = sqlsrv_prepare($conn, $sql, $params);
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if ($stmt) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $emailadres = $row['Emailadres'];
+                $this->stuurMail($emailadres);
+            }
+
+        }
+        else{
+            die(print_r(sqlsrv_errors(), true));
+        }
+
+    }
+
+    private function stuurMail($email){
+        $to = $email;
+        $subject = "U bent overboden!";
+
+        $message = "
+<html>
+<head>
+<title>U bent overboden!</title>
+</head>
+<body>
+<p>Klik 
+<a href='iproject12.icasites.nl/Veiling.php?id=$this->voorwerpnummer'>
+hier
+</a> om naar de veiling te gaan.</p>
+</body>
+</html>
+";
+
+// informatie email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <registratie@eenmaalandermaal.com>' . "\r\n";
+
+//deze functionaliteit werkt alleen op de webserver, want daar zit ook een email-server op.
+        mail($to,$subject,$message,$headers);
     }
 }

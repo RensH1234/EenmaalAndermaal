@@ -55,12 +55,30 @@ if (array_key_exists("prijsrange4", $_GET)) {
                             <input type="hidden" value=$value name="prijsrange4">
 HTML;
 }
+if (array_key_exists("rubriekID", $_GET)) {
+    $value = $_GET["rubriekID"];
+    $hiddenDataForms .= <<<HTML
+                            <input type="hidden" value=$value name="rubriekID">
+HTML;
+}
 
 
+$rubrieken = new HeaderClass();
 
 
 $resultaten->prijsfilter(implode(".",$filters));
-$resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"]);
+if (array_key_exists("rubriekID", $_GET)) {
+    if(preg_match('/[^0-9]/', $_GET['rubriekID'])||strlen($_GET['rubriekID'])>6){
+        $_GET['rubriekID'] = -1;
+    }
+
+    $subRubrieken =  $rubrieken->_generateRubriekFilter($_GET['rubriekID'],$rubrieken-> _getRubriekFromDb(), 6);
+    $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"],$subRubrieken,$_GET['rubriekID']);
+}
+else{
+    $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"],null,null);
+}
+
 ?>
 
 <!doctype html>
@@ -89,9 +107,8 @@ $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"]);
                     </button>
                     <form action="VeilingenOverzicht.php">
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <input type="hidden" value="<?php echo $_GET["zoekopdracht"]; ?>" name="zoekopdracht">
-                            <input type="hidden" value="<?php echo $_GET["filter"]; ?>" name="filter">
                             <div class="form-check">
+                                <?php echo $hiddenDataForms?>
                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="prijsrange1"
                                        value="1">
                                 <label class="form-check-label" for="inlineCheckbox1">&euro;0 - &euro;10</label><br>
@@ -110,7 +127,6 @@ $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"]);
                         <button class="btn btn-primary" type="submit">Reset filter</button>
                     </form>
                     <?php
-                    $rubrieken = new HeaderClass();
                     if(array_key_exists('rubriekID',$_GET)){
                         $superID = $_GET['rubriekID'];
                     }
