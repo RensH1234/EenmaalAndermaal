@@ -57,6 +57,21 @@ class HeaderClass
         }
         return $html;
     }
+
+    function _generateRubriekFilter($SuperID, $menuData, $Depth)
+    {
+        $html = '';
+
+        if (isset($menuData['parents'][$SuperID])) {
+            foreach ($menuData['parents'][$SuperID] as $itemId) {
+                $html .= "OR R.RubriekID = {$menuData['items'][$itemId]['RubriekID']} ";
+                if ($Depth > 1) {
+                    $html .= $this->_generateRubriekFilter($itemId, $menuData, $Depth - 1);
+                }
+            }
+        }
+        return $html;
+    }
     //DEPRECIATED FUNCTIE NIET AAN KOMEN!
 //    function __getRubriekFromDb($SuperRubriek, $RubriekNiveau)
 //    {

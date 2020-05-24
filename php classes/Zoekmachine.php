@@ -9,8 +9,14 @@ class Zoekmachine
     private $voorwerpgegevens = array();
     private $nVoorwerpen = 0;
 
-    function _constructNieuw($sleutelwoord, $filterindex, $rubriek)
+    function _constructNieuw($sleutelwoord, $filterindex,$subrubrieken,$hoofdrubriek)
     {
+        if($hoofdrubriek != null) {
+            $rubrieken = $this->getRubrieken($subrubrieken, $hoofdrubriek);
+        }
+        else{
+            $rubrieken = null;
+        }
         $nVoorwerpen = 0;
         $filteroptie = $this->setFilter($filterindex);
         if ($sleutelwoord == null) {
@@ -20,8 +26,8 @@ class Zoekmachine
         $conn = getConn();
         $sql = "SELECT TOP 20 V.Voorwerpnummer, V.Titel, V.Plaatsnaam, 
 V.Verkoopprijs, V.LoopTijdEinde, V.MaximaleLooptijd, V.Looptijdbegin, B.AfbeeldingURL 
-FROM Voorwerp V INNER JOIN Bestand B ON V.Voorwerpnummer = B.Voorwerpnummer WHERE
-(V.Titel LIKE '%{$sleutelwoord}%' )  {$rubriek} {$this->filterprijs} ORDER BY {$filteroptie};";
+FROM Voorwerp V INNER JOIN Bestand B ON V.Voorwerpnummer = B.Voorwerpnummer INNER JOIN VoorwerpInRubriek R ON V.Voorwerpnummer = R.Voorwerpnummer WHERE
+(V.Titel LIKE '%{$sleutelwoord}%' ) {$rubrieken} {$this->filterprijs} ORDER BY {$filteroptie};";
         $stmt = sqlsrv_prepare($conn, $sql);
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
@@ -103,5 +109,14 @@ FROM Voorwerp V INNER JOIN Bestand B ON V.Voorwerpnummer = B.Voorwerpnummer WHER
             default:
                 break;
         }
+    }
+
+    private function getRubrieken($subrubrieken, $hoofdrubriek)
+    {
+        $r = "";
+        $r .= "AND (R.RubriekID = {$hoofdrubriek} ";
+        $r .= "{$subrubrieken}";
+        $r .= ")";
+        return $r;
     }
 }

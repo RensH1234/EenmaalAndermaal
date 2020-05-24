@@ -63,14 +63,20 @@ HTML;
 }
 
 
+$rubrieken = new HeaderClass();
 
 
 $resultaten->prijsfilter(implode(".",$filters));
 if (array_key_exists("rubriekID", $_GET)) {
-    $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"],$_GET['rubriekID']);
+    if(preg_match('/[^0-9]/', $_GET['rubriekID'])||strlen($_GET['rubriekID'])>6){
+        $_GET['rubriekID'] = -1;
+    }
+
+    $subRubrieken =  $rubrieken->_generateRubriekFilter($_GET['rubriekID'],$rubrieken-> _getRubriekFromDb(), 6);
+    $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"],$subRubrieken,$_GET['rubriekID']);
 }
 else{
-    $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"],null);
+    $resultaten->_constructNieuw($_GET["zoekopdracht"], $_GET["filter"],null,null);
 }
 
 ?>
@@ -101,9 +107,8 @@ else{
                     </button>
                     <form action="VeilingenOverzicht.php">
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <input type="hidden" value="<?php echo $_GET["zoekopdracht"]; ?>" name="zoekopdracht">
-                            <input type="hidden" value="<?php echo $_GET["filter"]; ?>" name="filter">
                             <div class="form-check">
+                                <?php echo $hiddenDataForms?>
                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="prijsrange1"
                                        value="1">
                                 <label class="form-check-label" for="inlineCheckbox1">&euro;0 - &euro;10</label><br>
@@ -122,7 +127,6 @@ else{
                         <button class="btn btn-primary" type="submit">Reset filter</button>
                     </form>
                     <?php
-                    $rubrieken = new HeaderClass();
                     if(array_key_exists('rubriekID',$_GET)){
                         $superID = $_GET['rubriekID'];
                     }
