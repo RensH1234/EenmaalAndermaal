@@ -13,8 +13,6 @@ if(!isset($_GET["gebruiker"])||!isset($_GET["vkey"])){
     $error .="<h2>Er ging iets mis.</h2>";
 }
 else{
-    echo $_GET["gebruiker"];
-    echo $_GET["vkey"];
     controleerUitDatabase($_GET["gebruiker"],$_GET["vkey"]);
 }
 
