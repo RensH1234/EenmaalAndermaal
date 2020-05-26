@@ -37,6 +37,7 @@ $huidigeJaar = date('Y');
         echo $lijstComputers->_genereerContainer("Hot Veilingen!");
         ?>
     </div>
+
 </main>
 <?php _generateFooter(date('Y')) ?>
 </body>
