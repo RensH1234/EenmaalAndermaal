@@ -290,7 +290,7 @@ class Artikel
         if (array_key_exists('ingelogd', $_SESSION)) {
             $biedingen->_construct($this->Id, $_SESSION['ingelogd'], $_SESSION['gebruikersnaam']);
         } else {
-            $biedingen->_construct($this->Id, false, $_SESSION['gebruikersnaam']);
+            $biedingen->_construct($this->Id, false, null);
         }
         if ($optie == 1) {
             $biedingen->submitBod($bedrag);

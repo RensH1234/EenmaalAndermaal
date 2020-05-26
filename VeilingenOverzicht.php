@@ -108,7 +108,8 @@ else{
                     <form action="VeilingenOverzicht.php">
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div class="form-check">
-                                <?php echo $hiddenDataForms?>
+                                <input type="hidden" value=<?php echo $_GET["rubriekID"];?> name="rubriekID">
+                                <input type="hidden" value=<?php echo $_GET['zoekopdracht'];?> name="zoekopdracht">
                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="prijsrange1"
                                        value="1">
                                 <label class="form-check-label" for="inlineCheckbox1">&euro;0 - &euro;10</label><br>
@@ -124,7 +125,7 @@ else{
                             </div>
                         </div>
                         <br>
-                        <button class="btn btn-primary" type="submit">Reset filter</button>
+                        <button class="btn btn-primary" type="submit">Submit filters</button>
                     </form>
                     <?php
                     if(array_key_exists('rubriekID',$_GET)){

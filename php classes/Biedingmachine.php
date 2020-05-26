@@ -20,7 +20,9 @@ class Biedingmachine
         }
 
         $this->voorwerpnummer = $voorwerpnummer;
-        $this->nieuweBieder = $gebruiker;
+        if($gebruiker != null) {
+            $this->nieuweBieder = $gebruiker;
+        }
         $conn = getConn();
         $sql = "SELECT A.Voorwerpnummer, A.Bodbedrag, A.Gebruikersnaam, A.Boddatum, B.Verkoopprijs 
 FROM Bod A INNER JOIN Voorwerp B ON A.Voorwerpnummer = B.Voorwerpnummer
@@ -201,20 +203,22 @@ HTML;
 
     //zet bieding in de database gebaseerd op bedrag. Alleen uitvoeren als er is ingelogd
     public function submitBod($bedrag){
-        $conn = getConn();
-        $sql = "INSERT INTO Bod(Voorwerpnummer,Bodbedrag,Gebruikersnaam,Boddatum)
+        if($bedrag >= $this->minimumVerhoging && $bedrag <= 9999.99) {
+            $conn = getConn();
+            $sql = "INSERT INTO Bod(Voorwerpnummer,Bodbedrag,Gebruikersnaam,Boddatum)
                 VALUES(?,?,?,?);
                 UPDATE Voorwerp
                 SET Verkoopprijs = ?
                 WHERE Voorwerpnummer = ?
                ";
-        $params=array($this->voorwerpnummer, $bedrag, $this->nieuweBieder, date('Y/m/d G:i:s a', time()),$bedrag,$this->voorwerpnummer);
-        $stmt = sqlsrv_prepare($conn, $sql, $params);
-        if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
+            $params = array($this->voorwerpnummer, $bedrag, $this->nieuweBieder, date('Y/m/d G:i:s a', time()), $bedrag, $this->voorwerpnummer);
+            $stmt = sqlsrv_prepare($conn, $sql, $params);
+            if (!$stmt) {
+                die(print_r(sqlsrv_errors(), true));
+            }
+            sqlsrv_execute($stmt);
+            $this->stuurmailNaarVorigeBieder();
         }
-        sqlsrv_execute($stmt);
-        $this->stuurmailNaarVorigeBieder();
     }
 
     private function stuurmailNaarVorigeBieder(){
