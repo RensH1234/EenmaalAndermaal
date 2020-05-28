@@ -10241,10 +10241,7 @@ body {
   background-color: #fff;
 }
 
-.page-footer{
-  background-color: transparent;
-  opacity: 75%;
-}
+
 
 .page-footer .text-uppercase{
   padding: 2rem;
@@ -10299,3 +10296,11 @@ body {
    display:none;
  }
 
+.page-footer{
+  background-color: transparent;
+  opacity: 75%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
