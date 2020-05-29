@@ -58,16 +58,16 @@ Voorwerpnummer = ?;";
         }
     }
 
-    function _constructArray($arrayVoorwerp){
+    function _constructArray($arrayVoorwerp)
+    {
         $this->titel = $arrayVoorwerp[1];
         $this->afstand = $arrayVoorwerp[2];
         $this->prijs = $arrayVoorwerp[3];
-        if($arrayVoorwerp[4]!=null){
+        if ($arrayVoorwerp[4] != null) {
             $this->eindtijd = ($arrayVoorwerp[4]->format('Y-m-d H:i:s'));
-        }
-        elseif($arrayVoorwerp[5]!=null&&$arrayVoorwerp[6]){
+        } elseif ($arrayVoorwerp[5] != null && $arrayVoorwerp[6]) {
             $date = $arrayVoorwerp[6]->format('Y-m-d H:i:s');
-            $this->eindtijd = date('Y-m-d H:i:s', strtotime($date. " + {$arrayVoorwerp[5]} days"));
+            $this->eindtijd = date('Y-m-d H:i:s', strtotime($date . " + {$arrayVoorwerp[5]} days"));
         }
         $this->afbeeldingURL = $arrayVoorwerp[7];
         $this->id = $arrayVoorwerp[0];
@@ -294,7 +294,7 @@ class Artikel
 <div class='row'>
 <div class='col '><img src=$this->url$this->AfbeeldingURL class='rounded' alt=$this->Titel>
 <div class='row'><div class='col'>
-         <h5 class="font-weight-bold">Beschrijving:</h5></div><div class="col"></div></div>  
+         </div><div class="col"></div></div>  
          <div class='row mt-2'><div class='col-1 '><h5 class='text-muted'>✓</h5></div>
          <div class='col '><h5 class='text-muted'>Georganiseerd door $this->Verkoper</h5></div></div>
          <div class='row'><div class='col-1 '><h5 class='text-muted'>⮙</h5></div>
@@ -323,7 +323,8 @@ class Artikel
          </div>
          <div class="row">
          <div class="row"><div class="col">
-         <p class="text-muted">$this->Beschrijving</p></div><div class="col"></div></div>
+         <h5 class="font-weight-bold">Beschrijving:</h5>
+         <h5 class="text-muted">$this->Beschrijving</h5></div><div class="col"></div></div>
          </div>
          </div>  
          </div></div></div>
