@@ -5,7 +5,7 @@ function getConn()
 
     if(!isset($connection)){
         $config = parse_ini_file('private/config.ini');
-        $connectionInfo = array("Database" => $config['dbname'], "UID" => $config['username'], "PWD" => $config['password']);
+        $connectionInfo = array("Database" => $config['dbname'], "UID" => $config['username'], "PWD" => $config['password'], "CharacterSet" => "UTF-8");
         $connection = sqlsrv_connect($config['servername'], $connectionInfo);
     }
 

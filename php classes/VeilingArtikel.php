@@ -174,14 +174,7 @@ class Artikel
                 $this->Verzendinstructies = $row['Verzendinstructies'];
                 $this->Verkoper = $row['Verkoper'];
                 $this->Koper = $row['Koper'];
-                if ($row['LoopTijdEinde'] != null) {
-                    $this->eindtijd = ($row['LoopTijdEinde']->format('Y-m-d H:i:s'));
-                } elseif ($row["MaximaleLooptijd"] != null && $row["Looptijdbegin"]) {
-                    $date = $row["Looptijdbegin"]->format('Y-m-d H:i:s');
-                    $this->LoopTijdEinde = date('Y-m-d H:i:s', strtotime($date . " + {$row["MaximaleLooptijd"]} days"));
-                    $this->LoopTijdEinde = date_create($this->LoopTijdEinde);
-
-                }
+                $this->LoopTijdEinde = $row['LoopTijdEinde'];
                 $this->VeilingGesloten = $row['VeilingGesloten'];
                 $this->MaximaleLooptijd = $row['MaximaleLooptijd'];
                 $this->Verkoopprijs = $row['Verkoopprijs'];
@@ -228,12 +221,6 @@ class Artikel
             }
         } else {
             die(print_r(sqlsrv_errors(), true));
-        }
-    }
-
-    function _genereerHotVeilingen(){
-        for($i = 0; $i < 8; $i++){
-
         }
     }
 
