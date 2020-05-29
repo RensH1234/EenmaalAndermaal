@@ -324,7 +324,7 @@ class Artikel
          <div class="row">
          <div class="row"><div class="col">
          <h5 class="font-weight-bold">Beschrijving:</h5>
-         <h5 class="text-muted">$this->Beschrijving</h5></div><div class="col"></div></div>
+         <p class="text-muted">$this->Beschrijving</p></div><div class="col"></div></div>
          </div>
          </div>  
          </div></div></div>
