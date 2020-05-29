@@ -307,10 +307,7 @@ class Artikel
 <div class='row'>
 <div class='col '><img src=$this->url$this->AfbeeldingURL class='rounded' alt=$this->Titel>
 <div class='row'><div class='col'>
-         <h5 class="font-weight-bold">Beschrijving:</h5></div><div class="col"></div></div>
-         <div class="row"><div class="col">
-         <h5 class="text-muted">$this->Beschrijving</h5></div><div class="col"></div></div>
-         
+         <h5 class="font-weight-bold">Beschrijving:</h5></div><div class="col"></div></div>  
          <div class='row mt-2'><div class='col-1 '><h5 class='text-muted'>✓</h5></div>
          <div class='col '><h5 class='text-muted'>Georganiseerd door $this->Verkoper</h5></div></div>
          <div class='row'><div class='col-1 '><h5 class='text-muted'>⮙</h5></div>
@@ -336,6 +333,10 @@ class Artikel
          <div class='row justify-content-center'><div class='col'>
          $this->biedingenHTML</div></div>     
          </div>
+         </div>
+         <div class="row">
+         <div class="row"><div class="col">
+         <h5 class="text-muted">$this->Beschrijving</h5></div><div class="col"></div></div>
          </div>
          </div>  
          </div></div></div>
