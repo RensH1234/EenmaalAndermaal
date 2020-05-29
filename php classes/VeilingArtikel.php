@@ -289,6 +289,9 @@ class Artikel
     //functie die de gehele veilingpagina inhoud genereert
     function _printArtikel()
     {
+        $beschrijvingNoHtmlTag = $this->Beschrijving;
+//        preg_replace('#<script(.*?)>(.*?)</script>#is', '', $beschrijvingNoHtmlTag);
+        $beschrijvingNoHtmlTag = strip_tags($beschrijvingNoHtmlTag);
         echo <<< ARTIKEL
 <div class='container mt-2'><div class='container'>
 <div class='row'>
@@ -323,7 +326,7 @@ class Artikel
          </div>
          <div class="row">
          <div class="row"><div class="col">
-         <h5 class="text-muted">$this->Beschrijving</h5></div><div class="col"></div></div>
+         <h5 class="text-muted">$beschrijvingNoHtmlTag</h5></div><div class="col"></div></div>
          </div>
          </div>  
          </div></div></div>
