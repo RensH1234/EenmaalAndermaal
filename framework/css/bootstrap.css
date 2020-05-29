@@ -10299,8 +10299,4 @@ body {
 .page-footer{
   background-color: transparent;
   opacity: 75%;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: inherit;
 }

@@ -116,9 +116,9 @@ function _activeHeader($page_cur)
 }
 
 //samen met de email en de gebruikersnaam wordt een unieke hash aangemaakt, die uniek is per gebruiker.
-function stuurRegistratieEmail($email,$gebruikersnaam){
-    $vkey = password_hash(($email.$gebruikersnaam),PASSWORD_DEFAULT);
-    $url = "http://iproject12.icasites.nl/RegistratieVerifeer.php?vkey={$vkey}&gebruiker={$gebruikersnaam}";
+function stuurRegistratieEmail($email){
+    $mode = rand(0,100);
+    $url = "http://iproject12.icasites.nl/RegistratieVerifeer.php?origin={$email}&mode={$mode}";
     $to = $email;
     $subject = "Registratie voltooien EenmaalAndermaal";
 

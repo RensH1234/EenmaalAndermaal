@@ -2,64 +2,68 @@
 include_once 'Framework.php';
 include_once 'Functions.php';
 include_once 'DatabaseConn.php';
-$title = 'Eenmaal Andermaal!';
+$title = 'Voer uw code in';
 $siteNaam = 'Welkom!';
 $huidigeJaar = date('Y');
-
-$message = '';
 $error = '';
+if(array_key_exists('verified',$_POST)){
+    $mainContent = <<<HTML
 
-if(!isset($_GET["gebruiker"])||!isset($_GET["vkey"])){
-    $error .="<h2>Er ging iets mis.</h2>";
+HTML;
+
 }
 else{
-    controleerUitDatabase($_GET["gebruiker"],$_GET["vkey"]);
+    if(array_key_exists('origin', $_GET)&&array_key_exists('mode', $_GET)){
+        $email = $_GET['origin'];
+        $mode = $_GET['mode'];
+        $mainContent = <<<HTML
+<br>
+    <h1 class="h1">Code controleren</h1>
+    <p class="text">Voer uw emailadres en code in om verder te gaan.</p>
+    <div class="container-fluid">
+        <form class="form-group" action="RegistratieVerifeer.php" method="post">
+        <input name="email"  type="hidden" value=$email>
+        <input name="email"  type="hidden" value=$mode>
+            <div class="row">
+                <div class="col-sm-4 col-xs-1">
+                    <div class="form-group">
+                        <label class="control-label">Emailadres</label>
+                        <div class="inputGroupContainer">
+                            <div class="input-group">
+                                <input required name="email" placeholder="iemand@example.com" class="form-control" type="text" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-1">
+                    <div class="form-group">
+                        <label class="control-label">Code</label>
+                        <div class="inputGroupContainer">
+                            <div class="input-group">
+                                <input required name="code" placeholder="voer uw code in" class="form-control" type="text" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-xs-1">
+                    <button type="submit" class="btn btn-dark"> Controleer code</button>
+                </div>
+            </div>
+        </form>
+    </div>
+HTML;
+    }
+    else{
+        $mainContent = <<<HTML
+<p>Er ging iets mis. Controleer uw email om te registreren.</p>
+HTML;
+
+    }
+
+
 }
-
-
-//de gegeven waardes in de url worden gecontroleerd, en als het klopt wordt de gebruiker geregistreerd.
-function controleerUitDatabase($gebruikersnaam,$vkey){
-    $conn = getConn();
-    $sql = "SELECT * FROM Gebruiker WHERE Gebruikersnaam = ?";
-    $stmt = sqlsrv_prepare($conn, $sql,array($gebruikersnaam));
-    if (!$stmt) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-    sqlsrv_execute($stmt);
-    if (sqlsrv_execute($stmt)) {
-        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-
-             //de vkey in de url is een brypt van email.gebruikersnaam. Daarom wordt password_verify gebruikt om dit te controleren.
-            $vkeyReal = $row["Emailadres"].$row["Gebruikersnaam"];
-             if(password_verify($vkeyReal,$vkey)){
-                 voltooiRegistratie($gebruikersnaam);
-             }
-        }
-    } else {
-        die(print_r(sqlsrv_errors(), true));
-    }
-}
-
-
-//veranderdt de kolom bevestigd naar 1, en de gebruiker is officeel geregistreerd
-function voltooiRegistratie($gebruikersnaam){
-    $conn = getConn();
-    $sql = "UPDATE Gebruiker SET Bevestigd = 1 WHERE Gebruikersnaam = ?;";
-    $stmt = sqlsrv_prepare($conn, $sql, array($gebruikersnaam));
-    if (!$stmt) {
-        die(print_r(sqlsrv_errors(), true));
-    }
-    sqlsrv_execute($stmt);
-    if (sqlsrv_execute($stmt)) {
-        global $message;
-        $message .= '<h2>U bent succesvol geregistreert.</h2>';
-    } else {
-        global $error;
-        $error .= '<h2>Er ging iets mis.</h2>';
-        die(print_r(sqlsrv_errors(), true));
-    }
-}
-
 ?>
 
 <!doctype html>
@@ -77,9 +81,9 @@ function voltooiRegistratie($gebruikersnaam){
 <body>
 <?php include_once 'Header.php'; ?>
 <main>
-    <br>
     <?php echo $error;
-    echo $message;?>
+    echo $mainContent; ?>
+
 </main>
 <?php _generateFooter(date('Y')) ?>
 </body>
