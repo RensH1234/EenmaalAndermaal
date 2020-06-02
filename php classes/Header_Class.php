@@ -122,7 +122,7 @@ class HeaderClass
             $session["href_log"] = "Inloggen.php";
             $session["name_log"] = "Login";
             $session["username"] = "";
-            $session["href_reg"] = "RegistratiePagina.php";
+            $session["href_reg"] = "RegistratieOpgeven.php";
             $session["name_reg"] = "Registreren";
         }
         return $session;

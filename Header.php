@@ -29,7 +29,7 @@ $data = $menu->sessionLink();
                        href=<?=$data['href_log']?>><?=$data['name_log']?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php $menu->_activeHeader('RegistratiePagina.php');?>"
+                    <a class="nav-link <?php $menu->_activeHeader('RegistratieOpgeven.php');?>"
                        href=<?=$data['href_reg']?>><?=$data['name_reg']?></a>
                 </li>
                 <li class="nav-item">

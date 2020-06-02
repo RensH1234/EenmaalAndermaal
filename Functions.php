@@ -117,11 +117,11 @@ function _activeHeader($page_cur)
 
 //samen met de email en de gebruikersnaam wordt een unieke hash aangemaakt, die uniek is per gebruiker.
 function stuurRegistratieEmail($email){
-    $mode = rand(0,100);
+    $mode = rand(0,1000);
     $url = "http://iproject12.icasites.nl/RegistratieVerifeer.php?origin={$email}&mode={$mode}";
     $to = $email;
     $subject = "Registratie voltooien EenmaalAndermaal";
-
+    $code = generateCode($mode,$email);
     $message = "
 <html>
 <head>
@@ -129,6 +129,8 @@ function stuurRegistratieEmail($email){
 </head>
 <body>
 <a href='$url'>Voltooi uw registratie</a>
+<p>Kopieer deze code en voer hem op de website in:</p>
+<p>$code</p>
 </body>
 </html>
 ";
@@ -142,3 +144,42 @@ function stuurRegistratieEmail($email){
     mail($to,$subject,$message,$headers);
 }
 
+function checkCode($code, $mode, $email){
+    $mode = alterMode($mode);
+    if(password_verify("{$mode}{$email}",$code)){
+        return true;
+        }
+    return false;
+}
+
+function generateCode($mode,$email){
+    $mode = alterMode($mode);
+    return password_hash("{$mode}{$email}",PASSWORD_DEFAULT);
+}
+
+function alterMode($mode){
+    return ($mode * $mode + (int)round($mode/10));
+}
+
+function stuurConformatiemail($email){
+    $to = $email;
+    $subject = "U bent geregistreert";
+    $message = "
+<html>
+<head>
+<title>U bent geregistreerd!</title>
+</head>
+<body>
+<p>U kunt de website nu gebruiken!</p>
+</body>
+</html>
+";
+
+// informatie email
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= 'From: <registratie@eenmaalandermaal.com>' . "\r\n";
+
+//deze functionaliteit werkt alleen op de webserver, want daar zit ook een email-server op.
+    mail($to,$subject,$message,$headers);
+}

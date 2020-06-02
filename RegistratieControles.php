@@ -17,6 +17,7 @@ if(isset($_POST["registreren"])) {
         }
     }
     if (array_key_exists("wachtwoord", $_POST)) {
+
         $wachtoord1 = $_POST["wachtwoord"];
         if (strlen($_POST["wachtwoord"]) < 5) {
             $error .= "<p class='text-white'>Error: wachtwoord is te kort</p>";
@@ -129,15 +130,8 @@ if(isset($_POST["registreren"])) {
             $error .= "<p class='text-white'>Error: land mag geen vreemde tekens of cijfers bevatten</p>";
         }
     }
-    if (array_key_exists("email", $_POST)) {
-        $email = $_POST["email"];
-        if (strlen($_POST["email"]) < 3) {
-            $error .= "<p class='text-white'>Error: email is te kort</p>";
-        }
-        if (strlen($_POST["email"]) > 50) {
-            $error .= "<p class='text-white'>Error: email is te lang, maximaal 50 karakters</p>";
-        }
-    }
+
+
     if (array_key_exists("telefoonnummer", $_POST) && $_POST["telefoonnummer"] != null) {
         $telefoonnummer = $_POST["telefoonnummer"];
         if (strlen($_POST["telefoonnummer"]) != 10) {
@@ -161,13 +155,8 @@ if(isset($_POST["registreren"])) {
     if (array_key_exists("beveiligingsvraag", $_POST)) {
         $beveiligingsvraag = $_POST["beveiligingsvraag"];
     }
-    if (array_key_exists("rol", $_POST)) {
-        $rol = $_POST["rol"];
-    }
-
     //aan het eind, als er geen errors zijn gegenereerd wordt de gebruiker geregistreerd.
     if ($error == null && array_key_exists("gebruikersnaam", $_POST)) {
         _registreerGebruiker();
-
     }
 }
