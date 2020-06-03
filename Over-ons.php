@@ -18,8 +18,18 @@ $siteNaam = 'Over Ons';
 <body>
 <?php include_once 'Header.php'; ?>
 <main>
-    <h1>Over ons</h1>
-    <p>Wij zijn natuurlijk way cool, blah blah blah, et cetera.</p>
+    <div class="container">
+        <div class='row mt-4 '>
+            <div class='col text-center'>
+                <h1 class="text-center">Over ons </h1>
+                <p class="text-left">Welkom op de website van Eenmaal Andermaal.</p>
+                <p class="text-left">De veilingsite EenmaalAndermaal is onderdeel van bedrijf iConcepts. Op deze website kunnen gebruikers
+                    voorwerpen aanbieden en andere gebruikers kunnen daarop bieden. We merken dat de tweedehans markt
+                    fors groeid en willen daar graag, op een verantwoorde wijze, op inspelen. Daarnaast levert
+                    EenmaalAndermaal een bijdrage aan de verduurzaming van onze maatschappij.</p>
+            </div>
+        </div>
+    </div>
 </main>
 <?php _generateFooter(date('Y')) ?>
 </body>
