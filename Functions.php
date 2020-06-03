@@ -123,14 +123,24 @@ function stuurRegistratieEmail($email){
     $subject = "Registratie voltooien EenmaalAndermaal";
     $code = generateCode($mode,$email);
     $message = "
-<html>
+<!doctype html>
+<html lang='nl'>
 <head>
-<title>Om te registreren, klik op de link</title>
+<title></title>
+<meta charset='UFT-8'>
 </head>
 <body>
-<a href='$url'>Voltooi uw registratie</a>
-<p>Kopieer deze code en voer hem op de website in:</p>
+<h2>Beste klant, </h2>
+<p>Onlangs heeft u een verzoek ingediend om een account bij ons te registeren.</p>
+<p>Om uw registratie te voltooien <a href='$url'>klik hier </a>*.</p>
+<p>Kopieer vervolgens uw persoonlijke verificatiecode en voer hem in op de website.</p>
+<p>Uw persoonlijke verificatiecode is:</p>
 <p>$code</p>
+<br>
+<p>Met vriendelijke groeten,</p>
+<p>Veilingsite Eenmaal Andermaal</p>
+<p>P.s. werkt de link niet? Kopieer de onderstaande link en plak hem in uw urlbalk.</p>
+<p> $url </p> 
 </body>
 </html>
 ";
@@ -163,14 +173,19 @@ function alterMode($mode){
 
 function stuurConformatiemail($email){
     $to = $email;
-    $subject = "U bent geregistreert";
+    $subject = "Welkom uw registratie is succesvol voltooid.";
     $message = "
-<html>
+<html lang='nl'>
 <head>
-<title>U bent geregistreerd!</title>
+<title></title>
+<meta charset='UTF-8'>
 </head>
 <body>
-<p>U kunt de website nu gebruiken!</p>
+<h2>Beste klant, </h2>
+<p>Welkom op onze veilingsite. Onlangs heeft u uw registratie voltooid. U kunt nu gebruk maken van onze diensten!</p>
+<p>Indien u vragen en of opmerkingen heeft, dan horen wij dat graag van u.</p>
+<p>Met vriendelijke groeten,</p>
+<p>Veilingsite Eenmaal Andermaal</p>
 </body>
 </html>
 ";
