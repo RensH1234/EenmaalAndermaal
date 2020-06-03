@@ -116,8 +116,24 @@ ORDER BY Aantalbiedingen DESC";
         return $results;
     }
 
-    public function _fetchAflopendeVeilingen()
+    public function _fetchAflopendeVeilingen($amount)
     {
+        $results = array();
+        $conn = getConn();
+        $sql = "SELECT TOP (?) Voorwerpnummer FROM Voorwerp
+where VeilingGesloten=0
+ORDER BY LoopTijdEinde ASC";
+        $stmt = sqlsrv_prepare($conn, $sql, array($amount));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $results[] = $row['Voorwerpnummer'];
+            }
+        }
 
+        return $results;
     }
 }
