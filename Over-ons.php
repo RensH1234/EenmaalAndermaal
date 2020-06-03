@@ -30,6 +30,7 @@ $siteNaam = 'Over Ons';
             </div>
         </div>
     </div>
+
 </main>
 <?php _generateFooter(date('Y')) ?>
 </body>
