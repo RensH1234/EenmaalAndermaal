@@ -25,6 +25,10 @@ $data = $menu->sessionLink();
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <?php $menu->_activeHeader('AdvertentiePlaatsen.php');?>"
+                       href='AdvertentiePlaatsen.php'>Advertentie Plaatsen</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?php $menu->_activeHeader($data['href_log']);?>"
                        href=<?=$data['href_log']?>><?=$data['name_log']?></a>
                 </li>
