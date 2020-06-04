@@ -1,4 +1,5 @@
 <?php
+include_once 'DatabaseConn.php';
 function validate($data)
 {
     $data = trim($data);
@@ -182,4 +183,66 @@ function stuurConformatiemail($email){
 
 //deze functionaliteit werkt alleen op de webserver, want daar zit ook een email-server op.
     mail($to,$subject,$message,$headers);
+}
+
+function getEmailadres(){
+    if(array_key_exists('gebruikersnaam', $_SESSION)){
+        $conn = getConn();
+        $sql = "SELECT Emailadres FROM Gebruiker  WHERE Gebruikersnaam = ?;";
+        $stmt = sqlsrv_prepare($conn, $sql, array($_SESSION['gebruikersnaam']));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                return $row['Emailadres'];
+            }
+        } else {
+            die(print_r(sqlsrv_errors(), true));
+        }
+    }
+    return '';
+}
+
+function stuurVerkopersEmail($email, $gebruikersnaam){
+    $mode = rand(0,1000);
+    $url = "http://iproject12.icasites.nl/VerkoperRegistreer.php?origin={$gebruikersnaam}&mode={$mode}";
+    $to = $email;
+    $subject = "Wordt een verkoper";
+    $code = generateCode($mode,$gebruikersnaam);
+    $message = "
+<html>
+<head>
+<title>Om een verkoper te worden, klik op de link</title>
+</head>
+<body>
+<a href='$url'>Wordt een verkoper</a>
+<p>Kopieer deze code en voer hem op de website in:</p>
+<p>$code</p>
+</body>
+</html>
+";
+
+// informatie email
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= 'From: <registratie@eenmaalandermaal.com>' . "\r\n";
+
+//deze functionaliteit werkt alleen op de webserver, want daar zit ook een email-server op.
+    mail($to,$subject,$message,$headers);
+}
+
+//verander de rol van een gebruiker in de database
+function veranderRol($gebruikersnaam, $rol){
+    $conn = getConn();
+    $sql = "UPDATE Gebruiker SET Rol = ? WHERE Gebruikersnaam = ?;";
+    $stmt = sqlsrv_prepare($conn, $sql, array($rol, $gebruikersnaam));
+    if (!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    sqlsrv_execute($stmt);
+    if(!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
 }
