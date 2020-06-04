@@ -123,7 +123,8 @@ VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
         elseif ($stmt) {
             stuurConformatiemail($email);
             echo '<script type="text/javascript">';
-            echo ' alert("Er is een email gestuurt naar het mailadres.")';
+            echo " alert('U bent geregistreerd! U wordt naar de inlogpagina gestuurt..')
+            window.location.href='Inloggen.php';";
             echo '</script>';
         }
     }

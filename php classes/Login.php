@@ -5,16 +5,16 @@ class Login
 {
     private $name_db;
     private $pass_db;
+    private $role_db;
     private $name_post;
     private $pass_post;
-
     private $mismatch;
 
     //Functie die de gebruikersnaam en wachtwoord ophaalt vanuit de Database
     function _getFromGebruikersDb($user)
     {
         $conn = getConn();
-        $sql = "SELECT Gebruikersnaam, Wachtwoord FROM Gebruiker WHERE 
+        $sql = "SELECT Gebruikersnaam, Wachtwoord, Rol FROM Gebruiker WHERE 
 Gebruikersnaam = ?;";
         $stmt = sqlsrv_prepare($conn, $sql, array($user));
         if (!$stmt) {
@@ -25,6 +25,7 @@ Gebruikersnaam = ?;";
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
                 $this->name_db = $row['Gebruikersnaam'];
                 $this->pass_db = $row['Wachtwoord'];
+                $this->role_db = $row['Rol'];
             }
         }
     }
@@ -41,8 +42,9 @@ Gebruikersnaam = ?;";
             $this->_getFromGebruikersDb($this->name_post);
             if ($this->_isMatch()) {
                 $_SESSION['ingelogd'] = true;
-                //toegevoegd door rens om een gebruikersnaam bij de biedingen te krijgen
+                //toegevoegd door rens om een gebruikersnaam en rol te krijgen
                 $_SESSION['gebruikersnaam'] = $this->name_post;
+                $_SESSION['Rol'] = $this->role_db;
                 header('location: Login_Redir.php');
             }
         }
