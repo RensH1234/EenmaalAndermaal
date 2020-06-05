@@ -38,7 +38,7 @@ Voorwerpnummer = ?;";
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
-        $sql = "SELECT * FROM Bestand WHERE Voorwerpnummer = ?;";
+        $sql = "SELECT top(1) * FROM Bestand WHERE Voorwerpnummer = ?;";
         $stmt = sqlsrv_prepare($conn, $sql, array($id));
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
@@ -143,15 +143,33 @@ class Artikel
     private $Aantalbiedingen;
     private $Minimumprijs;
 
-    private $AfbeeldingURL;
+    private $AfbeeldingURL = array();
     private $AantalVoorwerpen;
 
     private $biedingenHTML;
     private $url = 'http://iproject12.icasites.nl/pics/';
+    private $aantalAfbeeldingen;
 
-    //Constructor
     public function _getVeilingGegevens($id)
     {
+        $conn = getConn();
+        $sql1 = "SELECT count(b.voorwerpnummer) as aantalAfbeeldingen FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer where v.voorwerpnummer=?;";
+        $stmt = sqlsrv_prepare($conn, $sql1, array($id));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $this->aantalAfbeeldingen = $row['aantalAfbeeldingen'];
+            }
+        } else {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        if($this->aantalAfbeeldingen > 4) {
+            $this->aantalAfbeeldingen = 4;
+        }
+
         $conn = getConn();
         $sql1 = "SELECT * FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE v.Voorwerpnummer = ?;";
         $stmt = sqlsrv_prepare($conn, $sql1, array($id));
@@ -178,15 +196,29 @@ class Artikel
                 $this->VeilingGesloten = $row['VeilingGesloten'];
                 $this->MaximaleLooptijd = $row['MaximaleLooptijd'];
                 $this->Verkoopprijs = $row['Verkoopprijs'];
-                $this->AfbeeldingURL = $row['AfbeeldingURL'];
+
                 $this->VeilingStatus = $this->_isGesloten();
                 $this->Minimumprijs = "Sample Text";
 
+            }
+        }
+        for($i=0; $i<$this->aantalAfbeeldingen; $i++){
+        $conn = getConn();
+        $sql1 = "SELECT top($i+1) b.AfbeeldingURL FROM Voorwerp v INNER JOIN Bestand b On v.Voorwerpnummer = b.Voorwerpnummer WHERE v.Voorwerpnummer = ?;";
+        $stmt = sqlsrv_prepare($conn, $sql1, array($id));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $this->AfbeeldingURL[$i] = $row['AfbeeldingURL'];
             }
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
         $this->setBiedingen(0, 0, 0);
+        }
     }
 
     //Functie die op basis van geldigheid van de veiling een bericht meegeeft.
@@ -289,13 +321,50 @@ class Artikel
     //functie die de gehele veilingpagina inhoud genereert
     function _printArtikel()
     {
+        $foto=array();
         $beschrijvingNoHtmlTag = $this->Beschrijving;
 //        preg_replace('#<script(.*?)>(.*?)</script>#is', '', $beschrijvingNoHtmlTag);
         $beschrijvingNoHtmlTag = strip_tags($beschrijvingNoHtmlTag);
+        for($i=0; $i<$this->aantalAfbeeldingen; $i++) {
+            $foto[$i] = $this->url . $this->AfbeeldingURL[$i];
+        }
         echo <<< ARTIKEL
 <div class='container mt-2'><div class='container'>
 <div class='row'>
-<div class='col '><img src=$this->url$this->AfbeeldingURL class='rounded' alt=$this->Titel>
+<div class='container col '>
+<div id="images" class="carousel slide " data-ride="carousel">
+<ol class="carousel-indicators">
+<li data-target="#images" data-slide-to="0" class="active"></li>
+ARTIKEL;
+
+    for($i=1; $i<$this->aantalAfbeeldingen; $i++) {
+        echo "<li data-target=\"#images\" data-slide-to=\"$i\"></li>";
+        }
+
+echo <<<ARTIKEL
+  </ol>
+        <div class="carousel-inner">
+             <div class="carousel-item active ">            
+                <img class="d-block mx-auto mw-100 mh-100" src=$foto[0] alt="foto 1 ">
+            </div>
+ARTIKEL;
+        for($i=1; $i<$this->aantalAfbeeldingen; $i++) {
+
+            echo "<div class=\"carousel-item\" >
+                <img class=\"d-block mx-auto mw-100 mh-100\" src = $foto[$i] alt = \"foto $i+1\" >
+            </div >";
+            }
+    echo <<< ARTIKEL
+        </div>
+    <a class="carousel-control-prev" href="#images" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#images" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 <div class='row'><div class='col'>
          </div><div class="col"></div></div>  
          <div class='row mt-2'><div class='col-1 '><h5 class='text-muted'>✓</h5></div>
@@ -313,6 +382,7 @@ class Artikel
          <div class='row'><div class='col-1 '><h5 class='text-muted'>▪</h5></div>
          <div class='col '><h5 class='text-muted'>Kavelnummer: $this->Id</h5></div></div>
 </div> 
+
          <div class='col '><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>
          $this->VeilingStatus
          </h4></div></div>
