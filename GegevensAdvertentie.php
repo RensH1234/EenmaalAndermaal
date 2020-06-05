@@ -8,9 +8,13 @@ $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $error = '';
 include_once 'AdvertentieControles.php';
+$rubriekID=81415;
 
+$newVoorwerpnummer = getNewVoorwerpnummer();
 if($error =="" && (array_key_exists('plaatsen',$_GET))){
-    echo "yeah";
+    maakAdvertentieAan($titel,$afbeeldingURL,$beschrijving,$betalingswijze,$plaatsnaam,$betalingsinstructies,$land
+    , $looptijd, $startprijs, $verzendinstructies, $verzendkosten,$rubriekID, $newVoorwerpnummer);
+    header("Location: http://iproject12.icasites.nl/Veiling.php?id={$newVoorwerpnummer}");
 }
 ?>
 

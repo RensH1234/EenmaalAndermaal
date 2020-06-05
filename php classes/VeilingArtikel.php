@@ -78,9 +78,11 @@ Voorwerpnummer = ?;";
 
     function printArtikel()
     {
-        $url = null;
-        if(strpos('dt_',$this->afbeeldingURL)==0) {
+        if(strpos($this->afbeeldingURL,'dt_')===0) {
             $url = 'http://iproject12.icasites.nl/pics/';
+        }
+        else{
+            $url= null;
         }
         return <<<HTML
 <div class="card text-center" style="width: 18rem;">
@@ -327,11 +329,12 @@ class Artikel
         $beschrijvingNoHtmlTag = $this->Beschrijving;
         $beschrijvingNoHtmlTag = strip_tags($beschrijvingNoHtmlTag);
         for($i=0; $i<$this->aantalAfbeeldingen; $i++) {
-            $this->url = null;
-            if(strpos('dt_',$this->AfbeeldingURL[$i])==0) {
-                $this->url = 'http://iproject12.icasites.nl/pics/';
+            if(strpos($this->AfbeeldingURL[$i],'dt_')===0) {
+                $foto[$i] = $this->url . $this->AfbeeldingURL[$i];
             }
-            $foto[$i] = $this->url . $this->AfbeeldingURL[$i];
+            else{
+                $foto[$i] = $this->AfbeeldingURL[$i];
+            }
         }
         echo <<< ARTIKEL
 <div class='container mt-2'><div class='container'>

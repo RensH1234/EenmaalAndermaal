@@ -2,17 +2,17 @@
 $cijfersEnLetters = '/[^A-Za-z0-9\\s]/';
 $alleenLetters = '/[^A-Za-z\\s]/';
 $alleenCijfers = '/[^0-9.]/';
-$titel = setErrorAndValue('titel', 5, 20, $cijfersEnLetters, true, 'string');
-$afbeeldingURL = setErrorAndValue('AfbeeldingURL', 5, 250, $cijfersEnLetters, true, 'string');
-$beschrijving = setErrorAndValue('beschrijving', 0, 20, $cijfersEnLetters, false, 'string');
-$betalingswijze = setErrorAndValue('betalingswijze', 5, 20, $alleenLetters, true, 'string');
-$plaatsnaam = setErrorAndValue('Plaatsnaam', 5, 250, $alleenLetters, true, 'string');
+$titel = setErrorAndValue('titel', 5, 100, $cijfersEnLetters, true, 'string');
+$afbeeldingURL = setErrorAndValue('AfbeeldingURL', 5, 200, $cijfersEnLetters, true, 'string');
+$beschrijving = setErrorAndValue('beschrijving', 0, 250, $cijfersEnLetters, false, 'string');
+$betalingswijze = setErrorAndValue('betalingswijze', 5, 9, $alleenLetters, true, 'string');
+$plaatsnaam = setErrorAndValue('Plaatsnaam', 2, 250, $alleenLetters, true, 'string');
 $betalingsinstructies = setErrorAndValue('betalingsinstructies', 5, 20, $cijfersEnLetters, true, 'string');
-$land = setErrorAndValue('land', 5, 250, $alleenLetters, true, 'string');
+$land = setErrorAndValue('land', 2, 20, $alleenLetters, true, 'string');
 $looptijd = setErrorAndValue('looptijd', 1, 7, $alleenCijfers, true, 'float');;
-$startprijs = setErrorAndValue('startprijs', 4, 7, $alleenCijfers, true, 'float');
+$startprijs = setErrorAndValue('startprijs', 2, 7, $alleenCijfers, true, 'float');
 $verzendinstructies = setErrorAndValue('verzendinstructies', 0, 20, $cijfersEnLetters, false, 'string');
-$verzendkosten = setErrorAndValue('verzendkosten', 4, 7, $alleenCijfers, false, 'float');
+$verzendkosten = setErrorAndValue('verzendkosten', 2, 7, $alleenCijfers, false, 'float');
 
 function setErrorAndValue($variablename, $minlength, $maxlength, $chartype, $required, $varType){
     $errorVariable = "";

@@ -2,8 +2,7 @@
 require_once 'SessionHandling/Session.php';
 include_once 'Framework.php';
 include_once 'php classes/Veilinglijst.php';
-include_once 'Functions.php';include_once 'SessionHandling';
-include_once 'SessionHandling/Session.php';
+include_once 'Functions.php';
 
 $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';

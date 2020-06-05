@@ -3,6 +3,8 @@ require_once 'SessionHandling/Session.php';
 
 include_once 'Framework.php';
 include_once 'php classes/Veilinglijst.php';
+include_once 'php classes/VeilingArtikel.php';
+
 include_once 'php classes/Rubriekenlijst.php';
 include_once 'Functions.php';
 $title = 'Eenmaal Andermaal!';
