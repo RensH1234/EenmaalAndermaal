@@ -5,7 +5,7 @@ include_once 'Biedingmachine.php';
 class VeilingArtikel
 {
     private $titel;
-    private $afbeeldingURL;
+    private $afbeeldingURL = array();
     private $afstand;
     private $prijs;
     private $eindtijd;
@@ -15,7 +15,7 @@ class VeilingArtikel
     function _construct($id)
     {
         $conn = getConn();
-        $sql = "SELECT * FROM Voorwerp  WHERE 
+        $sql = "SELECT * FROM Voorwerp WHERE
 Voorwerpnummer = ?;";
         $stmt = sqlsrv_prepare($conn, $sql, array($id));
         if (!$stmt) {
@@ -38,7 +38,7 @@ Voorwerpnummer = ?;";
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
-        $sql = "SELECT top(1) * FROM Bestand WHERE Voorwerpnummer = ?;";
+        $sql = "SELECT top(1) AfbeeldingURL FROM Bestand WHERE Voorwerpnummer = ?;";
         $stmt = sqlsrv_prepare($conn, $sql, array($id));
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
@@ -47,7 +47,7 @@ Voorwerpnummer = ?;";
 
         if (sqlsrv_execute($stmt)) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                $this->afbeeldingURL = $row['AfbeeldingURL'];
+                $this->afbeeldingURL[0] = $row['AfbeeldingURL'];
             }
         } else {
             die(print_r(sqlsrv_errors(), true));
@@ -69,19 +69,20 @@ Voorwerpnummer = ?;";
             $date = $arrayVoorwerp[6]->format('Y-m-d H:i:s');
             $this->eindtijd = date('Y-m-d H:i:s', strtotime($date . " + {$arrayVoorwerp[5]} days"));
         }
-        $this->afbeeldingURL = $arrayVoorwerp[7];
+        $this->afbeeldingURL[0] = $arrayVoorwerp[7];
         $this->id = $arrayVoorwerp[0];
-        if ($this->afbeeldingURL == null) {
-            $this->afbeeldingURL = "images/png/logov1.png";
+        if ($this->afbeeldingURL[0] == null) {
+            $this->afbeeldingURL[0] = "images/png/logov1.png";
         }
     }
 
     function printArtikel()
     {
         $url = 'http://iproject12.icasites.nl/pics/';
+        $afbeelding=$url . $this->afbeeldingURL[0];
         return <<<HTML
 <div class="card text-center" style="width: 18rem;">
-  <img class="card-img-top" src=$url$this->afbeeldingURL alt="Card image cap">
+  <img class="card-img-top" src=$afbeelding alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">$this->titel</h5>
     <p class="card-text">Locatie: $this->afstand</p>
