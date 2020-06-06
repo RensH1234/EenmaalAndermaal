@@ -20,7 +20,6 @@ if ($rubriekSelectie->_inputCheck()) {
     $_SESSION['verkooprubriek'] = prev($_POST);
     header('location: GegevensAdvertentie.php');
 }
-
 include_once 'Header.php';
 ?>
 <!doctype html>
@@ -61,7 +60,7 @@ include_once 'Header.php';
                     <script type="text/javascript">
                         document.getElementById('hoofdrubriek').value = "<?php echo $_POST['hoofdrubriek'];?>";
                     </script>
-                    <?php $rubriekSelectie->_generateSelection($rubriekSelectie); ?>
+                    <?php $rubriekSelectie->_generateSelection(); ?>
                     <div class="form-group">
                         <button type="reset" onclick="resetForm()">Reset</button>
                         <button type="submit" name="verder" id="verder" <?php

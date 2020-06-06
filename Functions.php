@@ -1,5 +1,11 @@
 <?php
 include_once 'DatabaseConn.php';
+/**
+ * Functie die de invoer opschoont van speciale karakters en witregels
+ * @author Yasin Tavsan
+ * @param $data string data dat wordt opgeschoond
+ * @return string
+ */
 function validate($data)
 {
     $data = trim($data);
@@ -8,6 +14,11 @@ function validate($data)
     return $data;
 }
 
+/**
+ * Functie die de footer van de pagina genereert
+ * @author Yasin Tavsan & Liander van Bergen
+ * @param $jaar mixed Dateformat van huidige jaar
+ */
 function _generateFooter($jaar){
     echo <<< FOOTER
 <!-- Footer -->
@@ -107,6 +118,11 @@ function _generateFooter($jaar){
 FOOTER;
 }
 
+/**
+ * Functie die de huidige pagina actief maakt in de header
+ * @author Yasin Tavsam
+ * @param $page_cur string URL van de pagina
+ */
 function _activeHeader($page_cur)
 {
     $url_array = explode('/', $_SERVER['REQUEST_URI']);

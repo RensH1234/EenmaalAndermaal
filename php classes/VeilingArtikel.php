@@ -121,11 +121,12 @@ HTML;
 
 }
 
-//Constructor voor Enkele Artikel in Veilingpagina
+/**
+ *  * Class Artikel Maakt een object aan die een veilingartikel aanmaakt en beheert
+ * @author Yasin Tavsan
+ */
 class Artikel
 {
-    //Lokale variabelen
-    //Database variabelen worden hierin verwerkt
     private $Id;
     private $Titel;
     private $Beschrijving;
@@ -149,12 +150,16 @@ class Artikel
     private $Minimumprijs;
 
     private $AfbeeldingURL = array();
-    private $AantalVoorwerpen;
 
     private $biedingenHTML;
     private $url = 'http://iproject12.icasites.nl/pics/';
     private $aantalAfbeeldingen;
 
+    /**
+     * Functie die de veilinggegevens ophaalt van de database
+     * @author Yasin Tavsan
+     * @param $id integer Voorwerpnummer wiens veilinggegevens worden opgehaald
+     */
     public function _getVeilingGegevens($id)
     {
         $conn = getConn();
@@ -203,7 +208,6 @@ class Artikel
                 $this->Verkoopprijs = $row['Verkoopprijs'];
                 $this->VeilingStatus = $this->_isGesloten();
                 $this->Minimumprijs = "Sample Text";
-
             }
         }
         for($i=0; $i<$this->aantalAfbeeldingen; $i++){
@@ -225,7 +229,11 @@ class Artikel
         }
     }
 
-    //Functie die op basis van geldigheid van de veiling een bericht meegeeft.
+    /**
+     * Functie die op basis van geldigheid van de veiling een bericht meegeeft.
+     * @author Yasin Tavsan
+     * @return string
+     */
     function _isGesloten()
     {
         $datum = date_format($this->LoopTijdEinde, "Y/m/d");
@@ -241,7 +249,10 @@ class Artikel
         return $str;
     }
 
-    //Functie die alle biedingen op het veilingartikel telt
+    /**
+     * Functie die alle biedingen op het veilingartikel telt
+     * @author Yasin Tavsan
+     */
     function _getAantalBiedingen()
     {
         $conn = getConn();
@@ -260,7 +271,11 @@ class Artikel
         }
     }
 
-    //Functie die op basis van de vorige en volgende knoppen daar de desbetreffende veiling gaat.
+    /**
+     * Functie die op basis van de vorige en volgende knoppen daar de desbetreffende veiling gaat
+     * @author Yasin Tavsan
+     * @param $hdg boolean geeft aan of de vorige of volgende item moet worden opgehaald
+     */
     function _gotoVeiling($hdg)
     {
         $conn = getConn();
@@ -285,7 +300,6 @@ class Artikel
         }
     }
 
-    //functie die de printBiedingmachine uit Biedingmachine.php uitprint
     public function setBiedingen($optie, $bedrag)
     {
         $biedingen = new Biedingmachine();
@@ -301,8 +315,10 @@ class Artikel
         $this->biedingenHTML = $biedingen->printBiedingmachine();
     }
 
-
-    //functie die de gehele veilingpagina inhoud genereert
+    /**
+     * Functie die de gehele veilingpagina inhoud genereert
+     * @author Yasin Tavsan & Rens harinck & Bas Ruijs
+     */
     function _printArtikel()
     {
         $foto=array();
@@ -324,11 +340,9 @@ class Artikel
 <ol class="carousel-indicators">
 <li data-target="#images" data-slide-to="0" class="active"></li>
 ARTIKEL;
-
     for($i=1; $i<$this->aantalAfbeeldingen; $i++) {
         echo "<li data-target=\"#images\" data-slide-to=\"$i\"></li>";
         }
-
 echo <<<ARTIKEL
   </ol>
         <div class="carousel-inner">
@@ -337,7 +351,6 @@ echo <<<ARTIKEL
             </div>
 ARTIKEL;
         for($i=1; $i<$this->aantalAfbeeldingen; $i++) {
-
             echo "<div class=\"carousel-item\" >
                 <img class=\"d-block mx-auto mw-100 mh-100\" src = $foto[$i] alt = \"foto $i+1\" >
             </div >";

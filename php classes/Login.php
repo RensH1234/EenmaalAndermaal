@@ -1,6 +1,10 @@
 <?php
 include_once 'DatabaseConn.php';
 
+/**
+ *  * Class Login Object dat inloggegevens controleert en de session afhandelt
+ * @author Yasin Tavsan
+ */
 class Login
 {
     private $name_db;
@@ -10,7 +14,11 @@ class Login
     private $pass_post;
     private $mismatch;
 
-    //Functie die de gebruikersnaam en wachtwoord ophaalt vanuit de Database
+    /**
+     * Functie die de gebruikersnaam en wachtwoord ophaalt vanuit de Database
+     * @author Yasin Tavsan
+     * @param $user string gebruikersnaam dat opgehaald moet worden
+     */
     function _getFromGebruikersDb($user)
     {
         $conn = getConn();
@@ -30,8 +38,11 @@ Gebruikersnaam = ?;";
         }
     }
 
-    //Functie die het inloggen afhandelt. Invoer wordt eerst via de _verify() functie gecontroleerd en dan pas
-    //vergeleken met het resultaat vanuit de database.
+    /**
+     * Functie die het inloggen afhandelt. Invoer wordt eerst via de _verify() functie gecontroleerd en dan pas
+     * vergeleken met het resultaat vanuit de database.
+     * @author Yasin Tavsam
+     */
     function _genLogin()
     {
         $this->mismatch = false;
@@ -50,7 +61,11 @@ Gebruikersnaam = ?;";
         }
     }
 
-    //Boolean functie die controleert of de invoer en de database gegevens een match zijn
+    /**
+     * Boolean functie die controleert of de invoer en de database gegevens een match zijn
+     * @author Yasin Tavsan
+     * @return boolean
+     */
     function _isMatch()
     {
         if (isset($_POST['login'])) {
@@ -62,7 +77,11 @@ Gebruikersnaam = ?;";
         return false;
     }
 
-    //Functie die de invoer van de gebruiker opschoont en bij foutieve invoer een foutmelding weergeeft.
+    /**
+     * Functie die de invoer van de gebruiker opschoont en bij foutieve invoer een foutmelding weergeeft
+     * @author Yasin Tavsan
+     * @return string
+     */
     function _verify()
     {
         $e = "";
@@ -80,7 +99,6 @@ Gebruikersnaam = ?;";
             }
             return $e;
         }
-        //unset($_POST['login']);
         return $e;
     }
 }

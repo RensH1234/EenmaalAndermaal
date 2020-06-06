@@ -43,10 +43,6 @@ ON r.RubriekID = Deriv1.SuperRubriekID WHERE r.SuperRubriekID= ?";
     {
 
     }
-
-
-
-
     public function _fetchHotRubrieken($amount)
     {
         $results = array();
