@@ -51,9 +51,9 @@ ON r.RubriekID = Deriv1.SuperRubriekID WHERE r.SuperRubriekID= ?";
     {
         $results = array();
         $conn = getConn();
-        $sql = "SELECT TOP (?) v.RubriekID, COUNT(v.RubriekID) As Aantalbiedingen FROM VoorwerpInRubriek v
-INNER JOIN Bod b ON v.Voorwerpnummer = b.Voorwerpnummer
-GROUP BY v.RubriekID
+        $sql = "SELECT TOP (?) v.RubriekID, COUNT(v.RubriekID)As Aantalbiedingen, r.Rubrieknaam FROM VoorwerpInRubriek v
+INNER JOIN Bod b ON v.Voorwerpnummer = b.Voorwerpnummer INNER JOIN Rubriek r on v.RubriekID = r.RubriekID
+GROUP BY r.Rubrieknaam, v.RubriekID
 ORDER BY Aantalbiedingen DESC";
         $stmt = sqlsrv_prepare($conn, $sql, array($amount));
         if (!$stmt) {
@@ -61,42 +61,11 @@ ORDER BY Aantalbiedingen DESC";
         }
         sqlsrv_execute($stmt);
         if (sqlsrv_execute($stmt)) {
+            $i=0;
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                $results[] = $row['RubriekID'];
-            }
-        }
-        return $results;
-    }
-
-    public function getRubrieknaam($rubriekID){
-        $results = array();
-        $conn = getConn();
-        $sql = "SELECT Rubrieknaam FROM Rubriek where RubriekID=?";
-        $stmt = sqlsrv_prepare($conn, $sql, array($rubriekID));
-        if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
-        }
-        sqlsrv_execute($stmt);
-        if (sqlsrv_execute($stmt)) {
-
-            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                $results[] = $row['Rubrieknaam'];
-            }
-        }
-        return $results;
-    }
-    public function getSuperRubriek($rubriekID){
-        $results = array();
-        $conn = getConn();
-        $sql = "SELECT SuperRubriekID FROM Rubriek where RubriekID=?";
-        $stmt = sqlsrv_prepare($conn, $sql, array($rubriekID));
-        if (!$stmt) {
-            die(print_r(sqlsrv_errors(), true));
-        }
-        sqlsrv_execute($stmt);
-        if (sqlsrv_execute($stmt)) {
-            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                $results[] = $row['SuperRubriekID'];
+                $results[$i][1] = $row['RubriekID'];
+                $results[$i][0] = $row['Rubrieknaam'];
+                $i++;
             }
         }
         return $results;
