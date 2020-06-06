@@ -313,7 +313,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Geboortedatum</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  required name="geboortedatum" placeholder="Geboortedatum" class="form-control"  type="date" value="<?php echo $geboortedatum; ?>">*
+                                        <input  required name="geboortedatum" placeholder="" class="form-control"  type="date" value="<?php echo $geboortedatum; ?>">*
                                     </div>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Beveilingsvraag</label>
                                 <div class="selectContainer">
                                     <div class="input-group">
-                                        <select required name="beveiligingsvraag" class="form-control selectpicker">   *
+                                        <select required name="beveiligingsvraag" class="form-control selectpicker">*
                                             $beveiligingsvragen
                                         </select>
                                     </div>
