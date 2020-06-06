@@ -43,15 +43,14 @@ $siteNaam = 'Welkom!';
         echo "<ul>";
         echo "<div class=\"list-group\">";
             for ($j = 0; $j < 4; $j++) {
-                if($rubriekID[$j]!=-1) {
-                    $rubrieknaam = $lijstRubrieken->getRubrieknaam($rubriekID[$j])[0];
-                    $url= "VeilingenOverzicht.php?rubriekID=" . $rubriekID[$j];
+                if($rubriekID[$j][0]!=-1) {
+                    $rubrieknaam = $rubriekID[$j][0];
+                    $url= "VeilingenOverzicht.php?rubriekID=" . $rubriekID[$j][1];
                     echo "<a href=\"";
                     echo $url;
                     echo "\" class=\"list-group-item list-group-item-action\">";
                     echo $rubrieknaam;
                     echo "</a>";
-                    $rubriekID[$j] = $lijstRubrieken->getSuperRubriek($rubriekID[$j]);
                 }
                 echo "<br>";
             }
