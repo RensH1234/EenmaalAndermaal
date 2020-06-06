@@ -11,17 +11,20 @@ $siteNaam = 'Welkom!';
 if(array_key_exists('gebruikersnaam',$_SESSION)){
     if($_SESSION['Rol']=='Verkoper'){
         //in deze if komt user story 23
-        $mainContent = <<<HTML
-
-HTML;
+    header('location: Verkopen.php');
 
     }
     else{
         //in deze if komt user story 16
         $mainContent = <<<HTML
-<h2>Om advertenties te plaatsen moet u een verkopersaccount hebben.</h2>
+
 <div class="container-fluid">
         <form class="form-group" action="WordtVerkoper.php" method="post">
+        <div class="row justify-content-center">
+                <div class="col-sm-4 col-xs-1">                  
+                    <h2>Om advertenties te plaatsen moet u een verkopersaccount hebben.</h2>
+                </div>
+        </div>
             <div class="row justify-content-center">
                 <div class="col-sm-4 col-xs-1">                  
                     <button type="submit" class="btn btn-dark"> Wordt een verkoper </button>
