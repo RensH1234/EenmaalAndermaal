@@ -260,26 +260,6 @@ class Artikel
         }
     }
 
-    //DEPRECATED
-    //Functie die het aantal veilingvoorwerpen retourneert
-//    function _getAantalVoorwerpen()
-//    {
-//        $conn = getConn();
-//        $sql = "SELECT COUNT(Voorwerpnummer) AS AantalVoorwerpen FROM Voorwerp";
-//        $stmt = sqlsrv_prepare($conn, $sql);
-//        if (!$stmt) {
-//            die(print_r(sqlsrv_errors(), true));
-//        }
-//        sqlsrv_execute($stmt);
-//        if (sqlsrv_execute($stmt)) {
-//            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-//                $this->AantalVoorwerpen = $row['AantalVoorwerpen'];
-//            }
-//        } else {
-//            die(print_r(sqlsrv_errors(), true));
-//        }
-//    }
-
     //Functie die op basis van de vorige en volgende knoppen daar de desbetreffende veiling gaat.
     function _gotoVeiling($hdg)
     {
