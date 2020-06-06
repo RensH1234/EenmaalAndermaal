@@ -1,7 +1,5 @@
 <?php
 require_once 'SessionHandling/Session.php';
-
-include_once 'Framework.php';
 include_once 'php classes/Veilinglijst.php';
 include_once 'php classes/VeilingArtikel.php';
 
@@ -15,9 +13,11 @@ $siteNaam = 'Welkom!';
 <html lang="nl">
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
-    minimum-scale=1.0" charset="UTF-8">
+    minimum-scale=1.0" >
+    <meta charset="UTF-8">
     <title><?= $title ?> | <?= $siteNaam ?></title>
     <link rel="stylesheet" href="Custom_css/custom%20stylesheet.css">
+    <?php include_once 'Framework.php' ?>
 </head>
 <body>
 <?php include_once 'Header.php'; ?>
@@ -40,7 +40,7 @@ $siteNaam = 'Welkom!';
         $rubriekID= array();
             $rubriekID = $lijstRubrieken->_fetchHotRubrieken(4);
         echo "<div class='row mt-4 text-center bg-dark'><div class='col'><h1 class='text-body'>Hot categorieën</h1>";
-        echo "<ul>";
+
         echo "<div class=\"list-group\">";
             for ($j = 0; $j < 4; $j++) {
                 if($rubriekID[$j][0]!=-1) {
@@ -54,10 +54,12 @@ $siteNaam = 'Welkom!';
                 }
                 echo "<br>";
             }
-        echo "</ul>";
-            echo "</div></div>";
+
+            echo "</div></div></div></div>";
         ?>
     </div>
+
+
 </main>
 <?php _generateFooter(date('Y')) ?>
 </body>

@@ -1,5 +1,5 @@
 <?php
-include_once 'Framework.php';
+
 include_once 'Functions.php';
 include_once 'DatabaseConn.php';
 $title = 'Voer uw code in';
@@ -99,6 +99,7 @@ HTML;
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <?php include_once 'Framework.php';?>
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
