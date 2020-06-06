@@ -13,6 +13,12 @@ class Veilinglijst
 //    private $huidigeDatum = date("h:i:sa");
 
     //constructor voor veilinglijst
+    /**
+     * Constructor die gegevens uit database haalt
+     * @author Rens Harinck
+     * @param array $voorwerpnummers array met voorwerpnummers om uit de db te halen
+     * @param string $cssID html-id van veilinglijst
+     */
     public function _construct($voorwerpnummers, $cssID)
     {
         $this->voorwerpnummers = $voorwerpnummers;
@@ -26,6 +32,13 @@ HTML;
         $this->voorwerpnummers = $voorwerpnummers;
     }
 
+    /**
+     * Constructor  die gegevens uit array haalt
+     * @author Rens Harinck
+     * @param array $array array met veilingartikelen
+     * @param int $voorwerpnummers aantal voorwerpnummers
+     * @param string $cssID html-id van veilinglijst
+     */
     public function _constructZoeken($array, $cssID, $voorwerpnummers)
     {
         $this->voorwerpnummers = $voorwerpnummers;
@@ -36,6 +49,10 @@ HTML;
     }
 
     //artikelen voor zoekquery
+    /**
+     * Constructor  die VeilingArtikelen genereert direct uit database
+     * @author Rens Harinck
+     */
     private function maakArtikelenZoekQuery()
     {
         for ($i = 0; $i < sizeof($this->voorwerpnummers); $i++) {
@@ -44,6 +61,12 @@ HTML;
         }
     }
 
+    /**
+     * Functie  die een lijst met VeilingArtikelen heen genereert en returned
+     * @author Rens Harinck
+     * @param string $name titel lijst
+     * @return string container
+     */
     public function _genereerContainer($name)
     {
         $container = "<div class='container'>";
@@ -58,7 +81,10 @@ HTML;
         $container .= "</div></div>";
         return $container;
     }
-
+    /**
+     * Functie die een lijst met VeilingArtikelen heen genereert
+     * @author Rens Harinck
+     */
     public function printVeilinglijst()
     {
         echo $this->naam;
@@ -70,7 +96,10 @@ HTML;
         }
         echo "</div></div>";
     }
-
+    /**
+     * Functie die alle opgegeven veilingen print
+     * @author Rens Harinck
+     */
     public function printVeilingen()
     {
         echo $this->naam;
@@ -82,7 +111,10 @@ HTML;
         }
         echo "</div></div>";
     }
-
+    /**
+     * Functie die alle opgegeven veilingen print uit de array
+     * @author Rens Harinck
+     */
     public function printVeilingenZoeken()
     {
         echo $this->naam;

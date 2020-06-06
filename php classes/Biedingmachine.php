@@ -10,6 +10,14 @@ class Biedingmachine
     private $verkoopprijs;
     private $nieuweBieder;
 
+    /**
+     * Constructor Biedingmachine
+     * @author Rens Harinck
+     * @uses file('DatabaseConn.php')
+     * @param int $voorwerpnummer voorwerpnummer waar biedingen van moeten worden genereerd
+     * @param bool $ingelogd of er een gebruiker is ingelogd
+     * @param string $gebruiker naam van gebruiker als die is ingelogd, anders '0'
+     */
     public function _construct($voorwerpnummer, $ingelogd, $gebruiker)
     {
         if(!$ingelogd||$ingelogd==null){
@@ -61,6 +69,13 @@ WHERE A.Voorwerpnummer = ? ORDER BY Boddatum DESC;";
     }
 
     //functie vult de array met de drie data in de vorm van een string die er zo uit ziet: "$bedrag.$datumtijd.$gebruikersnaam"
+    /**
+     * Functie die de gebruiker registreert in de database
+     * @author Rens Harinck
+     * @param string $bedrag bedrag bieding
+     * @param DateTime $datumtijd datumtijd van bod
+     * @param string $gebruikersnaam gebruikersnaam van bieder
+     */
     private function createDBString($bedrag, $datumtijd, $gebruikersnaam)
     {
         $explode = array();
@@ -74,7 +89,11 @@ WHERE A.Voorwerpnummer = ? ORDER BY Boddatum DESC;";
 
     //de functie printBodinfo is een onderdeel van de functie printBiedingsmachine. Het print de tabel met info van biedingen op het product.
 
-
+    /**
+     * Functie die de biedingentabel genereert
+     * @author Rens Harinck
+     * @return string html van biedingentabel
+     */
     private function printBodinfo()
     {
         if (sizeof($this->stringBiedingenArray) > 0) {
@@ -131,7 +150,12 @@ HTML;
 
 
 
-
+    /**
+     * Functie die gehele biedingfunctie returned
+     * @author Rens Harinck
+     * @uses $this->printBodInfo()
+     * @return string html van biedingen, knoppen, en biedingssfunctie
+     */
     public function printBiedingmachine()
     {
         if (!$this->ingelogd) {
@@ -183,7 +207,11 @@ HTML;
 
 
     }
-
+    /**
+     * Functie die de minimale verhoging returned van een veilingartikel
+     * @author Rens Harinck
+     * @return float de minimale verhoging
+     */
     private function setVerhoging()
     {
         if($this->verkoopprijs <= 49.99 ){
@@ -202,6 +230,13 @@ HTML;
 
 
     //zet bieding in de database gebaseerd op bedrag. Alleen uitvoeren als er is ingelogd
+    /**
+     * Functie die een bod in de database zet, en de verkoopprijs veranderd van een voorwerp
+     * @author Rens Harinck
+     * @uses file('DatabaseConn.php')
+     * @uses $this->stuurmailNaarVorigeBieder()
+     * @param float $bedrag bedrag bieding
+     */
     public function submitBod($bedrag){
         if($bedrag >= $this->minimumVerhoging && $bedrag <= 9999.99) {
             $conn = getConn();
@@ -221,6 +256,12 @@ HTML;
         }
     }
 
+    /**
+     * Functie die mail naar vorige bieder in de database stuurt
+     * @author Rens Harinck
+     * @uses file('DatabaseConn.php')
+     * @uses $this->stuurMail()
+     */
     private function stuurmailNaarVorigeBieder(){
         $conn = getConn();
         $sql = " SELECT G.Emailadres FROM Gebruiker G INNER JOIN Bod B ON G.Gebruikersnaam = B.Gebruikersnaam
@@ -244,7 +285,12 @@ HTML;
         }
 
     }
-
+    /**
+     * Functie die mail naar vorige bieder in de database stuurt
+     * @author Rens Harinck
+     * @uses file('DatabaseConn.php')
+     * @param string $email email ontvanger
+     */
     private function stuurMail($email){
         $to = $email;
         $subject = "U bent overboden!";

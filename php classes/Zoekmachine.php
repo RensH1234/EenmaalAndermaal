@@ -9,6 +9,17 @@ class Zoekmachine
     private $voorwerpgegevens = array();
     private $nVoorwerpen = 0;
 
+    /**
+     * Constructor voor Zoekmachine
+     * @author Rens Harinck
+     * @uses $this->getRubrieken()
+     * @uses $this->setFilter()
+     * @uses $this->getAfbeelding()
+     * @param string $sleutelwoord waar naar wordt gezocht
+     * @param int $filterindex alle filters
+     * @param array $subrubrieken alle subrubrieken die moeten worden laten zien
+     * @param int $hoofdrubriek de parent rubriek van de subrubrieken
+     */
     function _constructNieuw($sleutelwoord, $filterindex,$subrubrieken,$hoofdrubriek)
     {
         if($hoofdrubriek != null) {
@@ -66,13 +77,21 @@ V.Voorwerpnummer=$id";
         }
         return $afbeeldingURL;
     }
-
+    /**
+     * Functie die alle gezochte veilingen print
+     * @author Rens Harinck
+     */
     function genereerVeilingArtikelen(){
         $artikelen = new Veilinglijst();
         $artikelen->_constructZoeken($this->voorwerpgegevens,'zoekresultaten',$this->nVoorwerpen);
         $artikelen->printVeilingenZoeken();
     }
-
+    /**
+     * Functie die de filter selecteert van de resultaten, prijs hoog naar laag of laag naar hoog
+     * @author Rens Harinck
+     * @param int $filterindex index van de filter
+     * @return string sql substring om te filteren
+     */
     function setFilter($filterindex)
     {
         switch ($filterindex) {
@@ -85,12 +104,21 @@ V.Voorwerpnummer=$id";
         }
         return $a;
     }
-
+    /**
+     * Functie die een string van alle gezochte artikelen returned
+     * @author Rens Harinck
+     * @return string string van idarray
+     */
     function _getIdArrayRes()
     {
         return implode('.', $this->idArray);
     }
-
+    /**
+     * Functie die de filter bepaalt van de prijs
+     * @author Rens Harinck
+     * @uses $this->plaatsFilter()
+     * @param string $implode string van de gesselecteerde prijsranges
+     */
     public function prijsfilter(string $implode)
     {
         $laatsteAanroep = false;
@@ -112,6 +140,11 @@ V.Voorwerpnummer=$id";
         }
     }
 
+    /**
+     * Functie die de filter bepaalt van de prijs
+     * @author Rens Harinck
+     * @param string $i string van de gesselecteerde prijsranges
+     */
     private function plaatsFilter($i)
     {
         switch ($i) {
@@ -132,6 +165,13 @@ V.Voorwerpnummer=$id";
         }
     }
 
+    /**
+     * Functie die de filter bepaalt van de prijs
+     * @author Rens Harinck
+     * @param array $subrubrieken subrubrieken van parent
+     * @param int $hoofdrubriek parent van subrubrieken
+     * @return string substring van sql query
+     */
     private function getRubrieken($subrubrieken, $hoofdrubriek)
     {
         $r = "";
