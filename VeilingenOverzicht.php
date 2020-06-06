@@ -1,5 +1,5 @@
 <?php
-include_once 'Framework.php';
+
 include_once 'php classes/Veilinglijst.php';
 include_once 'Functions.php';
 include_once 'php classes/Zoekmachine.php';
@@ -77,13 +77,18 @@ if (array_key_exists("rubriekID", $_GET)) {
 }
 
 ?>
+
 <!doctype html>
 <html lang="nl">
+
 <head>
+    <?php include_once 'Framework.php'; ?>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
-    minimum-scale=1.0" charset="UTF-8">
+    minimum-scale=1.0" >
+    <meta charset="UTF-8">
     <title><?= $title ?> | <?= $siteNaam ?></title>
     <link rel="stylesheet" href="Custom_css/custom%20stylesheet.css">
+
 </head>
 <body>
 <?php include_once 'Header.php'; ?>
@@ -102,7 +107,7 @@ if (array_key_exists("rubriekID", $_GET)) {
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div class="form-check">
                                 <input type="hidden" value=<?php echo $_GET["rubriekID"]; ?> name="rubriekID">
-                                <input type="hidden" value=<?php echo $_GET['zoekopdracht']; ?> name="zoekopdracht">
+                                <input type="hidden" value="<?php echo $_GET["zoekopdracht"]; ?>" name="zoekopdracht">
                                 <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="prijsrange1"
                                        value="1">
                                 <label class="form-check-label" for="inlineCheckbox1">&euro;0 - &euro;10</label><br>
@@ -163,7 +168,7 @@ if (array_key_exists("rubriekID", $_GET)) {
                         </div>
                     </div>
                 </div>
-                <div class="row  text-center" width="80%">
+                <div class="row  text-center" >
                     <?php
 
                     $resultaten->genereerVeilingArtikelen();

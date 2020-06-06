@@ -24,7 +24,7 @@ class Zoekmachine
         }
         $this->idArray = array();
         $conn = getConn();
-        $sql = "SELECT TOP 20 V.Voorwerpnummer, V.Titel, V.Plaatsnaam, 
+        $sql = "SELECT DISTINCT top 20 V.Voorwerpnummer, V.Titel, V.Plaatsnaam, 
 V.Verkoopprijs, V.LoopTijdEinde, V.MaximaleLooptijd, V.Looptijdbegin, B.AfbeeldingURL 
 FROM Voorwerp V INNER JOIN Bestand B ON V.Voorwerpnummer = B.Voorwerpnummer INNER JOIN VoorwerpInRubriek R ON V.Voorwerpnummer = R.Voorwerpnummer WHERE
 (V.Titel LIKE '%{$sleutelwoord}%' ) {$rubrieken} {$this->filterprijs} ORDER BY {$filteroptie};";

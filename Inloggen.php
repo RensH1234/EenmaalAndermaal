@@ -3,7 +3,7 @@ require 'php classes/Login.php';
 
 require 'SessionHandling/Session.php';
 
-include_once 'Framework.php';
+
 include_once 'Functions.php';
 
 $title = 'Eenmaal Andermaal!';
@@ -17,8 +17,10 @@ $login->_genlogin();
 <html lang="nl">
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,
-    minimum-scale=1.0" charset="UTF-8">
+    minimum-scale=1.0" >
+    <meta charset="UTF-8">
     <title><?= $title ?> | <?= $siteNaam ?></title>
+    <?php include_once 'Framework.php';?>
     <link rel="stylesheet" href="Custom_css/custom%20stylesheet.css">
 </head>
 <body>
@@ -60,5 +62,6 @@ $login->_genlogin();
                 </form>
             </div>
         </div>
+    </div>
 </main>
 <?php _generateFooter(date('Y')) ?>

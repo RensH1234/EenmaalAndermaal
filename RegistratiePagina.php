@@ -1,6 +1,6 @@
 <?php
 include_once 'DatabaseConn.php';
-include_once 'framework.php';
+
 
 require_once 'SessionHandling/Session.php';
 
@@ -155,7 +155,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
     $mode = $_POST['mode'];
     $origin = $_POST['origin'];
     $mainContent = <<<HTML
-<form class="well form-horizontal" action=" " method="post"  id="contact_form">
+<form class="well form-horizontal" action="RegistratiePagina.php" method="post"  id="contact_form">
                 <div class="container-fluid">
                         <div class="row text-center">
                             <div class="col">
@@ -168,7 +168,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                     <label class="control-label">Gebruikersnaam</label>
                                     <div class="inputGroupContainer">
                                         <div class="input-group">
-                                            <input  required="true" name="gebruikersnaam" placeholder="Gebruikersnaam" class="form-control"  type="text" value=$gebruikersnaam>*
+                                            <input  required name="gebruikersnaam" placeholder="Gebruikersnaam" class="form-control"  type="text" value="<?php echo $gebruikersnaam; ?>">*
                                         </div>
                                     </div>
                                 </div>
@@ -178,7 +178,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                     <label class="control-label">Wachtwoord</label>
                                     <div class="inputGroupContainer">
                                         <div class="input-group">
-                                            <input  required="true" name="wachtwoord" placeholder="Wachtwoord" class="form-control"  type="password" value= $wachtoord1>*
+                                            <input  required name="wachtwoord" placeholder="Wachtwoord" class="form-control"  type="password" value= "<?php echo $wachtoord1; ?>">*
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                     <label class="control-label">Herhaal wachtwoord</label>
                                     <div class="inputGroupContainer">
                                         <div class="input-group">
-                                            <input  required="true" name="wachtwoord_herhaling" placeholder="Herhaal wachtwoord" class="form-control"  type="password" value=$wachtwoord2>*
+                                            <input  required= name="wachtwoord_herhaling" placeholder="Herhaal wachtwoord" class="form-control"  type="password" value="<?php echo $wachtwoord2; ?>">*
                                         </div>
                                     </div>
                                 </div>
@@ -200,7 +200,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                     <label class="control-label">Voornaam</label>
                                     <div class="inputGroupContainer">
                                         <div class="input-group">
-                                            <input  required="true" name="voornaam" placeholder="Voornaam" class="form-control"  type="text" value=$voornaam>*
+                                            <input  required name="voornaam" placeholder="Voornaam" class="form-control"  type="text" value="<?php echo $voornaam ; ?>">*
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +210,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                     <label class="control-label">Achternaam</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
-                                            <input  required="true" name="achternaam" placeholder="Achternaam" class="form-control"  type="text"  value=$achternaam>*
+                                            <input  required name="achternaam" placeholder="Achternaam" class="form-control"  type="text"  value="<?php echo $achternaam ; ?>">*
                                         </div>
                                     </div>
                                 </div>
@@ -222,7 +222,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Straatnaam</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  required="true" name="straatnaam" placeholder="Straatnaam" class="form-control"  type="text" value=$straatnaam>*
+                                        <input  required name="straatnaam" placeholder="Straatnaam" class="form-control"  type="text" value="<?php echo $straatnaam ; ?>">*
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +232,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Tussenvoegsel</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  name="tussenvoegsel" placeholder="Tussenvoegsel" class="form-control"  type="text" value= $tussenvoegsel>
+                                        <input  name="tussenvoegsel" placeholder="Tussenvoegsel" class="form-control"  type="text" value= "<?php echo $tussenvoegsel ; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -242,7 +242,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Huisnummer</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  required="true" name="huisnummer" placeholder="Huisnummer" class="form-control"  type="text" value=$huisnummer>*
+                                        <input  required name="huisnummer" placeholder="Huisnummer" class="form-control"  type="text" value="<?php echo $huisnummer ; ?>">*
                                     </div>
                                 </div>
                             </div>
@@ -254,7 +254,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Postcode</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  required="true" name="postcode" placeholder="Postcode" class="form-control"  type="text" value=$postcode>*
+                                        <input  required name="postcode" placeholder="Postcode" class="form-control"  type="text" value="<?php echo $postcode  ; ?>">*
                                     </div>
                                 </div>
                             </div>
@@ -264,7 +264,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Plaatsnaam</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  required="true" name="plaatsnaam" placeholder="Plaatsnaam" class="form-control"  type="text" value=$plaatsnaam>*
+                                        <input  required name="plaatsnaam" placeholder="Plaatsnaam" class="form-control"  type="text" value="<?php echo $plaatsnaam  ; ?>">*
                                     </div>
                                 </div>
                             </div>
@@ -274,7 +274,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Land</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  required="true" name="land" placeholder="Land" class="form-control"  type="text" value=$land>*
+                                        <input  required name="land" placeholder="Land" class="form-control"  type="text" value="<?php echo $land; ?>">*
                                     </div>
                                 </div>
                             </div>
@@ -286,10 +286,10 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">E-mail</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  disabled required="true" name="email" placeholder="Email" class="form-control"  type="email" value=$email>
-                                        <input name="origin" type="hidden" value=$origin>
-                                        <input name="code" type="hidden" value=$code>
-                                        <input name="mode" type="hidden" value=$mode>
+                                        <input  disabled required="true" name="email" placeholder="Email" class="form-control"  type="email" value="<?php echo $email; ?>">
+                                        <input name="origin" type="hidden" value="<?php echo $origin; ?>">
+                                        <input name="code" type="hidden" value="<?php echo $code; ?>">
+                                        <input name="mode" type="hidden" value="<?php echo $mode; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -301,7 +301,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Telefoonnummer</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  name="telefoonnummer" placeholder="Telefoonnummer" class="form-control"  type="tel" value=$telefoonnummer>
+                                        <input  name="telefoonnummer" placeholder="Telefoonnummer" class="form-control"  type="tel" value="<?php echo $telefoonnummer; ?>">
                                     </div>
                                 </div>
                             </div>
@@ -313,7 +313,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Geboortedatum</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  required="true" name="geboortedatum" placeholder="Geboortedatum" class="form-control"  type="date" value=$geboortedatum>*
+                                        <input  required name="geboortedatum" placeholder="Geboortedatum" class="form-control"  type="date" value="<?php echo $geboortedatum; ?>">*
                                     </div>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Beveilingsvraag</label>
                                 <div class="selectContainer">
                                     <div class="input-group">
-                                        <select required="true" name="beveiligingsvraag" class="form-control selectpicker">   *
+                                        <select required name="beveiligingsvraag" class="form-control selectpicker">   *
                                             $beveiligingsvragen
                                         </select>
                                     </div>
@@ -337,7 +337,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Antwoord beveiligingsvraag</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <input  required="true" name="antwoord" placeholder="Antwoord beveiligingsvraag" class="form-control"  type="text" value=$aBeveiligingsvraag>*
+                                        <input  required name="antwoord" placeholder="Antwoord beveiligingsvraag" class="form-control"  type="text" value="<?php echo $aBeveiligingsvraag; ?>">*
                                     </div>
                                 </div>
                             </div>
@@ -367,6 +367,7 @@ HTML;
 <!Doctype html>
 <html lang="nl">
 <head>
+  <?php  include_once 'framework.php';?>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
