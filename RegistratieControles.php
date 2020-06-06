@@ -42,7 +42,7 @@ if(isset($_POST["registreren"])) {
         if (strlen($_POST["voornaam"]) > 50) {
             $error .= "<p class='text-white'>Error: voornaam is te lang</p>";
         }
-        if (preg_match('/[^A-Za-z]+""/', $voornaam)) {
+        if (preg_match('/[^A-Za-z0-9]/', $voornaam)) {
             $error .= "<p class='text-white'>Error: voornaam mag geen vreemde tekens of cijfers bevatten</p>";
         }
     }

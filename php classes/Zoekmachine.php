@@ -24,8 +24,8 @@ class Zoekmachine
         }
         $this->idArray = array();
         $conn = getConn();
-        $sql = "SELECT DISTINCT top 20 V.Voorwerpnummer, V.Titel, V.Plaatsnaam, 
-V.Verkoopprijs, V.LoopTijdEinde, V.MaximaleLooptijd, V.Looptijdbegin, B.AfbeeldingURL 
+        $sql = "SELECT distinct TOP 20 V.Voorwerpnummer, V.Titel, V.Plaatsnaam, 
+V.Verkoopprijs, V.LoopTijdEinde, V.MaximaleLooptijd, V.Looptijdbegin 
 FROM Voorwerp V INNER JOIN Bestand B ON V.Voorwerpnummer = B.Voorwerpnummer INNER JOIN VoorwerpInRubriek R ON V.Voorwerpnummer = R.Voorwerpnummer WHERE
 (V.Titel LIKE '%{$sleutelwoord}%' ) {$rubrieken} {$this->filterprijs} ORDER BY {$filteroptie};";
         $stmt = sqlsrv_prepare($conn, $sql);
@@ -35,15 +35,36 @@ FROM Voorwerp V INNER JOIN Bestand B ON V.Voorwerpnummer = B.Voorwerpnummer INNE
         sqlsrv_execute($stmt);
         if (sqlsrv_execute($stmt)) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                array_push($this->voorwerpgegevens,array($row['Voorwerpnummer'],
-                    $row['Titel'],$row['Plaatsnaam'],$row['Verkoopprijs'],$row['LoopTijdEinde'],$row['MaximaleLooptijd'],
-                    $row['Looptijdbegin'],$row['AfbeeldingURL']));
-                    $nVoorwerpen = $nVoorwerpen + 1;
+                array_push($this->voorwerpgegevens, array($row['Voorwerpnummer'],
+                    $row['Titel'], $row['Plaatsnaam'], $row['Verkoopprijs'], $row['LoopTijdEinde'], $row['MaximaleLooptijd'],
+                    $row['Looptijdbegin'], $this->getAfbeelding($row['Voorwerpnummer'])));
             }
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
+
         $this->nVoorwerpen = $nVoorwerpen;
+    }
+
+    function getAfbeelding($id){
+        $afbeeldingURL="";
+        $conn = getConn();
+        $sql = "SELECT distinct TOP 1 B.AfbeeldingURL
+FROM Voorwerp V INNER JOIN Bestand B ON V.Voorwerpnummer = B.Voorwerpnummer INNER JOIN VoorwerpInRubriek R ON V.Voorwerpnummer = R.Voorwerpnummer WHERE
+V.Voorwerpnummer=$id";
+        $stmt = sqlsrv_prepare($conn, $sql);
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if (sqlsrv_execute($stmt)) {
+            while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+                $afbeeldingURL=$row['AfbeeldingURL'];
+            }
+        } else {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        return $afbeeldingURL;
     }
 
     function genereerVeilingArtikelen(){

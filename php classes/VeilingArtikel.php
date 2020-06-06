@@ -78,7 +78,12 @@ Voorwerpnummer = ?;";
 
     function printArtikel()
     {
-        $url = 'http://iproject12.icasites.nl/pics/';
+        if(strpos($this->afbeeldingURL,'dt_')===0) {
+            $url = 'http://iproject12.icasites.nl/pics/';
+        }
+        else{
+            $url= null;
+        }
         return <<<HTML
 <div class="card text-center" style="width: 18rem;">
   <img class="card-img-top" src=$url$this->afbeeldingURL alt="Card image cap">
@@ -196,7 +201,6 @@ class Artikel
                 $this->VeilingGesloten = $row['VeilingGesloten'];
                 $this->MaximaleLooptijd = $row['MaximaleLooptijd'];
                 $this->Verkoopprijs = $row['Verkoopprijs'];
-
                 $this->VeilingStatus = $this->_isGesloten();
                 $this->Minimumprijs = "Sample Text";
 
@@ -323,10 +327,14 @@ class Artikel
     {
         $foto=array();
         $beschrijvingNoHtmlTag = $this->Beschrijving;
-//        preg_replace('#<script(.*?)>(.*?)</script>#is', '', $beschrijvingNoHtmlTag);
         $beschrijvingNoHtmlTag = strip_tags($beschrijvingNoHtmlTag);
         for($i=0; $i<$this->aantalAfbeeldingen; $i++) {
-            $foto[$i] = $this->url . $this->AfbeeldingURL[$i];
+            if(strpos($this->AfbeeldingURL[$i],'dt_')===0) {
+                $foto[$i] = $this->url . $this->AfbeeldingURL[$i];
+            }
+            else{
+                $foto[$i] = $this->AfbeeldingURL[$i];
+            }
         }
         echo <<< ARTIKEL
 <div class='container mt-2'><div class='container'>
@@ -382,7 +390,6 @@ ARTIKEL;
          <div class='row'><div class='col-1 '><h5 class='text-muted'>▪</h5></div>
          <div class='col '><h5 class='text-muted'>Kavelnummer: $this->Id</h5></div></div>
 </div> 
-
          <div class='col '><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>
          $this->VeilingStatus
          </h4></div></div>
