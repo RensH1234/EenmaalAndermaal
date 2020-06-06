@@ -22,7 +22,7 @@ HTML;
 <h2>Om advertenties te plaatsen moet u een verkopersaccount hebben.</h2>
 <div class="container-fluid">
         <form class="form-group" action="WordtVerkoper.php" method="post">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-sm-4 col-xs-1">                  
                     <button type="submit" class="btn btn-dark"> Wordt een verkoper </button>
                 </div>

@@ -51,7 +51,7 @@ if((array_key_exists('origin', $_GET)&&array_key_exists('mode', $_GET))||(array_
     <p class="text">Voer uw emailadres en code in om een verkoper te worden.</p>
     <div class="container-fluid">
         <form class="form-group" action="VerkoperRegistreer.php" method="post">        
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-sm-4 col-xs-1">
                     <div class="form-group">
                         <label class="control-label">Gebruikersnaam</label>
@@ -65,7 +65,7 @@ if((array_key_exists('origin', $_GET)&&array_key_exists('mode', $_GET))||(array_
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-sm-4 col-xs-1">
                     <div class="form-group">
                         <label class="control-label">Code</label>
@@ -77,7 +77,7 @@ if((array_key_exists('origin', $_GET)&&array_key_exists('mode', $_GET))||(array_
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-sm-4 col-xs-1">
                     <button type="submit" class="btn btn-dark"> Controleer code</button>
                 </div>
