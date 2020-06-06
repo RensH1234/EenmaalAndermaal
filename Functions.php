@@ -260,4 +260,83 @@ function veranderRol($gebruikersnaam, $rol){
     if(!$stmt) {
         die(print_r(sqlsrv_errors(), true));
     }
+
+    $sql = "INSERT INTO Verkoper(Gebruikersnaam, ControleOptie) VALUES(?,?);";
+    $stmt = sqlsrv_prepare($conn, $sql, array($gebruikersnaam, 0));
+    if (!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    sqlsrv_execute($stmt);
+    if(!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+}
+
+function maakAdvertentieAan($titel,$afbeeldingURL,$beschrijving,$betalingswijze,$plaatsnaam,$betalingsinstructies,$land
+    , $looptijd, $startprijs, $verzendinstructies, $verzendkosten, $rubriekID, $voorwerpnummer){
+    $verkoper = $_SESSION['gebruikersnaam'];
+    $looptijdBegin = date("Y-m-d G:i:s",time());
+    $verkoopprijs = $startprijs;
+    $veilinggesloten = 0;
+    if($beschrijving == null){
+        $beschrijving = " ";
+    }
+    $eindtijd = date('Y-m-d H:i:s', strtotime($looptijdBegin . " + {$looptijd} days"));
+
+
+    $params = array($voorwerpnummer, $titel, $beschrijving, $startprijs, $betalingswijze, $betalingsinstructies,
+        $plaatsnaam, $land, $looptijd, $looptijdBegin, $verzendkosten, $verzendinstructies, $verkoper,
+        $veilinggesloten, $verkoopprijs, $eindtijd);
+
+     $conn = getConn();
+    $sql = "INSERT INTO Voorwerp(Voorwerpnummer, Titel, Beschrijving, Startprijs, Betalingswijze, Betalingsinstructie, 
+Plaatsnaam, Land, MaximaleLooptijd, Looptijdbegin, Verzendkosten, Verzendinstructies, Verkoper,
+VeilingGesloten, Verkoopprijs, LoopTijdEinde) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $stmt = sqlsrv_prepare($conn, $sql, $params);
+    if (!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    sqlsrv_execute($stmt);
+    if(!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    else{
+        $sql = "INSERT INTO Bestand(AfbeeldingURL, Voorwerpnummer) VALUES(?,?);";
+        $stmt = sqlsrv_prepare($conn, $sql, array($afbeeldingURL, $voorwerpnummer));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if(!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        $sql = "INSERT INTO VoorwerpInRubriek(Voorwerpnummer, RubriekID) VALUES(?,?);";
+        $stmt = sqlsrv_prepare($conn, $sql, array($voorwerpnummer, $rubriekID));
+        if (!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+        sqlsrv_execute($stmt);
+        if(!$stmt) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+    }
+}
+
+function getNewVoorwerpnummer(){
+    $conn = getConn();
+    $sql = "SELECT MAX(Voorwerpnummer)+1 as nummer FROM Voorwerp;";
+    $stmt = sqlsrv_prepare($conn, $sql);
+    if (!$stmt) {
+        die(print_r(sqlsrv_errors(), true));
+    }
+    sqlsrv_execute($stmt);
+    if($stmt) {
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            return $row['nummer'];
+        }
+    }
+    else{
+        die(print_r(sqlsrv_errors(), true));
+    }
+    return "a";
 }

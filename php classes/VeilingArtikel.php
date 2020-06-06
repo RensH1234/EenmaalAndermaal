@@ -5,7 +5,7 @@ include_once 'Biedingmachine.php';
 class VeilingArtikel
 {
     private $titel;
-    private $afbeeldingURL = array();
+    private $afbeeldingURL;
     private $afstand;
     private $prijs;
     private $eindtijd;
@@ -15,7 +15,7 @@ class VeilingArtikel
     function _construct($id)
     {
         $conn = getConn();
-        $sql = "SELECT * FROM Voorwerp WHERE
+        $sql = "SELECT * FROM Voorwerp  WHERE 
 Voorwerpnummer = ?;";
         $stmt = sqlsrv_prepare($conn, $sql, array($id));
         if (!$stmt) {
@@ -38,7 +38,7 @@ Voorwerpnummer = ?;";
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
-        $sql = "SELECT top(1) AfbeeldingURL FROM Bestand WHERE Voorwerpnummer = ?;";
+        $sql = "SELECT top(1) * FROM Bestand WHERE Voorwerpnummer = ?;";
         $stmt = sqlsrv_prepare($conn, $sql, array($id));
         if (!$stmt) {
             die(print_r(sqlsrv_errors(), true));
@@ -47,7 +47,7 @@ Voorwerpnummer = ?;";
 
         if (sqlsrv_execute($stmt)) {
             while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-                $this->afbeeldingURL[0] = $row['AfbeeldingURL'];
+                $this->afbeeldingURL = $row['AfbeeldingURL'];
             }
         } else {
             die(print_r(sqlsrv_errors(), true));
@@ -69,20 +69,24 @@ Voorwerpnummer = ?;";
             $date = $arrayVoorwerp[6]->format('Y-m-d H:i:s');
             $this->eindtijd = date('Y-m-d H:i:s', strtotime($date . " + {$arrayVoorwerp[5]} days"));
         }
-        $this->afbeeldingURL[0] = $arrayVoorwerp[7];
+        $this->afbeeldingURL = $arrayVoorwerp[7];
         $this->id = $arrayVoorwerp[0];
-        if ($this->afbeeldingURL[0] == null) {
-            $this->afbeeldingURL[0] = "images/png/logov1.png";
+        if ($this->afbeeldingURL == null) {
+            $this->afbeeldingURL = "images/png/logov1.png";
         }
     }
 
     function printArtikel()
     {
-        $url = 'http://iproject12.icasites.nl/pics/';
-        $afbeelding=$url . $this->afbeeldingURL[0];
+        if(strpos($this->afbeeldingURL,'dt_')===0) {
+            $url = 'http://iproject12.icasites.nl/pics/';
+        }
+        else{
+            $url= null;
+        }
         return <<<HTML
 <div class="card text-center" style="width: 18rem;">
-  <img class="card-img-top" src=$afbeelding alt="Card image cap">
+  <img class="card-img-top" src=$url$this->afbeeldingURL alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">$this->titel</h5>
     <p class="card-text">Locatie: $this->afstand</p>
@@ -197,7 +201,6 @@ class Artikel
                 $this->VeilingGesloten = $row['VeilingGesloten'];
                 $this->MaximaleLooptijd = $row['MaximaleLooptijd'];
                 $this->Verkoopprijs = $row['Verkoopprijs'];
-
                 $this->VeilingStatus = $this->_isGesloten();
                 $this->Minimumprijs = "Sample Text";
 
@@ -324,10 +327,14 @@ class Artikel
     {
         $foto=array();
         $beschrijvingNoHtmlTag = $this->Beschrijving;
-//        preg_replace('#<script(.*?)>(.*?)</script>#is', '', $beschrijvingNoHtmlTag);
         $beschrijvingNoHtmlTag = strip_tags($beschrijvingNoHtmlTag);
         for($i=0; $i<$this->aantalAfbeeldingen; $i++) {
-            $foto[$i] = $this->url . $this->AfbeeldingURL[$i];
+            if(strpos($this->AfbeeldingURL[$i],'dt_')===0) {
+                $foto[$i] = $this->url . $this->AfbeeldingURL[$i];
+            }
+            else{
+                $foto[$i] = $this->AfbeeldingURL[$i];
+            }
         }
         echo <<< ARTIKEL
 <div class='container mt-2'><div class='container'>
@@ -383,7 +390,6 @@ ARTIKEL;
          <div class='row'><div class='col-1 '><h5 class='text-muted'>▪</h5></div>
          <div class='col '><h5 class='text-muted'>Kavelnummer: $this->Id</h5></div></div>
 </div> 
-
          <div class='col '><h1 class='text-center font-weight-bold'>$this->Titel</h1><div class='row'>
          $this->VeilingStatus
          </h4></div></div>
