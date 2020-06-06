@@ -8,7 +8,7 @@ $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $error = '';
 include_once 'AdvertentieControles.php';
-$rubriekID=81415;
+$rubriekID=$_SESSION['verkooprubriek'];
 
 $newVoorwerpnummer = getNewVoorwerpnummer();
 if($error =="" && (array_key_exists('plaatsen',$_GET))){
