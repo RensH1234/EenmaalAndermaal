@@ -29,14 +29,13 @@ $geboortedatum = null;
 $aBeveiligingsvraag = null;
 $beveiligingsvraag = null;
 $rol = "Koper";
+$sizeBeveiligingsvragen = _getSizeBeveiligingsvragen();
 $beveiligingsvragen = _getBeveiligingsvragen();
 
 //Wanneer een gebruiker registreert, wordt hierin gecontroleerd of de ingevoerde gegevens correct en veilig zijn. Ook worden de waardes ingevoerd weer op de goede plek gegenereerd.
 include 'RegistratieControles.php';
 
-
-//deze functie haalt alle beveiligingsvragen uit de database, en maakt de html van de form aan. Als er vragen worden toegevoegd, komen deze automatisch op het registratieform.
-function _getBeveiligingsvragen(){
+function _getSizeBeveiligingsvragen(){
     $conn = getConn();
     $sql = "SELECT COUNT(*) AS AantalVragen FROM Vraag;";
     $stmt = sqlsrv_prepare($conn, $sql);
@@ -46,11 +45,16 @@ function _getBeveiligingsvragen(){
     sqlsrv_execute($stmt);
     if (sqlsrv_execute($stmt)) {
         while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-            $aantalvragen = $row["AantalVragen"];
+            return $row["AantalVragen"];
         }
     } else {
         die(print_r(sqlsrv_errors(), true));
     }
+}
+//deze functie haalt alle beveiligingsvragen uit de database, en maakt de html van de form aan. Als er vragen worden toegevoegd, komen deze automatisch op het registratieform.
+function _getBeveiligingsvragen(){
+    $conn = getConn();
+    $aantalvragen =  _getSizeBeveiligingsvragen();
     $html = "";
     $sql = "SELECT * FROM Vraag;";
     $stmt = sqlsrv_prepare($conn, $sql);
@@ -325,7 +329,7 @@ elseif(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])){
                                 <label class="control-label">Beveilingsvraag</label>
                                 <div class="selectContainer">
                                     <div class="input-group">
-                                        <select required="true" name="beveiligingsvraag" class="form-control selectpicker">   *
+                                        <select required="true" name="beveiligingsvraag" class="form-control selectpicker" size=$sizeBeveiligingsvragen>*
                                             $beveiligingsvragen
                                         </select>
                                     </div>
