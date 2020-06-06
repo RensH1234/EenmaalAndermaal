@@ -1,4 +1,9 @@
 <?php
+/**
+ * Functie die een verbinding legt met de database
+ * @author Yasin Tavsan
+ * @return false|resource
+ */
 function getConn()
 {
     static $connection;

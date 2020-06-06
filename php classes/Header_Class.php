@@ -2,9 +2,17 @@
 include_once 'DatabaseConn.php';
 include_once 'SessionHandling/Session.php';
 
+/**
+ *  * Class HeaderClass maakt een object aan die de categorieenlijst in de header genereert
+ * @author Yasin Tavsan
+ */
 class HeaderClass
 {
-    //Functie die all rubriek gegevens van de Database ophaalt
+    /**
+     * Functie de de rubriekgegevens van de database ophaalt en retourneert
+     * @author Yasin Tavsan
+     * @return array[]
+     */
     function _getRubriekFromDb()
     {
         $menuData = array('items' => array(), 'parents' => array());
@@ -24,7 +32,15 @@ class HeaderClass
         }
         return $menuData;
     }
-    //Functie die een lijst genereert op basis van de OuderID, de array met gegevens, en hoe diep het menu moet gaaan
+
+    /**
+     * Functie die de rubriekenlijst genereert
+     * @author Yasin Tavsan
+     * @param $SuperID integer RubriekID van wiens child-elementen een lijst wordt aangemaakt
+     * @param $menuData array[] array met parent- en child-elementen van RubriekID's
+     * @param $Depth integer Aantal niveau's van de rubriek die wordt aangemaakt
+     * @return string
+     */
     function _generateRubriekList($SuperID, $menuData, $Depth)
     {
         $html = '';
@@ -43,6 +59,13 @@ class HeaderClass
         return $html;
     }
 
+    /**
+     * @author Yasin Tavsan & Rens Harinck
+     * @param $SuperID
+     * @param $menuData
+     * @param $Depth
+     * @return string
+     */
     function _generateRubriekListVeilingenOverzicht($SuperID, $menuData, $Depth)
     {
         $html = '';
@@ -58,6 +81,13 @@ class HeaderClass
         return $html;
     }
 
+    /**
+     * @author Yasin Tavsan & Rens harinck
+     * @param $SuperID
+     * @param $menuData
+     * @param $Depth
+     * @return string
+     */
     function _generateRubriekFilter($SuperID, $menuData, $Depth)
     {
         $html = '';
@@ -73,7 +103,11 @@ class HeaderClass
         return $html;
     }
 
-    //Functie die controleert of de gebruiker op de huidige pagina zit en op basis daarvan een active echoot
+    /**
+     * Functie die de huidige pagina actief maakt in de header
+     * @author Yasin Tavsan
+     * @param $page_cur
+     */
     function _activeHeader($page_cur)
     {
         $url_array = explode('/', $_SERVER['REQUEST_URI']);
@@ -83,7 +117,11 @@ class HeaderClass
         }
     }
 
-    //Functie die of LOGIN of LOGUIT weergeeft in de navigatiebalk afhankelijk van of er is ingelogd of niet
+    /**
+     * Functie die of LOGIN of LOGUIT weergeeft in de navigatiebalk afhankelijk van of er is ingelogd of niet
+     * @author Yasin Tavsan
+     * @return array[]
+     */
     function sessionLink(){
         if(is_logged_in()){
             $session["href_log"] = "Loguit_Redir.php";
@@ -102,6 +140,10 @@ class HeaderClass
         return $session;
     }
 
+    /**
+     * @param $rubriekID
+     * @return string
+     */
     function titleToSuperID($rubriekID){
 
         $conn = getConn();
@@ -131,6 +173,5 @@ class HeaderClass
 <a class="h2" href="VeilingenOverzicht.php?rubriekID=$superID">
 <h2>$superNaam</h2></a>
 HTML;
-
     }
 }
