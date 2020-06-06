@@ -116,7 +116,13 @@ function _activeHeader($page_cur)
     }
 }
 
-//samen met de email en de gebruikersnaam wordt een unieke hash aangemaakt, die uniek is per gebruiker.
+/**
+ * Functie die de registratiemail stuurt
+ * @author Rens Harinck
+ * @author Liander van Bergen
+ * @uses generateCode()
+ * @param string $email ontvanger van email
+ */
 function stuurRegistratieEmail($email){
     $mode = rand(0,1000);
     $url = "http://iproject12.icasites.nl/RegistratieVerifeer.php?origin={$email}&mode={$mode}";
@@ -155,6 +161,15 @@ function stuurRegistratieEmail($email){
     mail($to,$subject,$message,$headers);
 }
 
+/**
+ * Functie controleert of de opgegeven code correct is
+ * @author Rens Harinck
+ * @uses alterMode()
+ * @param string $code code die wordt gecontroleerd
+ * @param int $mode cijfer dat bepaalt hoe de code moet worden gecontroleerd
+ * @param string $email email-gedeelte waaruit correcte code bestaat
+ * @return bool of de code klopt
+ */
 function checkCode($code, $mode, $email){
     $mode = alterMode($mode);
     if(password_verify("{$mode}{$email}",$code)){
@@ -163,15 +178,35 @@ function checkCode($code, $mode, $email){
     return false;
 }
 
+/**
+ * Functie de code genereert
+ * @author Rens Harinck
+ * @uses alterMode()
+ * @param int $mode cijfer dat bepaalt hoe de code moet worden gecontroleerd
+ * @param string $email email-gedeelte waaruit correcte code bestaat
+ * @return string gegenereerde code
+ */
 function generateCode($mode,$email){
     $mode = alterMode($mode);
     return password_hash("{$mode}{$email}",PASSWORD_DEFAULT);
 }
 
+/**
+ * Functie de aangepaste versie van $mode returnt
+ * @author Rens Harinck
+ * @param int $mode cijfer dat bepaalt hoe de code moet worden gecontroleerd
+ * @return float aangepaste versie van $mode
+ */
 function alterMode($mode){
     return ($mode * $mode + (int)round($mode/10));
 }
 
+/**
+ * Functie die de email stuurt dat een klant geregistreert is
+ * @author Rens Harinck
+ * @author Liander van Bergen
+ * @param string $email email van ontvanger
+ */
 function stuurConformatiemail($email){
     $to = $email;
     $subject = "Welkom uw registratie is succesvol voltooid.";
@@ -199,7 +234,13 @@ function stuurConformatiemail($email){
 //deze functionaliteit werkt alleen op de webserver, want daar zit ook een email-server op.
     mail($to,$subject,$message,$headers);
 }
-
+/**
+ * Functie die het emailadres van de ingelogde gebruiker returnt
+ * @author Rens Harinck
+ * @global $_SESSION['gebruikersnaam']
+ * @uses file('DatabaseConn.php')
+ * @return string email van ingelogde gebruiker
+ */
 function getEmailadres(){
     if(array_key_exists('gebruikersnaam', $_SESSION)){
         $conn = getConn();
@@ -220,6 +261,13 @@ function getEmailadres(){
     return '';
 }
 
+/**
+ * Functie die de email stuurt wanneer een klant verkoper wilt worden
+ * @author Rens Harinck
+ * @uses generateCode()
+ * @param string $email email van ontvanger
+ * @param string $gebruikersnaam gebruiker die email stuurt
+ */
 function stuurVerkopersEmail($email, $gebruikersnaam){
     $mode = rand(0,1000);
     $url = "http://iproject12.icasites.nl/VerkoperRegistreer.php?origin={$gebruikersnaam}&mode={$mode}";
@@ -248,7 +296,13 @@ function stuurVerkopersEmail($email, $gebruikersnaam){
     mail($to,$subject,$message,$headers);
 }
 
-//verander de rol van een gebruiker in de database
+/**
+ * Functie die de rol van een gebruiker in de database aanpast
+ * @author Rens Harinck
+ * @uses file('DatabaseConn.php')
+ * @param string $gebruikersnaam gebruikersnaam van klant
+ * @param string $rol Waar de rol naar veranderd
+ */
 function veranderRol($gebruikersnaam, $rol){
     $conn = getConn();
     $sql = "UPDATE Gebruiker SET Rol = ? WHERE Gebruikersnaam = ?;";
@@ -272,6 +326,24 @@ function veranderRol($gebruikersnaam, $rol){
     }
 }
 
+/**
+ * Functie die een nieuwe advertentie aanmaakt en in de database zet
+ * @author Rens Harinck
+ * @uses file('DatabaseConn.php')
+ * @param string $titel titel in database
+ * @param string $afbeeldingURL afbeeldingURL in database
+ * @param string $beschrijving beschrijving in database
+ * @param string $betalingswijze betalingswijze in database
+ * @param string $plaatsnaam plaatsnaam in database
+ * @param string $betalingsinstructies betalingsinstructies in database
+ * @param string $land land in database
+ * @param int $looptijd looptijd in database
+ * @param float $startprijs startprijs in database
+ * @param string $verzendinstructies verzendinstructies in database
+ * @param float $verzendkosten verzendkosten in database
+ * @param int $rubriekID rubriekID in database
+ * @param int $voorwerpnummer voorwerpnummer in database
+ */
 function maakAdvertentieAan($titel,$afbeeldingURL,$beschrijving,$betalingswijze,$plaatsnaam,$betalingsinstructies,$land
     , $looptijd, $startprijs, $verzendinstructies, $verzendkosten, $rubriekID, $voorwerpnummer){
     $verkoper = $_SESSION['gebruikersnaam'];
@@ -322,6 +394,12 @@ VeilingGesloten, Verkoopprijs, LoopTijdEinde) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?
     }
 }
 
+/**
+ * Functie die een nieuw voorwerpnummer returned
+ * @author Rens Harinck
+ * @uses file('DatabaseConn.php')
+ * @return int nieuw voorwerpnummer
+ */
 function getNewVoorwerpnummer(){
     $conn = getConn();
     $sql = "SELECT MAX(Voorwerpnummer)+1 as nummer FROM Voorwerp;";

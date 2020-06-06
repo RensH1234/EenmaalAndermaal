@@ -35,6 +35,12 @@ $beveiligingsvragen = _getBeveiligingsvragen();
 //Wanneer een gebruiker registreert, wordt hierin gecontroleerd of de ingevoerde gegevens correct en veilig zijn. Ook worden de waardes ingevoerd weer op de goede plek gegenereerd.
 include 'RegistratieControles.php';
 
+/**
+ * Functie die het aantal beveiligingsvragen in de database returned
+ * @author Rens Harinck
+ * @uses file('DatabaseConn.php')
+ * @return int aantal beveiligingsvragen in database
+ */
 function _getSizeBeveiligingsvragen(){
     $conn = getConn();
     $sql = "SELECT COUNT(*) AS AantalVragen FROM Vraag;";
@@ -51,7 +57,13 @@ function _getSizeBeveiligingsvragen(){
         die(print_r(sqlsrv_errors(), true));
     }
 }
-//deze functie haalt alle beveiligingsvragen uit de database, en maakt de html van de form aan. Als er vragen worden toegevoegd, komen deze automatisch op het registratieform.
+/**
+ * Functie die de option's genereerd met beveiligingsvragen van de database
+ * @author Rens Harinck
+ * @uses file('DatabaseConn.php')
+ * @uses _getSizeBeveiligingsvragen()
+ * @return string option's met beveiligingsvragen
+ */
 function _getBeveiligingsvragen(){
     $conn = getConn();
     $aantalvragen =  _getSizeBeveiligingsvragen();
@@ -78,6 +90,11 @@ HTML;
     return $html;
 }
 
+/**
+ * Functie die de gebruiker registreert in de database
+ * @author Rens Harinck
+ * @uses file('DatabaseConn.php')
+ */
 function _registreerGebruiker(){
 
     if(checkCode($_POST['code'], $_POST['mode'], $_POST['origin'])) {

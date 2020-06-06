@@ -12,6 +12,12 @@ class VeilingArtikel
     private $id;
 
     //constructor default
+    /**
+     * Constructor VeilingArtikel die gegevens uit database haalt
+     * @author Rens Harinck
+     * @uses file('DatabaseConn.php')
+     * @param int $id voorwerpnummer van voorwerp uit database
+     */
     function _construct($id)
     {
         $conn = getConn();
@@ -57,7 +63,11 @@ Voorwerpnummer = ?;";
             $this->afbeeldingURL = "images/png/logov1.png";
         }
     }
-
+    /**
+     * Constructor VeilingArtikel die gegevens uit opgegeven array haalt
+     * @author Rens Harinck
+     * @param int $arrayVoorwerp array met gegevens artikel
+     */
     function _constructArray($arrayVoorwerp)
     {
         $this->titel = $arrayVoorwerp[1];
@@ -76,6 +86,11 @@ Voorwerpnummer = ?;";
         }
     }
 
+    /**
+     * Functie die het artikel returned
+     * @author Rens Harinck
+     * @return string html van VeilingArtikel.php
+     */
     function printArtikel()
     {
         if(strpos($this->afbeeldingURL,'dt_')===0) {
@@ -221,7 +236,7 @@ class Artikel
         } else {
             die(print_r(sqlsrv_errors(), true));
         }
-        $this->setBiedingen(0, 0, 0);
+        $this->setBiedingen(0, 0);
         }
     }
 
