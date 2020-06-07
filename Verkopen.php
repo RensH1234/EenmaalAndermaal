@@ -68,7 +68,7 @@ include_once 'Header.php';
                                 $rubriekSelectie->_getRubriekFromDb()) || !isset($_POST['hoofdrubriek'])) { ?> disabled <?php } ?>
                                 onclick="submitForm('Verkopen.php')">Verder
                         </button>
-                        <button onclick="document.location.href='Index.php'">Annuleren</button>
+                        <button onclick="location.href='Index.php'">Annuleren</button>
                     </div>
                 </form>
             </div>
