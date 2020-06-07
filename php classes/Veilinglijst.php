@@ -1,6 +1,11 @@
 <?php
 require_once 'VeilingArtikel.php';
 
+/**
+ * Class veilinglijst genereert een weergave voor meerdere VeilingArtikelen
+ * @author Rens Harinck
+ * @uses VeilingArtikel
+ */
 class Veilinglijst
 {
     private $veilingArtikelen = array();

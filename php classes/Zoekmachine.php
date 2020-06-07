@@ -2,6 +2,11 @@
 include_once 'DatabaseConn.php';
 include_once 'Veilinglijst.php';
 
+/**
+ * Class Zoekmachine genereert een Veilinglijst gebaseerd op verschillende sleutelwoorden, prijsranges en prijsordening
+ * @author Rens Harinck
+ * @uses VeilingArtikel
+ */
 class Zoekmachine
 {
     private $idArray;

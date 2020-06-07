@@ -141,7 +141,10 @@ class HeaderClass
     }
 
     /**
-     * @param $rubriekID
+     * Functie returned html van rubriekenlijst die naar een niveau hoger leid
+     * @author Rens Harinck
+     * @uses file('DatabaseConn.php')
+     * @param int $rubriekID rubriekID van child
      * @return string
      */
     function titleToSuperID($rubriekID){

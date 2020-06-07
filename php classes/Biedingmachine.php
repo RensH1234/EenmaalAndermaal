@@ -1,6 +1,11 @@
 <?php
 include_once 'DatabaseConn.php';
 
+/**
+ *  Class biedingmachine genereert een biedingtabel, alle front end functies en alle back-end functies nodig voor biedingen
+ * @author Rens Harinck
+ * @uses file('DatabaseConn.php')
+ */
 class Biedingmachine
 {
     private $voorwerpnummer;

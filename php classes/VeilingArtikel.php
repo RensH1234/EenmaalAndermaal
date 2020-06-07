@@ -2,6 +2,11 @@
 include_once 'DatabaseConn.php';
 include_once 'Biedingmachine.php';
 
+/**
+ *  Class VeilingArtikel genereert een weergave voor een artikel uit de database
+ * @author Rens Harinck
+ * @uses file('DatabaseConn.php')
+ */
 class VeilingArtikel
 {
     private $titel;
