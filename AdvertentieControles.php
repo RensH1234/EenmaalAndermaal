@@ -54,16 +54,16 @@ function setErrorAndValue($variablename, $minlength, $maxlength, $chartype, $req
                     $errorVariable .= "<p class='text-white'>Error: '{$variablename}' mag geen vreemde tekens of cijfers bevatten.</p>";
                 }
             }
-            if($varType=='url' && filter_var($variablename, FILTER_VALIDATE_URL)){
+            if($varType=='url' && !filter_var($variablename, FILTER_VALIDATE_URL)){
                 $errorVariable .= "<p class='text-white'>Error: Voer een geldige link in</p>";
             }
         }
         elseif($varType=='float'){
             if ($variablename > $maxlength) {
-                $errorVariable .= "<p class='text-white'>Error: '{$variablename}' mag maximaal {$maxlength} tekens lang zijn.</p>";
+                $errorVariable .= "<p class='text-white'>Error: '{$variablename}' mag maximaal {$maxlength} groot zijn.</p>";
             }
             if ($variablename < $minlength) {
-                $errorVariable .= "<p class='text-white'>Error: '{$variablename}' moet minimaal {$minlength} tekens lang zijn.</p>";
+                $errorVariable .= "<p class='text-white'>Error: '{$variablename}' moet minimaal {$minlength} groot zijn.</p>";
             }
         }
 

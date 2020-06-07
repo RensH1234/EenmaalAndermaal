@@ -176,7 +176,7 @@ HTML;
                 <a class="btn btn-dark" href="Inloggen.php">Log in</a>
             </div>
             <div class="col text-center">
-                <a class="btn btn-primary" href="RegistratiePagina.php">Registreer</a>
+                <a class="btn btn-primary" href="RegistratieOpgeven.php">Registreer</a>
             </div>
         </div>
 <br>

@@ -135,7 +135,11 @@ if(isset($_POST["registreren"])) {
     if (array_key_exists("telefoonnummer", $_POST) && $_POST["telefoonnummer"] != null) {
         $telefoonnummer = $_POST["telefoonnummer"];
         if (strlen($_POST["telefoonnummer"]) != 10) {
-            $error .= "<p class='text-white'>Error: telfoonnummer moet 10 karakters lang zijn</p>";
+            $error .= "<p class='text-white'>Error: telefoonnummer moet 10 karakters lang zijn</p>";
+        }
+        if(preg_match('/[^0-9]+""/', $telefoonnummer)){
+            $error .= "<p class='text-white'>Error: telefoonnummer mag alleen cijfers bevatten</p>";
+
         }
     }
     if (array_key_exists("geboortedatum", $_POST)) {
@@ -148,7 +152,7 @@ if(isset($_POST["registreren"])) {
     }
     if (array_key_exists("antwoord", $_POST)) {
         $aBeveiligingsvraag = $_POST["antwoord"];
-        if (preg_match('/[^A-Za-z0-9]+""/', $land)) {
+        if (preg_match('/[^A-Za-z0-9]+""/', $aBeveiligingsvraag)) {
             $error .= "<p class='text-white'>Error: antwoord beveiligingsvraag mag geen vreemde tekens bevatten</p>";
         }
     }
