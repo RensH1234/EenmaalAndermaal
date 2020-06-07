@@ -10,10 +10,12 @@ $huidigeJaar = date('Y');
 
 $rubriekSelectie = new Advertentie();
 
-if(!is_logged_in() || !is_verkoper()){
+if(!is_logged_in()){
     header('location: inloggen.php');
 }
-
+if(!is_verkoper()){
+    header('location: Advertentie_Redir.php');
+}
 print_r($_SESSION);
 
 if ($rubriekSelectie->_inputCheck()) {

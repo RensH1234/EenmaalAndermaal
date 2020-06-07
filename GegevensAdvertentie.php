@@ -9,12 +9,13 @@ $siteNaam = 'Welkom!';
 $error = '';
 include_once 'AdvertentieControles.php';
 
-if(!is_logged_in() || !is_verkoper()){
+if(!is_logged_in()){
     header('location: inloggen.php');
 }
-
+if(!is_verkoper()){
+    header('location: Advertentie_Redir.php');
+}
 $rubriekID=$_SESSION['verkooprubriek'];
-
 $newVoorwerpnummer = getNewVoorwerpnummer();
 if($error =="" && (array_key_exists('plaatsen',$_GET))){
     maakAdvertentieAan($titel,$afbeeldingURL,$beschrijving,$betalingswijze,$plaatsnaam,$betalingsinstructies,$land
