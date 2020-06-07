@@ -8,8 +8,9 @@ $title = 'Eenmaal Andermaal!';
 $siteNaam = 'U bent Uitgelogd';
 
 $_SESSION['ingelogd'] = false;
-unset($_SESSION);
+log_out();
 header('refresh: 1 url= Inloggen.php');
+
 ?>
 <!doctype html>
 <html lang="nl">
