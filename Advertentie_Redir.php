@@ -8,14 +8,13 @@ $siteNaam = 'Advertentie';
 $huidigeJaar = date('Y');
 
 
-if(isset($_SESSION['ingelogd']) && $_SESSION['ingelogd'] == true) {
-    if($_SESSION['Rol']=='Verkoper'){
+if(is_logged_in()) {
+    if(is_verkoper()){
         header('location: Verkopen.php');
     }
     else{
         header('location: AdvertentiePlaatsen.php');
     }
-    header('refresh: 1 url= Index.php');
 }
 else {
     header('refresh: 1 url= Inloggen.php');
