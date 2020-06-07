@@ -16,7 +16,6 @@ if(!is_logged_in()){
 if(!is_verkoper()){
     header('location: Advertentie_Redir.php');
 }
-print_r($_SESSION);
 
 if ($rubriekSelectie->_inputCheck()) {
     unset($_SESSION['verkooprubriek']);
