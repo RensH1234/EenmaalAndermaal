@@ -10,9 +10,11 @@ $huidigeJaar = date('Y');
 
 $rubriekSelectie = new Advertentie();
 
-if (!array_key_exists('gebruikersnaam', $_SESSION) || $_SESSION['Rol'] != 'Verkoper') {
-    header('location: Inloggen.php');
+if(!is_logged_in() || !is_verkoper()){
+    header('location: inloggen.php');
 }
+
+print_r($_SESSION);
 
 if ($rubriekSelectie->_inputCheck()) {
     unset($_SESSION['verkooprubriek']);
@@ -68,7 +70,7 @@ include_once 'Header.php';
                                 $rubriekSelectie->_getRubriekFromDb()) || !isset($_POST['hoofdrubriek'])) { ?> disabled <?php } ?>
                                 onclick="submitForm('Verkopen.php')">Verder
                         </button>
-                        <button onclick="document.location.href='Index.php'">Annuleren</button>
+                        <button onclick="location.href='Index.php'">Annuleren</button>
                     </div>
                 </form>
             </div>

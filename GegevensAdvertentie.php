@@ -8,6 +8,11 @@ $title = 'Eenmaal Andermaal!';
 $siteNaam = 'Welkom!';
 $error = '';
 include_once 'AdvertentieControles.php';
+
+if(!is_logged_in() || !is_verkoper()){
+    header('location: inloggen.php');
+}
+
 $rubriekID=$_SESSION['verkooprubriek'];
 
 $newVoorwerpnummer = getNewVoorwerpnummer();

@@ -13,3 +13,15 @@ function is_logged_in()
     }
     return false;
 }
+
+function is_verkoper(){
+    if (array_key_exists('gebruikersnaam', $_SESSION) || $_SESSION['Rol'] == 'Verkoper') {
+        return true;
+    }
+    return false;
+}
+
+function log_out(){
+    unset($_SESSION);
+    session_destroy();
+}
