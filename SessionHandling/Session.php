@@ -15,7 +15,7 @@ function is_logged_in()
 }
 
 function is_verkoper(){
-    if (array_key_exists('gebruikersnaam', $_SESSION) || $_SESSION['Rol'] == 'Verkoper') {
+    if (array_key_exists('gebruikersnaam', $_SESSION) && $_SESSION['Rol'] == 'Verkoper') {
         return true;
     }
     return false;
