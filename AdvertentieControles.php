@@ -9,11 +9,30 @@ $betalingswijze = setErrorAndValue('betalingswijze', 5, 9, $alleenLetters, true,
 $plaatsnaam = setErrorAndValue('Plaatsnaam', 2, 250, $alleenLetters, true, 'string');
 $betalingsinstructies = setErrorAndValue('betalingsinstructies', 2, 20, $cijfersEnLetters, true, 'string');
 $land = setErrorAndValue('land', 2, 20, $alleenLetters, true, 'string');
-$looptijd = setErrorAndValue('looptijd', 1, 7, $alleenCijfers, true, 'float');;
+$looptijd = setErrorAndValue('looptijd', 1, 120, $alleenCijfers, true, 'float');;
 $startprijs = setErrorAndValue('startprijs', 0.01, 9000, $alleenCijfers, true, 'float');
 $verzendinstructies = setErrorAndValue('verzendinstructies', 0, 20, $cijfersEnLetters, false, 'string');
 $verzendkosten = setErrorAndValue('verzendkosten', 2, 7, $alleenCijfers, false, 'float');
 
+/**
+ * Functie die returned of een string eindigt op een of meer substrings meegegeven in de array
+ * @author Rens Harinck
+ * @param string $haystack string om te controleren
+ * @param array[] $needle array met substrings waar op wordt gecontroleerd
+ * @return boolean
+ */
+function eindigtOp($haystack, $needle){
+    for($i = 0; $i < sizeof($needle); $i++){
+        $length = strlen($needle[$i]);
+        if ($length == 0) {
+            return true;
+        }
+        if(substr($haystack, -$length) === $needle[$i]){
+            return true;
+        }
+    }
+    return false;
+}
 /**
  * Functie die de ingevoerde waarde uit de $_GET superglobal haalt, ze returnt, en errorberichten aan $error plakt als de waarde uit $_GET niet voldoet aan de controles.
  * De controles worden door de parameters aangegeven.
@@ -30,6 +49,7 @@ $verzendkosten = setErrorAndValue('verzendkosten', 2, 7, $alleenCijfers, false, 
  */
 function setErrorAndValue($variablename, $minlength, $maxlength, $chartype, $required, $varType){
     $errorVariable = "";
+    $imgEnds = array('.png','.jpg','.jpeg','.jfif','.pjepg','.pjp','.bpm','.apng','.bmp','.ico','.cur'); //een aantal afbeeldingextensions
     global $error;
     if(!array_key_exists($variablename,$_GET)){
         if($required&&array_key_exists('plaatsen',$_GET)) {
@@ -56,6 +76,9 @@ function setErrorAndValue($variablename, $minlength, $maxlength, $chartype, $req
             }
             if($varType=='url' && !filter_var($variablename, FILTER_VALIDATE_URL)){
                 $errorVariable .= "<p class='text-white'>Error: Voer een geldige link in</p>";
+                if(!eindigtOp($variablename, $imgEnds)){
+                    $errorVariable .= "<p class='text-white'>Error: Afbeelding-type wordt niet ondersteunt</p>";
+                }
             }
         }
         elseif($varType=='float'){
@@ -73,4 +96,6 @@ function setErrorAndValue($variablename, $minlength, $maxlength, $chartype, $req
 
         return $variablename;
     }
+
+
 }
